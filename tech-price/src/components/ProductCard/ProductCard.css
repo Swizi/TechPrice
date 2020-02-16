@@ -1,0 +1,21 @@
+.product-name {
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 16px;
+  text-align: center;
+}
+
+.card-block {
+  width: 250px;
+  height: 250px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.image-style{
+    height: 200px;
+    width: 200px;
+}

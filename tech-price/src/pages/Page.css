@@ -1,0 +1,34 @@
+.header-text {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 24px;
+    line-height: 28px;
+}
+
+.city-text {
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+}
+
+.flex-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.flex-button {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.product-cards {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
