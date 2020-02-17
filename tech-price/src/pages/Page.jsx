@@ -48,13 +48,21 @@ export function Page(props) {
             )
         })
     } */}
-        {
+    <div>
+        <ProductCard data={props.data[0]} />
+        <ProductCard data={props.data[1]} />
+    </div>
+    <div>
+        <ProductCard data={props.data[2]} />
+        <ProductCard data={props.data[3]} />
+    </div>
+        {/* {
         props.data.map(function (item, index){
             return (
                 <ProductCard key={index} data={item}/>
             )
         })
-    }
+    } */}
     </div>
 </React.Fragment>
     );
