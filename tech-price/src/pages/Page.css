@@ -1,37 +1,76 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
 
+.page-flexbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 100%;
+}
 .header-text {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 24px;
-    line-height: 28px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 24px;
+  line-height: 28px;
 }
 
 .city-text {
-    font-family: Roboto;
-    font-style: normal;
-    font-weight: normal;
-    font-size: 18px;
-    line-height: 21px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 18px;
+  line-height: 21px;
 }
 
 .flex-box {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 30px;
+  margin-top: 5px;
 }
 
 .flex-button {
-    display: flex;
-    flex-direction: row;
-    justify-content: flex-end;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .product-cards {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+@media (max-width: 400px) {
+  .product-cards {
+    justify-content: center;
+  }
+}
+
+.text-field {
     width: 100%;
-    justify-content: space-between;
-    flex-wrap: wrap;
+}
+
+.text-field .MuiInputBase-root {
+  background-color: #c9ffd9;
+}
+
+.text-field .MuiInputBase-root.Mui-focused {
+  background-color: #ffffff;
+}
+
+.text-field:focus {
+  background-color: #ffffff;
+}
+
+.enter-button {
+  border-radius: 10px !important;
+  background-color: #c9ffd9 !important;
 }

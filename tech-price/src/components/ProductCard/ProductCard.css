@@ -5,6 +5,7 @@
   font-size: 14px;
   line-height: 16px;
   text-align: center;
+  margin-top: 21px;
 }
 
 .card-block {
@@ -14,6 +15,7 @@
   align-items: center;
   flex-direction: column;
   flex-basis: 50%;
+  margin-top: 21px;
 }
 
 .image-style{

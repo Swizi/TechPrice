@@ -8,16 +8,16 @@ const data = [
     name: "Ноутбук ASUS"
   },
   {
-    url: "https://is.gd/W8hs6p",
+    url: "https://is.gd/7ty7or",
     name: "Мышь компьютерная EgorGamesCorporation"
   },
   {
-    url: "https://is.gd/zwDw5r",
-    name: "Ноутбук MSI"
+    url: "https://is.gd/j0kecm",
+    name: "Наушники Xiaomi redmi airdots"
   },
   {
-    url: "https://is.gd/zwDw5r",
-    name: "Ноутбук MSI"
+    url: "https://is.gd/mkEyDx",
+    name: "Видеокарта MSI nVidia GeForce GTX 1650"
   }
 ];
 
