@@ -1,21 +1,27 @@
 import React, { useState } from "react";
-import Button from "@material-ui/core/Button";
-import "./LoginButton.css"
+import LoginButton from "@material-ui/core/Button";
+import "../../pages/MainPage/MainPage.css";
+import { withStyles } from "@material-ui/core/styles";
 
-export default function CustomButton2(props) {
+// import { BrowserRouter as Router, Route, Link } from "react-router-dom";
+
+export default function CustomButton(props) {
   const [isToggleOn, toToggle] = useState(false);
 
   const handleClick = () => {
-      toToggle(!isToggleOn)
-  }
+    toToggle(!isToggleOn);
+  };
+
+  const StyledButton = withStyles({
+    root: {
+      backgroundColor: "#c9ffd9",
+      borderRadius: "10px"
+    }
+  })(LoginButton);
 
   return (
-      <Button
-        className="enter-button"
-        variant="outlined"
-        onClick={handleClick}
-      >
-        {isToggleOn ? 'Войти' : 'Зарегистрироваться'}
-      </Button>
+    <StyledButton variant="outlined" onClick={handleClick}>
+      {isToggleOn ? "Войти" : "Зарегистрироваться"}
+    </StyledButton>
   );
 }

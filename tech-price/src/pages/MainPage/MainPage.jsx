@@ -1,14 +1,13 @@
 import React from 'react';
-// import CustomButton from '../components/Button';
-import LoginButton from '../components/LoginButton/LoginButton';
-import ProductCard from '../components/ProductCard/ProductCard'
+import LoginButton from '../../components/LoginButton/LoginButton';
+import ProductCard from '../../components/ProductCard/ProductCard'
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
 import './MainPage.css'
 
 
-export function Page(props) {
+export function MainPage(props) {
     // const headerTextStyle = {
     //   color: "red"
     // }
@@ -17,7 +16,7 @@ export function Page(props) {
 <div className="page-flexbox">
     <div className="flex-button">
         {/* <CustomButton />  */}
-        < LoginButton />
+        < LoginButton className="enter-button" />
     </div>
     <div className = "flex-box">
         <span className = "header-text"> TechPrice </span> 

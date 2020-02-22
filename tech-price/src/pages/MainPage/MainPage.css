@@ -1,4 +1,11 @@
 @import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+* {
+  padding: 0;
+  margin: 0;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+}
 
 .page-flexbox {
   display: flex;
@@ -7,18 +14,13 @@
   flex-direction: column;
   width: 100%;
 }
+
 .header-text {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
   font-size: 24px;
   line-height: 28px;
 }
 
 .city-text {
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
   font-size: 18px;
   line-height: 21px;
 }
@@ -55,7 +57,7 @@
 }
 
 .text-field {
-    width: 100%;
+  width: 100%;
 }
 
 .text-field .MuiInputBase-root {
@@ -68,4 +70,9 @@
 
 .text-field:focus {
   background-color: #ffffff;
+}
+
+.MuiButtonBase-root {
+  background-color: #c9ffd9;
+  border-radius: 10px;
 }
