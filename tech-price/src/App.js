@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import { Page } from "./pages/Page";
+import { MainPage } from "./pages/MainPage";
 
 const data = [
   {
@@ -24,7 +24,7 @@ const data = [
 function App() {
   return (
     <div className="App">
-      <Page data={data} />
+      <MainPage data={data} />
     </div>
   );
 }

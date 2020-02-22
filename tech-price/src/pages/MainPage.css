@@ -69,8 +69,3 @@
 .text-field:focus {
   background-color: #ffffff;
 }
-
-.enter-button {
-  border-radius: 10px !important;
-  background-color: #c9ffd9 !important;
-}

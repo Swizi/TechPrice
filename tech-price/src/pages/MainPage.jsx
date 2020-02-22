@@ -1,11 +1,11 @@
 import React from 'react';
 // import CustomButton from '../components/Button';
-import CustomButton2 from '../components/Button2';
+import LoginButton from '../components/LoginButton/LoginButton';
 import ProductCard from '../components/ProductCard/ProductCard'
 import SearchIcon from '@material-ui/icons/Search';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import TextField from '@material-ui/core/TextField';
-import './Page.css'
+import './MainPage.css'
 
 
 export function Page(props) {
@@ -17,7 +17,7 @@ export function Page(props) {
 <div className="page-flexbox">
     <div className="flex-button">
         {/* <CustomButton />  */}
-        < CustomButton2 className="enter-button"/>
+        < LoginButton />
     </div>
     <div className = "flex-box">
         <span className = "header-text"> TechPrice </span> 

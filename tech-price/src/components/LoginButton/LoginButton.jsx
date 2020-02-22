@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
-import "../pages/Page.css"
+import "./LoginButton.css"
 
 export default function CustomButton2(props) {
   const [isToggleOn, toToggle] = useState(false);
