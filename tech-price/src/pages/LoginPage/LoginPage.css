@@ -34,3 +34,7 @@ a{
   flex-direction: column;
   justify-content: center;
 }
+
+.bottom-text{
+  color: red;
+}

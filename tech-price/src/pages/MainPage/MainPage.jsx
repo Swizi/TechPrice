@@ -28,7 +28,7 @@ export function MainPage(props) {
     <div className="page-flexbox">
       <div className="flex-button">
         {/* <CustomButton />  */}
-        <a href="../LoginPage/LoginPage">
+        <a href="./LoginPage">
           <LoginButton />
         </a>
       </div>

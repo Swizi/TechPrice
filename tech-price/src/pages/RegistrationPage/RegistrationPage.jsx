@@ -29,7 +29,7 @@ export function LoginPage(props) {
 
   return (
     <div className="page-flexbox">
-      <a href="/">
+      <a href="../../pages/MainPage/MainPage">
         <HomeIcon />
       </a>
       <div className="login-block">
@@ -40,7 +40,6 @@ export function LoginPage(props) {
           <Button variant="outlined" size="medium" color="primary" className={classes.margin}>
             Зайти
           </Button>
-          <p className="bottom-text">Ещё не зарегистрированы???</p>
         </form>
       </div>
     </div>

@@ -1,9 +1,8 @@
 import React from "react";
 import "./App.css";
-import { MainPage } from "./pages/MainPage/MainPage";
-import {LoginPage} from "./pages/LoginPage/LoginPage"
+import {MainPage} from "./pages/MainPage/MainPage";
+import {LoginPage} from "./pages/LoginPage/LoginPage";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-
 const data = [
   {
     url: "https://is.gd/zwDw5r",
@@ -26,21 +25,16 @@ const data = [
 function App() {
   return (
     <BrowserRouter>
-      <div className="App">
-        <Switch>
-          <Route
-            exact
-            path="/pages/LoginPage/LoginPage"
-            component={LoginPage}
-          />
-          <Route
-            exact
-            path="/pages/MainPage/MainPage"
-            render={()=><MainPage data={data}/>}
-            //data={data}
-          />
-        </Switch>
-      </div>
+        <div className="App">
+          <Switch>
+             <Route  path="/LoginPage" component={LoginPage} />
+            <Route
+              path="/"
+              render={() => <MainPage data={data} />}
+              //data={data}
+            /> 
+          </Switch>
+        </div>
     </BrowserRouter>
   );
 }
