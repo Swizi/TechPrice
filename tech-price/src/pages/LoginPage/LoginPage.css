@@ -24,8 +24,6 @@ a{
 .login-block{
   display: flex;
   flex-direction: column;
-  justify-content: center;
-  align-items: center;
   width: 300px;
 }
 
@@ -36,5 +34,11 @@ a{
 }
 
 .bottom-text{
-  color: red;
+  color: #3f51b5;
+  margin: 8px;
+}
+
+.bottom-text:hover{
+  text-decoration: underline;
+  cursor: pointer;
 }

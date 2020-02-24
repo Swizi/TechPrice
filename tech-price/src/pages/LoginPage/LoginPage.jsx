@@ -2,23 +2,23 @@ import React from "react";
 import "./LoginPage.css";
 import HomeIcon from "@material-ui/icons/Home";
 import TextField from "@material-ui/core/TextField";
-import { makeStyles } from '@material-ui/core/styles';
-import Button from '@material-ui/core/Button';
+import { makeStyles } from "@material-ui/core/styles";
+import Button from "@material-ui/core/Button";
 
 const useStyles = makeStyles(theme => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      width: 300,
-    },
+      width: 300
+    }
   },
   margin: {
     margin: theme.spacing(1),
-    width: 150,
+    width: 150
   },
   extendedIcon: {
-    marginRight: theme.spacing(1),
-  },
+    marginRight: theme.spacing(1)
+  }
 }));
 
 export function LoginPage(props) {
@@ -37,11 +37,18 @@ export function LoginPage(props) {
           <TextField id="standard-basic" label="Логин" />
           <TextField id="standard-basic" label="Пароль" />
           <TextField id="standard-basic" label="Номер карты сбербанка" />
-          <Button variant="outlined" size="medium" color="primary" className={classes.margin}>
+          <Button
+            variant="outlined"
+            size="medium"
+            color="primary"
+            className={classes.margin}
+          >
             Зайти
           </Button>
-          <p className="bottom-text">Ещё не зарегистрированы???</p>
         </form>
+        <a href="/RegistrationPage" className="bottom-text">
+          Ещё не зарегистрированы???
+        </a>
       </div>
     </div>
   );

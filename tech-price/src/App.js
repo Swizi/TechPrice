@@ -1,8 +1,10 @@
 import React from "react";
 import "./App.css";
-import {MainPage} from "./pages/MainPage/MainPage";
-import {LoginPage} from "./pages/LoginPage/LoginPage";
+import { MainPage } from "./pages/MainPage/MainPage";
+import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { RegistrationPage } from "./pages/RegistrationPage/RegistrationPage";
+
 const data = [
   {
     url: "https://is.gd/zwDw5r",
@@ -10,7 +12,7 @@ const data = [
   },
   {
     url: "https://is.gd/7ty7or",
-    name: "Мышь компьютерная HuyPizda"
+    name: "Мышь компьютерная AlohaGaming"
   },
   {
     url: "https://is.gd/j0kecm",
@@ -25,16 +27,17 @@ const data = [
 function App() {
   return (
     <BrowserRouter>
-        <div className="App">
-          <Switch>
-             <Route  path="/LoginPage" component={LoginPage} />
-            <Route
-              path="/"
-              render={() => <MainPage data={data} />}
-              //data={data}
-            /> 
-          </Switch>
-        </div>
+      <div className="App">
+        <Switch>
+          <Route path="/LoginPage" component={LoginPage} />
+          <Route exact
+            path="/"
+            render={() => <MainPage data={data} />}
+            //data={data}
+          />
+          <Route path="/RegistrationPage" component={RegistrationPage} />
+        </Switch>
+      </div>
     </BrowserRouter>
   );
 }
