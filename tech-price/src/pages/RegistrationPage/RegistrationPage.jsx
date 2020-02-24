@@ -4,6 +4,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -29,9 +30,14 @@ export function RegistrationPage(props) {
 
   return (
     <div className="page-flexbox">
-      <a href="/">
-        <HomeIcon />
-      </a>
+      <div className="menu-navigation">
+        <a href="/LoginPage">
+          <ArrowBackIcon />
+        </a>
+        <a href="/">
+          <HomeIcon />
+        </a>
+      </div>
       <div className="login-block">
         <form className={classes.root} noValidate autoComplete="off">
           <TextField id="standard-basic" label="Логин" />

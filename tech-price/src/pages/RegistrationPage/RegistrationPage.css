@@ -32,3 +32,10 @@ a{
   flex-direction: column;
   justify-content: center;
 }
+
+.menu-navigation {
+  width: 300px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
