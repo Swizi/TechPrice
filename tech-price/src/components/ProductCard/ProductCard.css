@@ -1,3 +1,12 @@
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+  color: black;
+}
+
 .product-name {
   font-family: Roboto;
   font-style: normal;
@@ -9,16 +18,25 @@
 }
 
 .card-block {
-  width: 250px;
-  height: 250px;
   display: flex;
   align-items: center;
   flex-direction: column;
-  flex-basis: 50%;
   margin-top: 21px;
 }
 
-.image-style{
-    height: 200px;
-    width: 200px;
+.card-link {
+  display: flex;
+  flex-basis: 50%;
+  justify-content: center;
+  align-items: center;
+}
+
+.image-style {
+  height: 200px;
+  width: 200px;
+}
+
+.product-page-image {
+  width: 277px;
+  height: 170px;
 }

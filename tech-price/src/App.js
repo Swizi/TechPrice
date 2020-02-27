@@ -4,23 +4,33 @@ import { MainPage } from "./pages/MainPage/MainPage";
 import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { RegistrationPage } from "./pages/RegistrationPage/RegistrationPage";
+import { ProductPage } from "./pages/ProductPage/ProductPage";
+import { match } from "assert";
 
 const data = [
   {
+    id: 0,
     url: "https://is.gd/zwDw5r",
-    name: "Ноутбук ASUS"
+    name: "Ноутбук ASUS",
+    description: "Зашибенный ноут"
   },
   {
+    id: 1,
     url: "https://is.gd/7ty7or",
-    name: "Мышь компьютерная AlohaGaming"
+    name: "Мышь компьютерная AlohaGaming",
+    description: "Зашибенная мышка"
   },
   {
+    id: 2,
     url: "https://is.gd/j0kecm",
-    name: "Наушники Xiaomi redmi airdots"
+    name: "Наушники Xiaomi redmi airdots",
+    description: "Зашибенные наушники"
   },
   {
+    id: 3,
     url: "https://is.gd/mkEyDx",
-    name: "Видеокарта MSI nVidia GeForce GTX 1650"
+    name: "Видеокарта MSI nVidia GeForce GTX 1650",
+    description: "Зашибенная видюха"
   }
 ];
 
@@ -30,12 +40,17 @@ function App() {
       <div className="App">
         <Switch>
           <Route path="/LoginPage" component={LoginPage} />
-          <Route exact
+          <Route
+            exact
             path="/"
             render={() => <MainPage data={data} />}
             //data={data}
           />
-          <Route path="/RegistrationPage" component={RegistrationPage} />
+          <Route exact path="/RegistrationPage" component={RegistrationPage} />
+          <Route exact
+            path="/ProductPage/:id"
+            render={() => <ProductPage data={data} />}
+          /> 
         </Switch>
       </div>
     </BrowserRouter>
