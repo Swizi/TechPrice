@@ -6,6 +6,9 @@ import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { variableDeclarator } from "@babel/types";
+import ProductPageInfo from "../../components/ProductPageInfo/ProductPageInfo";
+import ProductPageReviews from "../../components/ProductPageReviews/ProductPageReviews";
+import ProductPageShops from "../../components/ProductPageShops/ProductPageShops";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -50,21 +53,10 @@ export function ProductPage(props) {
           <h1 className="product-page-header">{props.data[index].name}</h1>
         </div>
         <hr className="hr" />
-        {/* <div className="product-page-info">
-          <h3 className="info-header">Информация о товаре</h3>
-          <p className="info-text">
-            Сайт рыбатекст поможет дизайнеру, верстальщику, вебмастеру
-            сгенерировать несколько абзацев более менее осмысленного текста рыбы
-            на русском языке, а начинающему оратору отточить навык публичных
-            выступлений
-          </p>
-        </div>
+        <ProductPageInfo data={props.data[index]} />
         <hr className="hr" />
-        <div className="product-page-reviews">
-          <h3 className="reviews-header">Отзывы</h3>
-          <div className="product-page-user-reviews">
-          </div>
-        </div> ФУЛЛ ЗАМЕНА НА КОМПОНЕНТЫ*/}
+        <ProductPageReviews data={props.data[index]} />
+        <ProductPageShops data={props.data[index]} />
       </div>
     </div>
   );

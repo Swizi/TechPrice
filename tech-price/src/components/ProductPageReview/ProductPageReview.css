@@ -1,0 +1,40 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.product-user-review-block {
+  margin-bottom: 30px;
+  display: flex;
+  flex-direction: column;
+  background-color: #c9ffd9;
+  height: 140px;
+  width: 170px;
+}
+
+.product-user {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.product-user-image {
+  height: 20px;
+  width: 20px;
+  border-radius: 10px;
+}
+
+.product-user-name {
+  font-size: 10px;
+  line-height: 12px;
+}
+
+.product-user-review-text {
+  font-size: 10px;
+  line-height: 12px;
+}
+

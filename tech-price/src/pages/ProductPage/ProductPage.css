@@ -42,32 +42,3 @@
   align-items: center;
   flex-direction: column;
 }
-
-.product-page-info {
-  display: flex;
-  flex-direction: column;
-}
-
-.info-header {
-  font-size: 20px;
-  line-height: 23px;
-  margin: 19px;
-}
-
-.info-text {
-  font-size: 12px;
-  line-height: 14px;
-  margin: 19px;
-}
-
-.product-page-reviews{
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-}
-
-.reviews-header {
-  font-size: 20px;
-  line-height: 23px;
-  margin: 19px;
-}
