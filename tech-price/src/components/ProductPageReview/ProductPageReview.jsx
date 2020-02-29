@@ -25,7 +25,7 @@ export default function ProductPageReview(props) {
         />
         <span className="product-user-name">{props.data.name}</span>
       </div>
-      <div className="product-user-review-text">{props.data.review}</div>
+      <span className="product-user-review-text">{props.data.review}</span>
     </div>
   );
 }

@@ -20,6 +20,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin: 10px;
 }
 
 .product-user-image {
@@ -29,12 +30,14 @@
 }
 
 .product-user-name {
-  font-size: 10px;
+  font-size: 16px;
   line-height: 12px;
+  margin-left: 10px;
 }
 
 .product-user-review-text {
-  font-size: 10px;
-  line-height: 12px;
+  font-size: 14px;
+  line-height: 20px;
+  margin: 10px;
 }
 

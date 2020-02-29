@@ -56,6 +56,20 @@ const data = [
         name: "Denis Bosyi",
         review: "Выглядят стильно, но в ушах держатся довольно скверно.",
         isLiked: false
+      },
+      {
+        id: 2,
+        url: "https://is.gd/8AzG0h",
+        name: "Egor Komaroff",
+        review: "Всё понравилось, рекомендую",
+        isLiked: true
+      },
+      {
+        id: 3,
+        url: "https://is.gd/BQe4UR",
+        name: "Denis Bosyi",
+        review: "Выглядят стильно, но в ушах держатся довольно скверно.",
+        isLiked: false
       }
     ]
   },
@@ -89,10 +103,11 @@ function App() {
             //data={data}
           />
           <Route exact path="/RegistrationPage" component={RegistrationPage} />
-          <Route exact
+          <Route
+            exact
             path="/ProductPage/:id"
             render={() => <ProductPage data={data} />}
-          /> 
+          />
         </Switch>
       </div>
     </BrowserRouter>
