@@ -1,11 +1,8 @@
 import React from "react";
 import "./ProductPage.css";
 import HomeIcon from "@material-ui/icons/Home";
-import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
-import Button from "@material-ui/core/Button";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import { variableDeclarator } from "@babel/types";
 import ProductPageInfo from "../../components/ProductPageInfo/ProductPageInfo";
 import ProductPageReviews from "../../components/ProductPageReviews/ProductPageReviews";
 import ProductPageShops from "../../components/ProductPageShops/ProductPageShops";

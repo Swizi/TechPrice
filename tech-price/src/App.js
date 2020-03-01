@@ -20,6 +20,32 @@ const data = [
         review: "Всё понравилось, рекомендую",
         isLiked: true
       }
+    ],
+    shops: [
+      {
+        id: 0,
+        name: "TehVolt",
+        price: 14599,
+        rating: 4.7,
+        reviews: 150,
+        link: "https://www.dns-shop.ru/"
+      },
+      {
+        id: 1,
+        name: "DNS",
+        price: 14799,
+        rating: 4.5,
+        reviews: 79,
+        link: "https://www.dns-shop.ru/"
+      },
+      {
+        id: 2,
+        name: "Citilink",
+        price: 14999,
+        rating: 4.1,
+        reviews: 45,
+        link: "https://www.dns-shop.ru/"
+      }
     ]
   },
   {
@@ -34,6 +60,32 @@ const data = [
         name: "Egor Komaroff",
         review: "Всё понравилось, рекомендую",
         isLiked: true
+      }
+    ],
+    shops: [
+      {
+        id: 0,
+        name: "TehVolt",
+        price: 14599,
+        rating: 4.7,
+        reviews: 150,
+        link: "https://www.dns-shop.ru/"
+      },
+      {
+        id: 1,
+        name: "DNS",
+        price: 14799,
+        rating: 4.5,
+        reviews: 79,
+        link: "https://www.dns-shop.ru/"
+      },
+      {
+        id: 2,
+        name: "Citilink",
+        price: 14999,
+        rating: 4.1,
+        reviews: 45,
+        link: "https://www.dns-shop.ru/"
       }
     ]
   },
@@ -71,6 +123,32 @@ const data = [
         review: "Выглядят стильно, но в ушах держатся довольно скверно.",
         isLiked: false
       }
+    ],
+    shops: [
+      {
+        id: 0,
+        name: "TehVolt",
+        price: 14599,
+        rating: 4.7,
+        reviews: 150,
+        link: "https://www.dns-shop.ru/"
+      },
+      {
+        id: 1,
+        name: "DNS",
+        price: 14799,
+        rating: 4.5,
+        reviews: 79,
+        link: "https://www.dns-shop.ru/"
+      },
+      {
+        id: 2,
+        name: "Citilink",
+        price: 14999,
+        rating: 4.1,
+        reviews: 45,
+        link: "https://www.dns-shop.ru/"
+      }
     ]
   },
   {
@@ -85,6 +163,32 @@ const data = [
         name: "Egor Komaroff",
         review: "Всё понравилось, рекомендую",
         isLiked: true
+      }
+    ],
+    shops: [
+      {
+        id: 0,
+        name: "TehVolt",
+        price: 14599,
+        rating: 4.7,
+        reviews: 150,
+        link: "https://www.dns-shop.ru/"
+      },
+      {
+        id: 1,
+        name: "DNS",
+        price: 14799,
+        rating: 4.5,
+        reviews: 79,
+        link: "https://www.dns-shop.ru/"
+      },
+      {
+        id: 2,
+        name: "Citilink",
+        price: 14999,
+        rating: 4.1,
+        reviews: 45,
+        link: "https://www.dns-shop.ru/"
       }
     ]
   }

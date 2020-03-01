@@ -13,12 +13,13 @@
   flex-direction: column;
   background-color: #c9ffd9;
   height: 140px;
-  width: 170px;
+  width: 100%;
 }
 
 .product-user {
   display: flex;
   flex-direction: row;
+  align-items: center;
   flex-wrap: wrap;
   margin: 10px;
 }
@@ -38,6 +39,10 @@
 .product-user-review-text {
   font-size: 14px;
   line-height: 20px;
-  margin: 10px;
+  margin: 0 5px 5px 10px;
+}
+
+.markedClass{
+  background:#FFA1A1;
 }
 

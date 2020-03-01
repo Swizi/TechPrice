@@ -1,7 +1,6 @@
 import React from "react";
 import "./ProductCard.css";
-import { BrowserRouter, Route, Switch, Link } from "react-router-dom";
-import { ProductPage } from "../.././pages/ProductPage/ProductPage";
+import {Link } from "react-router-dom";
 
 export default function ProductCard(props) {
   console.log(props.data);

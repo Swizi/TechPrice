@@ -10,9 +10,7 @@
 .product-page-reviews {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
   width: 90%;
-  
 }
 
 .reviews-header {
