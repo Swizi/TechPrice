@@ -5,6 +5,9 @@ import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { RegistrationPage } from "./pages/RegistrationPage/RegistrationPage";
 import { ProductPage } from "./pages/ProductPage/ProductPage";
+// import { Button, View } from 'react-native';
+// import { createDrawerNavigator } from "@react-navigation/drawer";
+// import { NavigationContainer } from "@react-navigation/native";
 
 const data = [
   {
@@ -194,9 +197,17 @@ const data = [
   }
 ];
 
+// const Drawer = createDrawerNavigator();
+
 function App() {
   return (
     <BrowserRouter>
+      {/* <NavigationContainer>
+        <Drawer.Navigator initialRouteName="MainPage">
+          <Drawer.Screen name="MainPage" component={MainPage} />
+          <Drawer.Screen name="LoginPage" component={LoginPage} />
+        </Drawer.Navigator>
+      </NavigationContainer> */}
       <div className="App">
         <Switch>
           <Route path="/LoginPage" component={LoginPage} />

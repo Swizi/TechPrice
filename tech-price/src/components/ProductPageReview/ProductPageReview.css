@@ -14,6 +14,8 @@
   background-color: #c9ffd9;
   height: 140px;
   width: 100%;
+  /* От меня */
+  border-radius: 30px;
 }
 
 .product-user {
