@@ -10,6 +10,8 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
+import { makeStyles } from "@material-ui/core/styles";
+
 // import { Router } from "react-router-dom"
 // import {createBrowserHistory} from 'history'
 
@@ -46,6 +48,7 @@ export function MainPage(props) {
   // const headerTextStyle = {
   //   color: "red"
   // }
+
   var city = "Йошкар-Ола";
 
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -65,10 +68,11 @@ export function MainPage(props) {
   return (
     <div className="page-flexbox">
       <div className="flex-button">
-        {/* <CustomButton />  */}
+        {/* <Button onClick={toggleDrawer('left', true)}>Open Left</Button> */}
+        {/* <CustomButton /> 
         <a href="/LoginPage">
           <LoginButton />
-        </a>
+        </a> */}
       </div>
       <div className="flex-box">
         <span className="header-text"> TechPrice </span>

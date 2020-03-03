@@ -6,6 +6,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ProductPageInfo from "../../components/ProductPageInfo/ProductPageInfo";
 import ProductPageReviews from "../../components/ProductPageReviews/ProductPageReviews";
 import ProductPageShops from "../../components/ProductPageShops/ProductPageShops";
+import Divider from "@material-ui/core/Divider";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -40,7 +41,7 @@ export function ProductPage(props) {
         </a>
       </div>
       <div className="product-page">
-        <hr className="hr" />
+        <Divider />
         <div className="product-description">
           <img
             className="product-page-image"
@@ -49,9 +50,9 @@ export function ProductPage(props) {
           />
           <h1 className="product-page-header">{props.data[index].name}</h1>
         </div>
-        <hr className="hr" />
+        <Divider />
         <ProductPageInfo data={props.data[index]} />
-        <hr className="hr" />
+        <Divider />
         <ProductPageReviews data={props.data[index]} />
         <ProductPageShops data={props.data[index]} />
       </div>

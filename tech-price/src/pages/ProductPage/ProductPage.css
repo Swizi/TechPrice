@@ -42,3 +42,7 @@
   align-items: center;
   flex-direction: column;
 }
+
+.MuiDivider-root {
+  width: 100% !important;
+}

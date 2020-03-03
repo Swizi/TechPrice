@@ -1,6 +1,7 @@
 import React from "react";
 import "./ProductPageShops.css";
 import ShopCard from "../ShopCard/ShopCard";
+import Divider from "@material-ui/core/Divider";
 
 export default function ProductPageShops(props) {
   return (
@@ -10,7 +11,7 @@ export default function ProductPageShops(props) {
         {props.data.shops.map(function(item, index) {
           return (
             <React.Fragment key={index}>
-              <hr className="hr" />
+              <Divider />
               <ShopCard data={item} />
             </React.Fragment>
           );

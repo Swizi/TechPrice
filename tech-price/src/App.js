@@ -5,9 +5,34 @@ import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { RegistrationPage } from "./pages/RegistrationPage/RegistrationPage";
 import { ProductPage } from "./pages/ProductPage/ProductPage";
+
+import { makeStyles } from "@material-ui/core/styles";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
+import MenuIcon from "@material-ui/icons/Menu";
+import IconButton from "@material-ui/core/IconButton";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import InboxIcon from "@material-ui/icons/MoveToInbox";
+import MailIcon from "@material-ui/icons/Mail";
+import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
+import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 // import { Button, View } from 'react-native';
 // import { createDrawerNavigator } from "@react-navigation/drawer";
 // import { NavigationContainer } from "@react-navigation/native";
+
+const useStyles = makeStyles({
+  list: {
+    width: 200
+  },
+  fullList: {
+    width: "auto"
+  }
+});
 
 const data = [
   {
@@ -200,6 +225,59 @@ const data = [
 // const Drawer = createDrawerNavigator();
 
 function App() {
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    left: false
+  });
+
+  const toggleDrawer = (side, open) => event => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [side]: open });
+  };
+
+  const sideList = side => (
+    <div
+      className={classes.list}
+      role="presentation"
+      onClick={toggleDrawer(side, false)}
+      onKeyDown={toggleDrawer(side, false)}
+    >
+      <List>
+        {["Войти", "Акции", "Служба поддержки"].map((text, index) => (
+          <ListItem button key={text}>
+            <ListItemIcon>
+              {index === 0 && <AccountBoxIcon />}
+              {index === 1 && <MonetizationOnIcon />}
+              {index === 2 && <ContactSupportIcon />}
+            </ListItemIcon>
+            <ListItemText primary={text} />
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {/* <ListItem>
+          <ListItemIcon button key={"Выйти"}>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <ListItemText primary="Выйти" />
+        </ListItem> */}
+        <ListItem button>
+          <ListItemIcon>
+            <ExitToAppIcon />
+          </ListItemIcon>
+          <ListItemText primary="Выйти" />
+        </ListItem>
+      </List>
+    </div>
+  );
   return (
     <BrowserRouter>
       {/* <NavigationContainer>
@@ -209,6 +287,22 @@ function App() {
         </Drawer.Navigator>
       </NavigationContainer> */}
       <div className="App">
+        <IconButton
+          onClick={toggleDrawer("left", true)}
+          edge="start"
+          className={classes.menuButton}
+          color="inherit"
+          aria-label="menu"
+        >
+          <MenuIcon />
+        </IconButton>
+        <SwipeableDrawer
+          open={state.left}
+          onClose={toggleDrawer("left", false)}
+          onOpen={toggleDrawer("left", true)}
+        >
+          {sideList("left")}
+        </SwipeableDrawer>
         <Switch>
           <Route path="/LoginPage" component={LoginPage} />
           <Route

@@ -18,7 +18,6 @@ a{
   align-items: center;
   flex-direction: column;
   width: 100%;
-  margin-top: 30px;
 }
 
 .login-block{
@@ -38,4 +37,5 @@ a{
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  margin-bottom: 20px;
 }
