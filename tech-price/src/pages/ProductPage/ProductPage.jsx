@@ -7,6 +7,7 @@ import ProductPageInfo from "../../components/ProductPageInfo/ProductPageInfo";
 import ProductPageReviews from "../../components/ProductPageReviews/ProductPageReviews";
 import ProductPageShops from "../../components/ProductPageShops/ProductPageShops";
 import Divider from "@material-ui/core/Divider";
+import Carousel from "nuka-carousel";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -36,18 +37,29 @@ export function ProductPage(props) {
         <a href="/">
           <ArrowBackIcon />
         </a>
-        <a href="/">
-          <HomeIcon />
-        </a>
       </div>
       <div className="product-page">
         <Divider />
         <div className="product-description">
-          <img
-            className="product-page-image"
-            src={props.data[index].url}
-            alt={props.data[index].name}
-          />
+          <Carousel
+            slidesToShow={1}
+            cellSpacing={10}
+            dragging={true}
+            withoutControls={true}
+            pauseOnHover={true}
+            className="product-images-carousel"
+          >
+            {props.data[index].urls.map(function(item, index) {
+              return (
+                <img
+                  key={index}
+                  className="product-page-image"
+                  src={item}
+                  alt={props.data[index].name}
+                />
+              );
+            })}
+          </Carousel>
           <h1 className="product-page-header">{props.data[index].name}</h1>
         </div>
         <Divider />

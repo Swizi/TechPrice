@@ -24,7 +24,7 @@
 
 .product-page-image {
   height: 200px;
-  width: 200px;
+  width: 300px;
   margin-top: 15px;
 }
 
@@ -41,8 +41,19 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  width: 80%;
 }
 
 .MuiDivider-root {
   width: 100% !important;
 }
+
+.product-images-carousel{
+  height: 220px !important;
+  margin: 0 0 20px 0;
+}
+
+/* .slider-slide, .slider-frame, .slider-list, .slider{
+  height: 220px !important;
+} */
+

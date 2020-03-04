@@ -34,10 +34,7 @@ export function RegistrationPage(props) {
         <a href="/LoginPage">
           <ArrowBackIcon />
         </a>
-        <a href="/">
-          <HomeIcon />
-        </a>
-      </div>
+      </div> 
       <div className="login-block">
         <form className={classes.root} noValidate autoComplete="off">
           <TextField id="standard-basic" label="Логин" />

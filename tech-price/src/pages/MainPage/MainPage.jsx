@@ -11,6 +11,18 @@ import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 
 import { makeStyles } from "@material-ui/core/styles";
+import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
+import List from "@material-ui/core/List";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import Divider from "@material-ui/core/Divider";
+import MenuIcon from "@material-ui/icons/Menu";
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import ExitToAppIcon from "@material-ui/icons/ExitToApp";
+import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
+import ContactSupportIcon from "@material-ui/icons/ContactSupport";
+import LocationCityIcon from "@material-ui/icons/LocationCity";
 
 // import { Router } from "react-router-dom"
 // import {createBrowserHistory} from 'history'
@@ -45,26 +57,26 @@ const options = [
 const ITEM_HEIGHT = 48;
 
 export function MainPage(props) {
+  console.log(props);
   // const headerTextStyle = {
   //   color: "red"
   // }
 
-  var city = "Йошкар-Ола";
+  // var city = "Йошкар-Ола";
 
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const open = Boolean(anchorEl);
+  // const [anchorEl, setAnchorEl] = React.useState(null);
+  // const open = Boolean(anchorEl);
 
-  const handleClick = event => {
-    setAnchorEl(event.currentTarget);
-  };
+  // const handleClick = event => {
+  //   setAnchorEl(event.currentTarget);
+  // };
 
-  const handleClose = event => {
-    setAnchorEl(null);
-    console.log(event.currentTarget.textContent);
-    city = event.currentTarget.textContent;
-    // Меняется список товаров на главной странице + весь поиск идёт только по этому городу
-  };
-
+  // const handleClose = event => {
+  //   setAnchorEl(null);
+  //   console.log(event.currentTarget.textContent);
+  //   city = event.currentTarget.textContent;
+  //   // Меняется список товаров на главной странице + весь поиск идёт только по этому городу
+  // };
   return (
     <div className="page-flexbox">
       <div className="flex-button">
@@ -73,10 +85,19 @@ export function MainPage(props) {
         <a href="/LoginPage">
           <LoginButton />
         </a> */}
+        <IconButton
+          onClick={props.toggleDrawer("left", true)}
+          edge="start"
+          className={props.classes.menuButton}
+          color="inherit"
+          aria-label="menu"
+        >
+          <MenuIcon />
+        </IconButton>
       </div>
       <div className="flex-box">
         <span className="header-text"> TechPrice </span>
-        <IconButton
+        {/* <IconButton
           aria-label="more"
           aria-controls="long-menu"
           aria-haspopup="true"
@@ -106,7 +127,7 @@ export function MainPage(props) {
               {option}
             </MenuItem>
           ))}
-        </Menu>
+        </Menu> */}
       </div>
       <TextField
         className="text-field"

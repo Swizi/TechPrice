@@ -1,10 +1,12 @@
 import React from "react";
 import "./App.css";
+import { Link } from "react-router-dom";
 import { MainPage } from "./pages/MainPage/MainPage";
 import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { RegistrationPage } from "./pages/RegistrationPage/RegistrationPage";
 import { ProductPage } from "./pages/ProductPage/ProductPage";
+import { UserCityPage } from "./pages/UserCityPage/UserCityPage";
 
 import { makeStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
@@ -17,10 +19,10 @@ import MenuIcon from "@material-ui/icons/Menu";
 import IconButton from "@material-ui/core/IconButton";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import InboxIcon from "@material-ui/icons/MoveToInbox";
-import MailIcon from "@material-ui/icons/Mail";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
+import LocationCityIcon from "@material-ui/icons/LocationCity";
+import HomeIcon from "@material-ui/icons/Home";
 // import { Button, View } from 'react-native';
 // import { createDrawerNavigator } from "@react-navigation/drawer";
 // import { NavigationContainer } from "@react-navigation/native";
@@ -34,10 +36,12 @@ const useStyles = makeStyles({
   }
 });
 
+var city = "Йошкар-Ола";
+
 const data = [
   {
     id: 0,
-    url: "https://is.gd/zwDw5r",
+    urls: ["https://is.gd/zwDw5r", "https://is.gd/pBN9Ss"],
     name: "Ноутбук ASUS",
     description: "Зашибенный ноут",
     reviews: [
@@ -78,7 +82,7 @@ const data = [
   },
   {
     id: 1,
-    url: "https://is.gd/7ty7or",
+    urls: ["https://is.gd/7ty7or", "https://is.gd/pBN9Ss"],
     name: "Мышь компьютерная AlohaGaming",
     description: "Зашибенная мышка",
     reviews: [
@@ -119,7 +123,7 @@ const data = [
   },
   {
     id: 2,
-    url: "https://is.gd/j0kecm",
+    urls: ["https://is.gd/j0kecm", "https://is.gd/pBN9Ss"],
     name: "Наушники Xiaomi redmi airdots",
     description: "Зашибенные наушники",
     reviews: [
@@ -181,7 +185,7 @@ const data = [
   },
   {
     id: 3,
-    url: "https://is.gd/mkEyDx",
+    urls: ["https://is.gd/mkEyDx", "https://is.gd/pBN9Ss"],
     name: "Видеокарта MSI nVidia GeForce GTX 1650",
     description: "Зашибенная видюха",
     reviews: [
@@ -244,22 +248,33 @@ function App() {
 
   const sideList = side => (
     <div
-      className={classes.list}
+      className={classes.fullList}
       role="presentation"
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-        {["Войти", "Акции", "Служба поддержки"].map((text, index) => (
-          <ListItem button key={text}>
-            <ListItemIcon>
-              {index === 0 && <AccountBoxIcon />}
-              {index === 1 && <MonetizationOnIcon />}
-              {index === 2 && <ContactSupportIcon />}
-            </ListItemIcon>
-            <ListItemText primary={text} />
-          </ListItem>
-        ))}
+        {["Домашняя страница", "Войти", "Акции", "Служба поддержки"].map(
+          (text, index) => (
+            <Link
+              key={index}
+              to={`${(index === 0 && "/") ||
+                (index === 1 && "/LoginPage") ||
+                (index === 2 && "/Sales") ||
+                (index === 3 && "/Contacts")}`}
+            >
+              <ListItem button key={text}>
+                <ListItemIcon>
+                  {index === 0 && <HomeIcon />}
+                  {index === 1 && <AccountBoxIcon />}
+                  {index === 2 && <MonetizationOnIcon />}
+                  {index === 3 && <ContactSupportIcon />}
+                </ListItemIcon>
+                <ListItemText primary={text} />
+              </ListItem>
+            </Link>
+          )
+        )}
       </List>
       <Divider />
       <List>
@@ -269,12 +284,20 @@ function App() {
           </ListItemIcon>
           <ListItemText primary="Выйти" />
         </ListItem> */}
-        <ListItem button>
-          <ListItemIcon>
-            <ExitToAppIcon />
-          </ListItemIcon>
-          <ListItemText primary="Выйти" />
-        </ListItem>
+        {["Выйти", `Город: ${city}`].map((text, index) => (
+          <Link
+            key={index}
+            to={`${(index === 1 && "/UserCityPage")}`}
+          >
+            <ListItem button key={text}>
+              <ListItemIcon>
+                {index === 0 && <ExitToAppIcon />}
+                {index === 1 && <LocationCityIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} />
+            </ListItem>
+          </Link>
+        ))}
       </List>
     </div>
   );
@@ -287,15 +310,6 @@ function App() {
         </Drawer.Navigator>
       </NavigationContainer> */}
       <div className="App">
-        <IconButton
-          onClick={toggleDrawer("left", true)}
-          edge="start"
-          className={classes.menuButton}
-          color="inherit"
-          aria-label="menu"
-        >
-          <MenuIcon />
-        </IconButton>
         <SwipeableDrawer
           open={state.left}
           onClose={toggleDrawer("left", false)}
@@ -308,7 +322,13 @@ function App() {
           <Route
             exact
             path="/"
-            render={() => <MainPage data={data} />}
+            render={() => (
+              <MainPage
+                toggleDrawer={toggleDrawer}
+                data={data}
+                classes={classes}
+              />
+            )}
             //data={data}
           />
           <Route exact path="/RegistrationPage" component={RegistrationPage} />
@@ -316,6 +336,11 @@ function App() {
             exact
             path="/ProductPage/:id"
             render={() => <ProductPage data={data} />}
+          />
+          <Route
+            exact
+            path="/UserCityPage"
+            render={() => <UserCityPage data={data} />}
           />
         </Switch>
       </div>

@@ -1,10 +1,11 @@
 import React from "react";
-import "./LoginPage.css";
 import HomeIcon from "@material-ui/icons/Home";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import SearchIcon from "@material-ui/icons/Search";
+import InputAdornment from "@material-ui/core/InputAdornment";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -15,14 +16,14 @@ const useStyles = makeStyles(theme => ({
   },
   margin: {
     margin: theme.spacing(1),
-    width: 150
+    width: 200
   },
   extendedIcon: {
     marginRight: theme.spacing(1)
   }
 }));
 
-export function LoginPage(props) {
+export function UserCityPage(props) {
   // const headerTextStyle = {
   //   color: "red"
   // }
@@ -37,21 +38,20 @@ export function LoginPage(props) {
       </div>
       <div className="login-block">
         <form className={classes.root} noValidate autoComplete="off">
-          <TextField id="standard-basic" label="Логин" />
-          <TextField id="standard-basic" label="Пароль" />
-          <TextField id="standard-basic" label="Номер карты сбербанка" />
-          <Button
+          <TextField
+            className="text-field"
+            label="Искать город"
             variant="outlined"
-            size="medium"
-            color="primary"
-            className={classes.margin}
-          >
-            Зайти
-          </Button>
+            InputProps={{
+              // className: 'text-field',
+              startAdornment: (
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              )
+            }}
+          />
         </form>
-        <a href="/RegistrationPage" className="bottom-text">
-          Ещё не зарегистрированы???
-        </a>
       </div>
     </div>
   );
