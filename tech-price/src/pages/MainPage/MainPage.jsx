@@ -9,6 +9,7 @@ import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
+import LocationOnIcon from '@material-ui/icons/LocationOn';
 
 import { makeStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
@@ -79,57 +80,7 @@ export function MainPage(props) {
   // };
   return (
     <div className="page-flexbox">
-      <div className="flex-button">
-        {/* <Button onClick={toggleDrawer('left', true)}>Open Left</Button> */}
-        {/* <CustomButton /> 
-        <a href="/LoginPage">
-          <LoginButton />
-        </a> */}
-        <IconButton
-          onClick={props.toggleDrawer("left", true)}
-          edge="start"
-          className={props.classes.menuButton}
-          color="inherit"
-          aria-label="menu"
-        >
-          <MenuIcon />
-        </IconButton>
-      </div>
-      <div className="flex-box">
-        <span className="header-text"> TechPrice </span>
-        {/* <IconButton
-          aria-label="more"
-          aria-controls="long-menu"
-          aria-haspopup="true"
-          onClick={handleClick}
-        >
-          <MoreVertIcon />
-        </IconButton>
-        <Menu
-          id="long-menu"
-          anchorEl={anchorEl}
-          keepMounted
-          open={open}
-          onClose={handleClose}
-          PaperProps={{
-            style: {
-              maxHeight: ITEM_HEIGHT * 4.5,
-              width: 200
-            }
-          }}
-        >
-          {options.map(option => (
-            <MenuItem
-              key={option}
-              selected={option === "Йошкар-Ола"}
-              onClick={handleClose}
-            >
-              {option}
-            </MenuItem>
-          ))}
-        </Menu> */}
-      </div>
-      <TextField
+      {/* <TextField
         className="text-field"
         label="Искать товары"
         variant="outlined"
@@ -141,11 +92,17 @@ export function MainPage(props) {
             </InputAdornment>
           )
         }}
-      />
+      /> */}
       <div className="products">
-        <p className="items-header">Наиболее просматриваемые товары:</p>
+        <div className="items-header-block">
+          <p className="items-header">Каталог товаров</p>
+          <div className="city-block">
+            <LocationOnIcon className="location-on-icon"/>
+            <span className="city-text">Йошкар-Ола</span>
+          </div>
+        </div>
         <div className="product-cards">
-          {props.data.map(function(item, index) {
+          {props.catalog.map(function(item, index) {
             return <ProductCard key={index} data={item} />;
           })}
         </div>

@@ -7,6 +7,9 @@ import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { RegistrationPage } from "./pages/RegistrationPage/RegistrationPage";
 import { ProductPage } from "./pages/ProductPage/ProductPage";
 import { UserCityPage } from "./pages/UserCityPage/UserCityPage";
+import SearchIcon from "@material-ui/icons/Search";
+import TextField from "@material-ui/core/TextField";
+import { SalesPage } from "./pages/SalesPage/SalesPage"
 
 import { makeStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
@@ -30,13 +33,31 @@ import HomeIcon from "@material-ui/icons/Home";
 const useStyles = makeStyles({
   list: {
     width: 200
-  },
-  fullList: {
-    width: "auto"
   }
 });
 
 var city = "Йошкар-Ола";
+
+const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+const catalog = [
+  {
+    name: "Бытовая техника",
+    url: "https://is.gd/3ZM9lY"
+  },
+  {
+    name: "Ноутбуки и аксессуары",
+    url: "https://is.gd/7KJAEw"
+  },
+  {
+    name: "Телефоны",
+    url: "https://is.gd/Tdmnc1"
+  },
+  {
+    name: "Периферийные устройства",
+    url: "https://is.gd/OEquVx"
+  }
+]
 
 const data = [
   {
@@ -234,6 +255,7 @@ function App() {
     left: false
   });
 
+
   const toggleDrawer = (side, open) => event => {
     if (
       event &&
@@ -260,7 +282,7 @@ function App() {
               key={index}
               to={`${(index === 0 && "/") ||
                 (index === 1 && "/LoginPage") ||
-                (index === 2 && "/Sales") ||
+                (index === 2 && "/SalesPage") ||
                 (index === 3 && "/Contacts")}`}
             >
               <ListItem button key={text}>
@@ -285,10 +307,7 @@ function App() {
           <ListItemText primary="Выйти" />
         </ListItem> */}
         {["Выйти", `Город: ${city}`].map((text, index) => (
-          <Link
-            key={index}
-            to={`${(index === 1 && "/UserCityPage")}`}
-          >
+          <Link key={index} to={`${index === 1 && "/UserCityPage"}`}>
             <ListItem button key={text}>
               <ListItemIcon>
                 {index === 0 && <ExitToAppIcon />}
@@ -309,8 +328,28 @@ function App() {
           <Drawer.Screen name="LoginPage" component={LoginPage} />
         </Drawer.Navigator>
       </NavigationContainer> */}
+      <div className="navigation-menu">
+        <div className="menu-wrapper">
+          <IconButton
+            onClick={toggleDrawer("left", true)}
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
+            <MenuIcon />
+          </IconButton>
+          <span className="page-header">TechPrice</span>
+          <form className={classes.root} noValidate autoComplete="off" className="search-form">
+            <TextField id="standard-basic" label="Поиск" />
+            <SearchIcon className="search-icon" />
+          </form>
+        </div>
+      </div>
       <div className="App">
         <SwipeableDrawer
+          disableBackdropTransition={!iOS}
+          disableDiscovery={iOS}
           open={state.left}
           onClose={toggleDrawer("left", false)}
           onOpen={toggleDrawer("left", true)}
@@ -324,6 +363,7 @@ function App() {
             path="/"
             render={() => (
               <MainPage
+                catalog={catalog}
                 toggleDrawer={toggleDrawer}
                 data={data}
                 classes={classes}
@@ -341,6 +381,11 @@ function App() {
             exact
             path="/UserCityPage"
             render={() => <UserCityPage data={data} />}
+          />
+          <Route
+            exact
+            path="/SalesPage"
+            render={() => <SalesPage data={data} />}
           />
         </Switch>
       </div>

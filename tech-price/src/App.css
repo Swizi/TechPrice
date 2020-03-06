@@ -1,4 +1,42 @@
-.App{
+.App {
   width: 90%;
   margin: auto;
 }
+
+.navigation-menu {
+  height: 56px;
+  background-color: #ffd600;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.page-header {
+  font-size: 24px;
+  line-height: 28px;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+.menu-wrapper {
+  width: 90%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#standard-basic{
+  width: 100px;
+}
+
+.search-form{
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  height: 28px;
+}
+
+.MuiInputLabel-shrink{
+  display: none !important;
+} 

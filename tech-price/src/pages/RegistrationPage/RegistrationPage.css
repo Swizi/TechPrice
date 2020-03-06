@@ -23,7 +23,7 @@ a{
 .login-block{
   display: flex;
   flex-direction: column;
-  width: 300px;
+  width: 100%;
 }
 
 .form{
@@ -33,7 +33,7 @@ a{
 }
 
 .menu-navigation {
-  width: 300px;
+  width: 100%;
   display: flex;
   flex-direction: row;
   justify-content: space-between;

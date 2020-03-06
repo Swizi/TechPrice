@@ -9,7 +9,7 @@ export default function ShopCard(props) {
   return (
     <div className="shop-card">
       <div className="shop-description">
-        <span className="price-text">{props.data.price}</span>
+        <span className="price-text">{props.data.price} рублей</span>
         <span className="price-name">{props.data.name}</span>
         <div className="shop-rating-block">
           <StarBorderIcon className="star-icon" />
