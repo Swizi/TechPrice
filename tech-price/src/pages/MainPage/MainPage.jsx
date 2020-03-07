@@ -5,6 +5,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
 import "./MainPage.css";
+import ItemsCard from "../../components/ItemsCard/ItemsCard"
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
@@ -103,7 +104,7 @@ export function MainPage(props) {
         </div>
         <div className="product-cards">
           {props.catalog.map(function(item, index) {
-            return <ProductCard key={index} data={item} />;
+            return <ItemsCard key={index} data={item} />;
           })}
         </div>
       </div>

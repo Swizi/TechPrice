@@ -10,6 +10,7 @@ import { UserCityPage } from "./pages/UserCityPage/UserCityPage";
 import SearchIcon from "@material-ui/icons/Search";
 import TextField from "@material-ui/core/TextField";
 import { SalesPage } from "./pages/SalesPage/SalesPage"
+import { RedirectPage } from "./pages/RedirectPage/RedirectPage"
 
 import { makeStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
@@ -42,20 +43,72 @@ const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 const catalog = [
   {
+    id: 1,
     name: "Бытовая техника",
-    url: "https://is.gd/3ZM9lY"
+    url: "https://is.gd/3ZM9lY",
+    items: [
+      "Посудомоечные машины",
+      "Электропечи",
+      "Холодильники",
+      "Морозилки",
+      "Микроволновые печи",
+      "Егорики",
+      "Газовые плиты и электроплиты",
+      "Стиральные машины",
+      "Денисики",
+      "Ярички"
+    ]
   },
   {
+    id: 2,
     name: "Ноутбуки и аксессуары",
-    url: "https://is.gd/7KJAEw"
+    url: "https://is.gd/7KJAEw",
+    items: [
+      "Посудомоечные машины",
+      "Электропечи",
+      "Холодильники",
+      "Морозилки",
+      "Микроволновые печи",
+      "Егорики",
+      "Газовые плиты и электроплиты",
+      "Стиральные машины",
+      "Денисики",
+      "Ярички"
+    ]
   },
   {
+    id: 3,
     name: "Телефоны",
-    url: "https://is.gd/Tdmnc1"
+    url: "https://is.gd/Tdmnc1",
+    items: [
+      "Посудомоечные машины",
+      "Электропечи",
+      "Холодильники",
+      "Морозилки",
+      "Микроволновые печи",
+      "Егорики",
+      "Газовые плиты и электроплиты",
+      "Стиральные машины",
+      "Денисики",
+      "Ярички"
+    ]
   },
   {
+    id: 4,
     name: "Периферийные устройства",
-    url: "https://is.gd/OEquVx"
+    url: "https://is.gd/OEquVx",
+    items: [
+      "Посудомоечные машины",
+      "Электропечи",
+      "Холодильники",
+      "Морозилки",
+      "Микроволновые печи",
+      "Егорики",
+      "Газовые плиты и электроплиты",
+      "Стиральные машины",
+      "Денисики",
+      "Ярички"
+    ]
   }
 ]
 
@@ -292,7 +345,7 @@ function App() {
                   {index === 2 && <MonetizationOnIcon />}
                   {index === 3 && <ContactSupportIcon />}
                 </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemText primary={text} className="list-text" />
               </ListItem>
             </Link>
           )
@@ -313,7 +366,7 @@ function App() {
                 {index === 0 && <ExitToAppIcon />}
                 {index === 1 && <LocationCityIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} />
+              <ListItemText primary={text} className="list-text" />
             </ListItem>
           </Link>
         ))}
@@ -386,6 +439,11 @@ function App() {
             exact
             path="/SalesPage"
             render={() => <SalesPage data={data} />}
+          />
+          <Route
+            exact
+            path="/RedirectPage/"
+            render={() => <RedirectPage catalog={catalog} />}
           />
         </Switch>
       </div>

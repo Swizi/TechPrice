@@ -111,6 +111,11 @@ a {
   color: #7E7E7E;
 }
 
+.city-text:hover, .city-text:focus{
+  text-decoration: underline;
+  cursor: pointer;
+}
+
 .items-header-block{
   width: 100%;
   display: flex;
