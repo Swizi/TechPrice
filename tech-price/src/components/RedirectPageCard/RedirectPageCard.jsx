@@ -1,14 +1,12 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
-export default function ProductCard(props) {
+export default function RedirectPageCard(props) {
   console.log(props.data);
   return (
-    <Link className="card-link" to={`/RedirectPage/${props.data.id}`}>
+    <Link className="card-link" to={`/RedirectPage`}>
       <div className="card-block">
-        <span>
-            {props.data}
-        </span>
+        <span>{props.data}</span>
       </div>
     </Link>
   );

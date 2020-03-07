@@ -442,7 +442,7 @@ function App() {
           />
           <Route
             exact
-            path="/RedirectPage/"
+            path="/RedirectPage/:id"
             render={() => <RedirectPage catalog={catalog} />}
           />
         </Switch>
