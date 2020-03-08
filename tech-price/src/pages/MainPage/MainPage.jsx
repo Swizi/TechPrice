@@ -79,6 +79,14 @@ export function MainPage(props) {
   //   city = event.currentTarget.textContent;
   //   // Меняется список товаров на главной странице + весь поиск идёт только по этому городу
   // };
+  var sparesMenu = document.getElementsByClassName("default-menu-wrapper");
+  // spareMenu = spareMenu[1];
+  console.log(sparesMenu);
+  for (var spareMenu of sparesMenu){
+    console.log(spareMenu);
+  }
+  console.log(spareMenu);
+  // spareMenu.style.display = "none";
   return (
     <div className="page-flexbox">
       {/* <TextField

@@ -9,8 +9,8 @@ import { ProductPage } from "./pages/ProductPage/ProductPage";
 import { UserCityPage } from "./pages/UserCityPage/UserCityPage";
 import SearchIcon from "@material-ui/icons/Search";
 import TextField from "@material-ui/core/TextField";
-import { SalesPage } from "./pages/SalesPage/SalesPage"
-import { RedirectPage } from "./pages/RedirectPage/RedirectPage"
+import { SalesPage } from "./pages/SalesPage/SalesPage";
+import { RedirectPage } from "./pages/RedirectPage/RedirectPage";
 
 import { makeStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
@@ -27,6 +27,7 @@ import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 import LocationCityIcon from "@material-ui/icons/LocationCity";
 import HomeIcon from "@material-ui/icons/Home";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 // import { Button, View } from 'react-native';
 // import { createDrawerNavigator } from "@react-navigation/drawer";
 // import { NavigationContainer } from "@react-navigation/native";
@@ -38,6 +39,8 @@ const useStyles = makeStyles({
 });
 
 var city = "Йошкар-Ола";
+
+const pageHeader = "2";
 
 const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
@@ -110,7 +113,7 @@ const catalog = [
       "Ярички"
     ]
   }
-]
+];
 
 const data = [
   {
@@ -308,7 +311,6 @@ function App() {
     left: false
   });
 
-
   const toggleDrawer = (side, open) => event => {
     if (
       event &&
@@ -373,6 +375,9 @@ function App() {
       </List>
     </div>
   );
+  var href = window.location.href;
+  href = href.split("/");
+  var path = href[href.length - 1];
   return (
     <BrowserRouter>
       {/* <NavigationContainer>
@@ -393,10 +398,27 @@ function App() {
             <MenuIcon />
           </IconButton>
           <span className="page-header">TechPrice</span>
-          <form className={classes.root} noValidate autoComplete="off" className="search-form">
+          <form
+            className={classes.root}
+            noValidate
+            autoComplete="off"
+            className="search-form"
+          >
             <TextField id="standard-basic" label="Поиск" />
             <SearchIcon className="search-icon" />
           </form>
+        </div>
+        <div className="default-menu-wrapper">
+          <IconButton>
+            <ArrowBackIcon />
+          </IconButton>
+          <span>
+            {path === "LoginPage" && "Вход"}
+            {path === "RegistrationPage" && "Регистрация"}
+            {path === "ProductPage" && "Товар"}
+            {path === "UserCityPage" && "Выбор города"}
+            {path === "SalesPage" && "Акции"}
+          </span>
         </div>
       </div>
       <div className="App">
@@ -410,7 +432,7 @@ function App() {
           {sideList("left")}
         </SwipeableDrawer>
         <Switch>
-          <Route path="/LoginPage" component={LoginPage} />
+          <Route path="/LoginPage" header="Вход" component={LoginPage} />
           <Route
             exact
             path="/"
@@ -422,21 +444,28 @@ function App() {
                 classes={classes}
               />
             )}
-            //data={data}
           />
-          <Route exact path="/RegistrationPage" component={RegistrationPage} />
           <Route
             exact
+            path="/RegistrationPage"
+            header="Регистрация"
+            component={RegistrationPage}
+          />
+          <Route
+            exact
+            header="Товар"
             path="/ProductPage/:id"
             render={() => <ProductPage data={data} />}
           />
           <Route
             exact
+            header="Выбор города"
             path="/UserCityPage"
             render={() => <UserCityPage data={data} />}
           />
           <Route
             exact
+            header="Акции"
             path="/SalesPage"
             render={() => <SalesPage data={data} />}
           />
