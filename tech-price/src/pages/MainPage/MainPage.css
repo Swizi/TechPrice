@@ -93,6 +93,7 @@ a {
 }
 
 .products {
+  width: 90%;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -126,4 +127,21 @@ a {
 .location-on-icon{
   font-size: 18;
   color: #7E7E7E !important;
+}
+
+.page-header{
+  transition: 1s ease;
+}
+
+#standard-basic{
+  transition: 1s ease;
+  width: 70px;
+}
+
+#standard-basic:focus{
+  width: 250px;
+}
+
+#standard-basic:focus ~ .page-header{
+  display: none;
 }

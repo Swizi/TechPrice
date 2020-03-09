@@ -1,5 +1,6 @@
 import React from "react";
 import "./ProductPage.css";
+import { useHistory } from "react-router-dom";
 import HomeIcon from "@material-ui/icons/Home";
 import { makeStyles } from "@material-ui/core/styles";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
@@ -8,6 +9,7 @@ import ProductPageReviews from "../../components/ProductPageReviews/ProductPageR
 import ProductPageShops from "../../components/ProductPageShops/ProductPageShops";
 import Divider from "@material-ui/core/Divider";
 import Carousel from "nuka-carousel";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,13 +32,17 @@ export function ProductPage(props) {
   href = href.split("/");
   var index = href[href.length - 1];
   console.log(index);
+  let history = useHistory();
   const classes = useStyles();
   return (
     <div className="page-flexbox">
-      <div className="menu-navigation">
-        <a href="/">
-          <ArrowBackIcon />
-        </a>
+      <div className="navigation-menu">
+        <div className="default-menu-wrapper">
+          <IconButton onClick={() => history.goBack()}>
+            <ArrowBackIcon />
+          </IconButton>
+          <span className="menu-header-text">Выбор категории</span>
+        </div>
       </div>
       <div className="product-page">
         <Divider />

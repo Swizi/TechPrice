@@ -8,8 +8,9 @@ import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import LocationOnIcon from '@material-ui/icons/LocationOn';
-
+import LocationOnIcon from "@material-ui/icons/LocationOn";
+import { useHistory } from "react-router-dom";
+import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { makeStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
 import List from "@material-ui/core/List";
@@ -28,8 +29,17 @@ import LocationCityIcon from "@material-ui/icons/LocationCity";
 import SaleProductCard from "../../components/SaleProductCard/SaleProductCard";
 export function SalesPage(props) {
   console.log(props);
+  let history = useHistory();
   return (
     <div className="page-flexbox">
+      <div className="navigation-menu">
+        <div className="default-menu-wrapper">
+          <IconButton onClick={() => history.goBack()}>
+            <ArrowBackIcon />
+          </IconButton>
+          <span className="menu-header-text">Пригретые товары</span>
+        </div>
+      </div>
       <div className="products">
         <div className="product-cards">
           {props.data.map(function(item, index) {

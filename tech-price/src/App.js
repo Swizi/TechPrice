@@ -1,14 +1,12 @@
-import React from "react";
+import React, { Suspense } from "react";
 import "./App.css";
-import { Link } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { MainPage } from "./pages/MainPage/MainPage";
 import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 import { RegistrationPage } from "./pages/RegistrationPage/RegistrationPage";
 import { ProductPage } from "./pages/ProductPage/ProductPage";
 import { UserCityPage } from "./pages/UserCityPage/UserCityPage";
-import SearchIcon from "@material-ui/icons/Search";
-import TextField from "@material-ui/core/TextField";
 import { SalesPage } from "./pages/SalesPage/SalesPage";
 import { RedirectPage } from "./pages/RedirectPage/RedirectPage";
 
@@ -28,9 +26,20 @@ import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 import LocationCityIcon from "@material-ui/icons/LocationCity";
 import HomeIcon from "@material-ui/icons/Home";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { isVariableDeclarator } from "@babel/types";
 // import { Button, View } from 'react-native';
 // import { createDrawerNavigator } from "@react-navigation/drawer";
 // import { NavigationContainer } from "@react-navigation/native";
+
+const LoadingPage = () => <div>Loading...</div>;
+
+// const MainPage = React.lazy(() => import("./pages/MainPage/MainPage"));
+// const LoginPage = React.lazy(() => import("./pages/LoginPage/LoginPage"));
+// const RegistrationPage = React.lazy(() => import("./pages/RegistrationPage/RegistrationPage"));
+// const ProductPage = React.lazy(() => import("./pages/ProductPage/ProductPage"));
+// const UserCityPage = React.lazy(() => import("./pages/UserCityPage/UserCityPage"));
+// const SalesPage = React.lazy(() => import("./pages/SalesPage/SalesPage"));
+// const RedirectPage = React.lazy(() => import("./pages/RedirectPage/RedirectPage"));
 
 const useStyles = makeStyles({
   list: {
@@ -46,11 +55,14 @@ const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 const catalog = [
   {
-    id: 1,
+    id: 0,
     name: "Бытовая техника",
     url: "https://is.gd/3ZM9lY",
     items: [
-      "Посудомоечные машины",
+      {
+        id: 0,
+        name: "Посудомоечные машины"
+      },
       "Электропечи",
       "Холодильники",
       "Морозилки",
@@ -63,7 +75,7 @@ const catalog = [
     ]
   },
   {
-    id: 2,
+    id: 1,
     name: "Ноутбуки и аксессуары",
     url: "https://is.gd/7KJAEw",
     items: [
@@ -80,7 +92,7 @@ const catalog = [
     ]
   },
   {
-    id: 3,
+    id: 2,
     name: "Телефоны",
     url: "https://is.gd/Tdmnc1",
     items: [
@@ -97,7 +109,7 @@ const catalog = [
     ]
   },
   {
-    id: 4,
+    id: 3,
     name: "Периферийные устройства",
     url: "https://is.gd/OEquVx",
     items: [
@@ -306,6 +318,24 @@ const data = [
 // const Drawer = createDrawerNavigator();
 
 function App() {
+  // const history = useHistory();
+  // const location = useLocation();
+  // const history = useHistory();
+  // const location = history.location;
+  // var location_history = [];
+  // location_history.push(location.pathname);
+  // const unlisten = history.listen((location, action) => {
+  //   // location is an object like window.location
+  //   console.log("Location = ", action, location.pathname, location.state);
+  // });
+
+  // function goToPreviosPage() {
+  //   console.log(history);
+  //   console.log(location_history);
+  //   console.log(location_history.pop());
+  // }
+
+  // console.log("Location - ", location);
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false
@@ -375,9 +405,44 @@ function App() {
       </List>
     </div>
   );
-  var href = window.location.href;
-  href = href.split("/");
-  var path = href[href.length - 1];
+  // var href = window.location.href;
+  // href = href.split("/");
+  // var path = "";
+  // var len = href.length;
+  // console.log(href);
+  // console.log("Длина - ", len);
+  // if (len == 4) {
+  //   path = href[len - 1];
+  // } else if (len == 5) {
+  //   path = href[len - 2];
+  // }
+  // if (path == "") {
+  //   path = "MainPage";
+  // }
+  // console.log("Путь - ", path);
+  // var main_menu = {};
+  // var default_menu = {};
+  // if (
+  //   path == "LoginPage" ||
+  //   path == "RegistrationPage" ||
+  //   path == "UserCityPage" ||
+  //   path == "SalesPage" ||
+  //   path == "Contacts"
+  // ) {
+  //   main_menu = {
+  //     display: "none"
+  //   };
+  // }
+  // if (path == "MainPage") {
+  //   default_menu = {
+  //     display: "none"
+  //   };
+  // }
+  // var spareMenu = document.getElementById("main-menu");
+  // console.log(spareMenu);
+  // if (path == "LoginPage"){
+  //   spareMenu.style.display = "none";
+  // }
   return (
     <BrowserRouter>
       {/* <NavigationContainer>
@@ -386,8 +451,8 @@ function App() {
           <Drawer.Screen name="LoginPage" component={LoginPage} />
         </Drawer.Navigator>
       </NavigationContainer> */}
-      <div className="navigation-menu">
-        <div className="menu-wrapper">
+      {/* <div className="navigation-menu">
+        <div id="main-menu" style={main_menu} className="menu-wrapper">
           <IconButton
             onClick={toggleDrawer("left", true)}
             edge="start"
@@ -408,19 +473,20 @@ function App() {
             <SearchIcon className="search-icon" />
           </form>
         </div>
-        <div className="default-menu-wrapper">
+        <div style={default_menu} className="default-menu-wrapper">
           <IconButton>
             <ArrowBackIcon />
           </IconButton>
-          <span>
+          <span className="menu-header-text">
             {path === "LoginPage" && "Вход"}
             {path === "RegistrationPage" && "Регистрация"}
             {path === "ProductPage" && "Товар"}
             {path === "UserCityPage" && "Выбор города"}
             {path === "SalesPage" && "Акции"}
+            {path == "Contacts" && "Служба поддержки"}
           </span>
         </div>
-      </div>
+      </div> */}
       <div className="App">
         <SwipeableDrawer
           disableBackdropTransition={!iOS}
@@ -442,6 +508,7 @@ function App() {
                 toggleDrawer={toggleDrawer}
                 data={data}
                 classes={classes}
+                toggleDrawer={toggleDrawer}
               />
             )}
           />
@@ -473,6 +540,13 @@ function App() {
             exact
             path="/RedirectPage/:id"
             render={() => <RedirectPage catalog={catalog} />}
+          />
+          <Route
+            render={() => (
+              <h1 style={{ textAlign: "center", marginTop: 300 }}>
+                404: page not found
+              </h1>
+            )}
           />
         </Switch>
       </div>

@@ -6,6 +6,8 @@ import Button from "@material-ui/core/Button";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import SearchIcon from "@material-ui/icons/Search";
 import InputAdornment from "@material-ui/core/InputAdornment";
+import { useHistory } from "react-router-dom";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -27,14 +29,18 @@ export function UserCityPage(props) {
   // const headerTextStyle = {
   //   color: "red"
   // }
+  let history = useHistory();
   const classes = useStyles();
 
   return (
     <div className="page-flexbox">
-      <div className="menu-navigation">
-        <a href="/">
-          <ArrowBackIcon />
-        </a>
+      <div className="navigation-menu">
+        <div className="default-menu-wrapper">
+          <IconButton onClick={() => history.goBack()}>
+            <ArrowBackIcon />
+          </IconButton>
+          <span className="menu-header-text">Выбор станицы</span>
+        </div>
       </div>
       <div className="login-block">
         <form className={classes.root} noValidate autoComplete="off">

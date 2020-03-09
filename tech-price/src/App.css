@@ -1,5 +1,5 @@
 .App {
-  width: 90%;
+  width: 100%;
   margin: auto;
 }
 
@@ -26,25 +26,39 @@
   align-items: center;
 }
 
-#standard-basic{
-  width: 100px;
-}
-
-.search-form{
+.search-form {
   display: flex;
   justify-content: center;
   align-items: flex-end;
   height: 28px;
 }
 
-.MuiInputLabel-shrink{
+.MuiInputLabel-shrink {
   display: none !important;
-} 
+}
 
-.list-text{
+.menu-header-text {
+  font-size: 18px;
+  line-height: 21px;
+}
+
+.default-menu-wrapper{
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.list-text {
   color: black;
 }
 
-a, Link{
+a,
+link {
   color: black;
+}
+
+.menu-header-text{
+  margin-left: 15px;
 }

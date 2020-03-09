@@ -5,6 +5,8 @@ import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
+import { useHistory } from "react-router-dom";
+import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -24,6 +26,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export function LoginPage(props) {
+  let history = useHistory();
   // const headerTextStyle = {
   //   color: "red"
   // }
@@ -31,10 +34,15 @@ export function LoginPage(props) {
 
   return (
     <div className="page-flexbox">
-      <div className="menu-navigation">
-        <a href="/">
-          <ArrowBackIcon />
-        </a>
+      <div className="navigation-menu">
+        <div className="default-menu-wrapper">
+          <IconButton onClick={() => history.goBack()}>
+            <ArrowBackIcon />
+          </IconButton>
+          <span className="menu-header-text">
+            Вход
+          </span>
+        </div>
       </div>
       <div className="login-block">
         <form className={classes.root} noValidate autoComplete="off">
@@ -51,7 +59,7 @@ export function LoginPage(props) {
           </Button>
         </form>
         <a href="/RegistrationPage" className="bottom-text">
-          Ещё не зарегистрированы???
+          Ещё не записался?
         </a>
       </div>
     </div>

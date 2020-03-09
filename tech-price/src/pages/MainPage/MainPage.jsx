@@ -1,16 +1,16 @@
-import React from "react";
+import React, { useState } from "react";
 import LoginButton from "../../components/LoginButton/LoginButton";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import SearchIcon from "@material-ui/icons/Search";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import TextField from "@material-ui/core/TextField";
 import "./MainPage.css";
-import ItemsCard from "../../components/ItemsCard/ItemsCard"
+import ItemsCard from "../../components/ItemsCard/ItemsCard";
 import IconButton from "@material-ui/core/IconButton";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
-import LocationOnIcon from '@material-ui/icons/LocationOn';
+import LocationOnIcon from "@material-ui/icons/LocationOn";
 
 import { makeStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
@@ -59,7 +59,9 @@ const options = [
 const ITEM_HEIGHT = 48;
 
 export function MainPage(props) {
+  const [isVisible, changeVisible] = useState(true);
   console.log(props);
+
   // const headerTextStyle = {
   //   color: "red"
   // }
@@ -79,16 +81,45 @@ export function MainPage(props) {
   //   city = event.currentTarget.textContent;
   //   // Меняется список товаров на главной странице + весь поиск идёт только по этому городу
   // };
-  var sparesMenu = document.getElementsByClassName("default-menu-wrapper");
-  // spareMenu = spareMenu[1];
-  console.log(sparesMenu);
-  for (var spareMenu of sparesMenu){
-    console.log(spareMenu);
-  }
-  console.log(spareMenu);
   // spareMenu.style.display = "none";
+
   return (
     <div className="page-flexbox">
+      <div className="navigation-menu">
+        <div id="main-menu" className="menu-wrapper">
+          <IconButton
+            onClick={props.toggleDrawer("left", true)}
+            edge="start"
+            className={props.classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
+            <MenuIcon />
+          </IconButton>
+          <span
+            id="pageHeader"
+            className="page-header"
+            style={{ fontSize: isVisible ? "24px" : "0px" }}
+          >
+            TechPrice
+          </span>
+          <form
+            className={props.classes.root}
+            noValidate
+            autoComplete="off"
+            className="search-form"
+          >
+            <TextField
+              onClick={() => changeVisible(!isVisible)}
+              onMouseOut={() => changeVisible(!isVisible)}
+              className="textField"
+              id="standard-basic"
+              label="Поиск"
+            />
+            <SearchIcon className="search-icon" />
+          </form>
+        </div>
+      </div>
       {/* <TextField
         className="text-field"
         label="Искать товары"
@@ -106,7 +137,7 @@ export function MainPage(props) {
         <div className="items-header-block">
           <p className="items-header">Каталог товаров</p>
           <div className="city-block">
-            <LocationOnIcon className="location-on-icon"/>
+            <LocationOnIcon className="location-on-icon" />
             <span className="city-text">Йошкар-Ола</span>
           </div>
         </div>
