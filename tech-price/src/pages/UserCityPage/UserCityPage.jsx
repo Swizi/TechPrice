@@ -8,6 +8,8 @@ import SearchIcon from "@material-ui/icons/Search";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { useHistory } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
+import "./UserCityPage.css";
+import CityCard from "../../components/CityCard/CityCard"
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -42,14 +44,14 @@ export function UserCityPage(props) {
           <span className="menu-header-text">Выбор станицы</span>
         </div>
       </div>
-      <div className="login-block">
+      <div className="cities-block">
         <form className={classes.root} noValidate autoComplete="off">
           <TextField
             className="text-field"
-            label="Искать город"
-            variant="outlined"
+            id="standard-search"
+            label="Місто"
+            type="search"
             InputProps={{
-              // className: 'text-field',
               startAdornment: (
                 <InputAdornment position="start">
                   <SearchIcon />
@@ -58,6 +60,11 @@ export function UserCityPage(props) {
             }}
           />
         </form>
+        <div className="city-cards-block">
+          {props.cities.map(function(item, index) {
+            return <CityCard key={index} data={item} userCity={props.userCity} />;
+          })}
+        </div>
       </div>
     </div>
   );

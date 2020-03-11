@@ -12,7 +12,6 @@ export default function ShopCard(props) {
         <span className="price-text">{props.data.price} рублей</span>
         <span className="price-name">{props.data.name}</span>
         <div className="shop-rating-block">
-          <StarBorderIcon className="star-icon" />
           <div className="shop-rating">{props.data.rating}</div>
           {/* <div className="shop-rating-square"></div> */}
           <span className="shop-reviews-count">

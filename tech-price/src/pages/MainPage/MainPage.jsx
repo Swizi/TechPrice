@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import LoginButton from "../../components/LoginButton/LoginButton";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import SearchIcon from "@material-ui/icons/Search";
@@ -138,7 +139,9 @@ export function MainPage(props) {
           <p className="items-header">Каталог товаров</p>
           <div className="city-block">
             <LocationOnIcon className="location-on-icon" />
-            <span className="city-text">Йошкар-Ола</span>
+            <Link to="/UserCityPage">
+              <span className="city-text">{props.userCity}</span>
+            </Link>
           </div>
         </div>
         <div className="product-cards">

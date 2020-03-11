@@ -2,7 +2,7 @@
 * {
   padding: 0;
   margin: 0;
-  font-family: Roboto;
+  font-family: Roboto, sans-serif;
   font-style: normal;
   font-weight: normal;
 }
@@ -60,22 +60,6 @@ a {
   .product-cards {
     justify-content: center;
   }
-}
-
-.text-field {
-  width: 100%;
-}
-
-.text-field .MuiInputBase-root {
-  background-color: #c9ffd9;
-}
-
-.text-field .MuiInputBase-root.Mui-focused {
-  background-color: #ffffff;
-}
-
-.text-field:focus {
-  background-color: #ffffff;
 }
 
 .MuiButtonBase-root {

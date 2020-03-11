@@ -41,7 +41,7 @@ export function ProductPage(props) {
           <IconButton onClick={() => history.goBack()}>
             <ArrowBackIcon />
           </IconButton>
-          <span className="menu-header-text">Выбор категории</span>
+          <span className="menu-header-text">Товар</span>
         </div>
       </div>
       <div className="product-page">

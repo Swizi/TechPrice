@@ -37,6 +37,7 @@
 }
 
 .shop-rating {
+  border-radius: 12px;
   font-size: 12px;
   line-height: 12px;
   display: flex;
@@ -46,7 +47,7 @@
   width: 40px;
   height: 20px;
   background-color: #38b723;
-  margin: 0 10px 0 10px;
+  margin: 0 10px 0 0;
 }
 
 /* .shop-rating-square {

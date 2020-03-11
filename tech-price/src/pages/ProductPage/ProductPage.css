@@ -24,8 +24,12 @@
 
 .product-page-image {
   height: 200px;
-  width: 300px;
   margin-top: 15px;
+}
+
+.slider-slide > img{
+  height: 300px !important;
+  display: block;
 }
 
 .product-page-header {
@@ -48,12 +52,11 @@
   width: 100% !important;
 }
 
-.product-images-carousel{
-  height: 220px !important;
+.product-images-carousel {
+  height: 320px !important;
   margin: 0 0 20px 0;
 }
 
 /* .slider-slide, .slider-frame, .slider-list, .slider{
   height: 220px !important;
 } */
-

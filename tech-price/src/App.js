@@ -47,12 +47,21 @@ const useStyles = makeStyles({
   }
 });
 
-var city = "Йошкар-Ола";
+var userCity = "Йошкар-Ола";
 
 const pageHeader = "2";
 
 const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
+const cities = [
+  "Москва",
+  "Краснодар",
+  "Санкт-Петербург",
+  "Йошкар-Ола",
+  "Кировоград",
+  "Днепр",
+  "Евпатория"
+]
 const catalog = [
   {
     id: 0,
@@ -391,7 +400,7 @@ function App() {
           </ListItemIcon>
           <ListItemText primary="Выйти" />
         </ListItem> */}
-        {["Выйти", `Город: ${city}`].map((text, index) => (
+        {["Выйти", `Город: ${userCity}`].map((text, index) => (
           <Link key={index} to={`${index === 1 && "/UserCityPage"}`}>
             <ListItem button key={text}>
               <ListItemIcon>
@@ -509,6 +518,7 @@ function App() {
                 data={data}
                 classes={classes}
                 toggleDrawer={toggleDrawer}
+                userCity={userCity}
               />
             )}
           />
@@ -528,7 +538,7 @@ function App() {
             exact
             header="Выбор города"
             path="/UserCityPage"
-            render={() => <UserCityPage data={data} />}
+            render={() => <UserCityPage data={data} cities={cities} userCity={userCity}/>}
           />
           <Route
             exact
