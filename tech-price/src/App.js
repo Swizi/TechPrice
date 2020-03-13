@@ -8,6 +8,7 @@ import { RegistrationPage } from "./pages/RegistrationPage/RegistrationPage";
 import { ProductPage } from "./pages/ProductPage/ProductPage";
 import { UserCityPage } from "./pages/UserCityPage/UserCityPage";
 import { SalesPage } from "./pages/SalesPage/SalesPage";
+import { ShopPage } from "./pages/ShopPage/ShopPage";
 import { RedirectPage } from "./pages/RedirectPage/RedirectPage";
 
 import { makeStyles } from "@material-ui/core/styles";
@@ -62,79 +63,6 @@ const cities = [
   "Днепр",
   "Евпатория"
 ]
-const catalog = [
-  {
-    id: 0,
-    name: "Бытовая техника",
-    url: "https://is.gd/3ZM9lY",
-    items: [
-      {
-        id: 0,
-        name: "Посудомоечные машины"
-      },
-      "Электропечи",
-      "Холодильники",
-      "Морозилки",
-      "Микроволновые печи",
-      "Егорики",
-      "Газовые плиты и электроплиты",
-      "Стиральные машины",
-      "Денисики",
-      "Ярички"
-    ]
-  },
-  {
-    id: 1,
-    name: "Ноутбуки и аксессуары",
-    url: "https://is.gd/7KJAEw",
-    items: [
-      "Посудомоечные машины",
-      "Электропечи",
-      "Холодильники",
-      "Морозилки",
-      "Микроволновые печи",
-      "Егорики",
-      "Газовые плиты и электроплиты",
-      "Стиральные машины",
-      "Денисики",
-      "Ярички"
-    ]
-  },
-  {
-    id: 2,
-    name: "Телефоны",
-    url: "https://is.gd/Tdmnc1",
-    items: [
-      "Посудомоечные машины",
-      "Электропечи",
-      "Холодильники",
-      "Морозилки",
-      "Микроволновые печи",
-      "Егорики",
-      "Газовые плиты и электроплиты",
-      "Стиральные машины",
-      "Денисики",
-      "Ярички"
-    ]
-  },
-  {
-    id: 3,
-    name: "Периферийные устройства",
-    url: "https://is.gd/OEquVx",
-    items: [
-      "Посудомоечные машины",
-      "Электропечи",
-      "Холодильники",
-      "Морозилки",
-      "Микроволновые печи",
-      "Егорики",
-      "Газовые плиты и электроплиты",
-      "Стиральные машины",
-      "Денисики",
-      "Ярички"
-    ]
-  }
-];
 
 const data = [
   {
@@ -324,6 +252,157 @@ const data = [
   }
 ];
 
+const catalog = [
+  {
+    id: 0,
+    name: "Бытовая техника",
+    url: "https://is.gd/3ZM9lY",
+    items: [
+      {
+        id: 0,
+        name: "Крупная бытовая техника",
+        items: data
+      },
+      {
+        id: 1,
+        name: "Техника для дома",
+        items: data
+      },
+      {
+        id: 2,
+        name: "Техника для кухни",
+        items: data
+      },
+      {
+        id: 3,
+        name: "Техника для красоты и здоровья",
+        items: data
+      },
+      {
+        id: 4,
+        name: "Встраиваемая техника",
+        items: data
+      },
+      {
+        id: 5,
+        name: "Климатическая техника",
+        items: data
+      }
+    ]
+  },
+  {
+    id: 1,
+    name: "Ноутбуки и аксессуары",
+    url: "https://is.gd/7KJAEw",
+    items: [
+      {
+        id: 0,
+        name: "Крупная бытовая техника",
+        items: data
+      },
+      {
+        id: 1,
+        name: "Техника для дома",
+        items: data
+      },
+      {
+        id: 2,
+        name: "Техника для кухни",
+        items: data
+      },
+      {
+        id: 3,
+        name: "Техника для красоты и здоровья",
+        items: data
+      },
+      {
+        id: 4,
+        name: "Встраиваемая техника",
+        items: data
+      },
+      {
+        id: 5,
+        name: "Климатическая техника",
+        items: data
+      }
+    ]
+  },
+  {
+    id: 2,
+    name: "Телефоны",
+    url: "https://is.gd/Tdmnc1",
+    items: [
+      {
+        id: 0,
+        name: "Крупная бытовая техника",
+        items: data
+      },
+      {
+        id: 1,
+        name: "Техника для дома",
+        items: data
+      },
+      {
+        id: 2,
+        name: "Техника для кухни",
+        items: data
+      },
+      {
+        id: 3,
+        name: "Техника для красоты и здоровья",
+        items: data
+      },
+      {
+        id: 4,
+        name: "Встраиваемая техника",
+        items: data
+      },
+      {
+        id: 5,
+        name: "Климатическая техника",
+        items: data
+      }
+    ]
+  },
+  {
+    id: 3,
+    name: "Периферийные устройства",
+    url: "https://is.gd/OEquVx",
+    items: [
+      {
+        id: 0,
+        name: "Крупная бытовая техника",
+        items: data
+      },
+      {
+        id: 1,
+        name: "Техника для дома",
+        items: data
+      },
+      {
+        id: 2,
+        name: "Техника для кухни",
+        items: data
+      },
+      {
+        id: 3,
+        name: "Техника для красоты и здоровья",
+        items: data
+      },
+      {
+        id: 4,
+        name: "Встраиваемая техника",
+        items: data
+      },
+      {
+        id: 5,
+        name: "Климатическая техника",
+        items: data
+      }
+    ]
+  }
+];
+
 // const Drawer = createDrawerNavigator();
 
 function App() {
@@ -370,7 +449,7 @@ function App() {
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-        {["Домашняя страница", "Войти", "Акции", "Служба поддержки"].map(
+        {["Домашняя страница", "Войти [Профиль]", "Акции", "Служба поддержки"].map(
           (text, index) => (
             <Link
               key={index}
@@ -550,6 +629,11 @@ function App() {
             exact
             path="/RedirectPage/:id"
             render={() => <RedirectPage catalog={catalog} />}
+          />
+          <Route
+            exact
+            path="/ShopPage/:id/:id"
+            render={() => <ShopPage catalog={catalog} />}
           />
           <Route
             render={() => (

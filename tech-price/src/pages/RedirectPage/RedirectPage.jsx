@@ -3,6 +3,7 @@ import RedirectPageCard from "../../components/RedirectPageCard/RedirectPageCard
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { useHistory } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
+import "./RedirectPage.css"
 
 export function RedirectPage(props) {
   var href = window.location.href;
@@ -16,13 +17,24 @@ export function RedirectPage(props) {
           <IconButton onClick={() => history.goBack()}>
             <ArrowBackIcon />
           </IconButton>
-          <span className="menu-header-text">{props.catalog[href_index].name}</span>
+          <span className="menu-header-text">
+            {props.catalog[href_index].name}
+          </span>
         </div>
       </div>
       <div className="products">
-        <div className="product-cards">
+        <div className="redirect-page-cards">
           {props.catalog[href_index].items.map(function(item, index) {
-            return <RedirectPageCard key={index} data={item} href_index={href_index}/>;
+            return (
+              <React.Fragment>
+                <RedirectPageCard
+                  key={index}
+                  data={item}
+                  href_index={href_index}
+                />
+                <hr className="hr" />
+              </React.Fragment>
+            );
           })}
         </div>
       </div>
