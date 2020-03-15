@@ -1,0 +1,23 @@
+.help-block {
+  width: 100%;
+  height: auto;
+  display: flex;
+  align-items: center;
+  flex-direction: row;
+  justify-content: space-between;
+  margin-top: 21px;
+  background: #ffffff;
+  border: 1px solid #f0f0f0;
+  box-sizing: border-box;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.help-text{ 
+  font-size: 20px;
+  margin: 0 40px 0 0;
+}
+
+.help-link {
+  width: 100%;
+}

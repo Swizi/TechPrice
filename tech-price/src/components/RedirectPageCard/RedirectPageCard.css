@@ -2,3 +2,12 @@
   font-size: 14px;
   margin: 10px 0 10px 0;
 }
+
+.redirect-page-card-text:hover{
+  cursor: pointer;
+  color: blue;
+}
+
+.redirect-page-card-text:focus{
+  text-decoration: underline;
+}

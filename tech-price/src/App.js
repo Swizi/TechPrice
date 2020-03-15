@@ -10,6 +10,7 @@ import { UserCityPage } from "./pages/UserCityPage/UserCityPage";
 import { SalesPage } from "./pages/SalesPage/SalesPage";
 import { ShopPage } from "./pages/ShopPage/ShopPage";
 import { RedirectPage } from "./pages/RedirectPage/RedirectPage";
+import { HelpPage } from "./pages/HelpPage/HelpPage";
 
 import { makeStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
@@ -53,6 +54,19 @@ var userCity = "Йошкар-Ола";
 const pageHeader = "2";
 
 const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+const help_data = [
+  {
+    name: "Обратная связь",
+    url: "https://is.gd/Xg7LQf",
+    data: ""
+  },
+
+  {
+    name: "Частые вопросы",
+    url: "https://is.gd/pzm3TA"
+  }
+]
 
 const cities = [
   "Москва",
@@ -456,7 +470,7 @@ function App() {
               to={`${(index === 0 && "/") ||
                 (index === 1 && "/LoginPage") ||
                 (index === 2 && "/SalesPage") ||
-                (index === 3 && "/Contacts")}`}
+                (index === 3 && "/HelpPage")}`}
             >
               <ListItem button key={text}>
                 <ListItemIcon>
@@ -634,6 +648,11 @@ function App() {
             exact
             path="/ShopPage/:id/:id"
             render={() => <ShopPage catalog={catalog} />}
+          />
+          <Route
+            exact
+            path="/HelpPage"
+            render={() => <HelpPage help_data={help_data}/>}
           />
           <Route
             render={() => (
