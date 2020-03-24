@@ -5,14 +5,14 @@ import {Link} from "react-router-dom";
 export default function ItemsCard(props) {
   console.log(props.data);
   return (
-    <Link className="card-link" to={`/RedirectPage/${props.data.id}`}>
-      <div className="card-block">
+    <Link className="card_link" to={`/RedirectPage/${props.data.id}`}>
+      <div className="card_block">
         <img
-          className="image-style"
+          className="image_style"
           src={props.data.url}
           alt={props.data.name}
         />
-        <span className="product-name">{props.data.name}</span>
+        <span className="product_name">{props.data.name}</span>
       </div>
     </Link>
   );

@@ -7,7 +7,7 @@
   font-weight: normal;
 }
 
-.product-user-review-block {
+.product_user_review_block {
   margin-bottom: 30px;
   display: flex;
   flex-direction: column;
@@ -18,7 +18,7 @@
   border-radius: 30px;
 }
 
-.product-user {
+.product_user {
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -26,19 +26,19 @@
   margin: 10px;
 }
 
-.product-user-image {
+.product_user_image {
   height: 20px;
   width: 20px;
   border-radius: 10px;
 }
 
-.product-user-name {
+.product_user_name {
   font-size: 16px;
   line-height: 12px;
   margin-left: 10px;
 }
 
-.product-user-review-text {
+.product_user_review_text {
   font-size: 14px;
   line-height: 20px;
   margin: 0 5px 5px 10px;

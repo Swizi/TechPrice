@@ -7,19 +7,19 @@
   font-weight: normal;
 }
 
-.product-page-reviews {
+.product_page_reviews {
   display: flex;
   flex-direction: column;
   width: 90%;
 }
 
-.reviews-header {
+.reviews_header {
   font-size: 20px;
   line-height: 23px;
   margin: 19px 19px 19px 0;
 }
 
-.product-page-user-reviews {
+.product_page_user_reviews {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;

@@ -31,17 +31,17 @@ export function SalesPage(props) {
   console.log(props);
   let history = useHistory();
   return (
-    <div className="page-flexbox">
-      <div className="navigation-menu">
-        <div className="default-menu-wrapper">
+    <div className="page_flexbox">
+      <div className="navigation_menu">
+        <div className="default_menu_wrapper">
           <IconButton onClick={() => history.goBack()}>
             <ArrowBackIcon />
           </IconButton>
-          <span className="menu-header-text">Пригретые товары</span>
+          <span className="menu_header_text">Пригретые товары</span>
         </div>
       </div>
       <div className="products">
-        <div className="product-cards">
+        <div className="product_cards">
           {props.data.map(function(item, index) {
             return <SaleProductCard key={index} data={item} />;
           })}

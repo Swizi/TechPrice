@@ -35,38 +35,38 @@ export function ProductPage(props) {
   let history = useHistory();
   const classes = useStyles();
   return (
-    <div className="page-flexbox">
-      <div className="navigation-menu">
-        <div className="default-menu-wrapper">
+    <div className="page_flexbox">
+      <div className="navigation_menu">
+        <div className="default_menu_wrapper">
           <IconButton onClick={() => history.goBack()}>
             <ArrowBackIcon />
           </IconButton>
-          <span className="menu-header-text">Товар</span>
+          <span className="menu_header_text">Товар</span>
         </div>
       </div>
-      <div className="product-page">
+      <div className="product_page">
         <Divider />
-        <div className="product-description">
+        <div className="product_description">
           <Carousel
             slidesToShow={1}
             cellSpacing={10}
             dragging={true}
             withoutControls={true}
             pauseOnHover={true}
-            className="product-images-carousel"
+            className="product_images_carousel"
           >
             {props.data[index].urls.map(function(item, index) {
               return (
                 <img
                   key={index}
-                  className="product-page-image"
+                  className="product_page_image"
                   src={item}
                   alt={props.data[index].name}
                 />
               );
             })}
           </Carousel>
-          <h1 className="product-page-header">{props.data[index].name}</h1>
+          <h1 className="product_page_header">{props.data[index].name}</h1>
         </div>
         <Divider />
         <ProductPageInfo data={props.data[index]} />

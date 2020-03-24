@@ -3,7 +3,7 @@
   margin: auto;
 }
 
-.navigation-menu {
+.navigation_menu {
   height: 56px;
   background-color: #ffd600;
   width: 100%;
@@ -12,37 +12,37 @@
   justify-content: center;
 }
 
-.page-header {
+.page_header {
   font-size: 24px;
   line-height: 28px;
   text-transform: uppercase;
   font-weight: bold;
 }
 
-.menu-wrapper {
+.menu_wrapper {
   width: 90%;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.search-form {
+.search_form {
   display: flex;
   justify-content: center;
   align-items: flex-end;
   height: 28px;
 }
 
-.MuiInputLabel-shrink {
+.MuiInputLabel_shrink {
   display: none !important;
 }
 
-.menu-header-text {
+.menu_header_text {
   font-size: 18px;
   line-height: 21px;
 }
 
-.default-menu-wrapper{
+.default_menu_wrapper{
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -50,7 +50,7 @@
   justify-content: flex-start;
 }
 
-.list-text {
+.list_text {
   color: black;
 }
 
@@ -59,6 +59,6 @@ link {
   color: black;
 }
 
-.menu-header-text{
+.menu_header_text{
   margin-left: 15px;
 }

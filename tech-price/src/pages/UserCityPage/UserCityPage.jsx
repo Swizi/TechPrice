@@ -35,19 +35,19 @@ export function UserCityPage(props) {
   const classes = useStyles();
 
   return (
-    <div className="page-flexbox">
-      <div className="navigation-menu">
-        <div className="default-menu-wrapper">
+    <div className="page_flexbox">
+      <div className="navigation_menu">
+        <div className="default_menu_wrapper">
           <IconButton onClick={() => history.goBack()}>
             <ArrowBackIcon />
           </IconButton>
-          <span className="menu-header-text">Выбор станицы</span>
+          <span className="menu_header_text">Выбор станицы</span>
         </div>
       </div>
-      <div className="cities-block">
+      <div className="cities_block">
         <form className={classes.root} noValidate autoComplete="off">
           <TextField
-            className="text-field"
+            className="text_field"
             id="standard-search"
             label="Місто"
             type="search"
@@ -60,7 +60,7 @@ export function UserCityPage(props) {
             }}
           />
         </form>
-        <div className="city-cards-block">
+        <div className="city_cards_block">
           {props.cities.map(function(item, index) {
             return <CityCard key={index} data={item} userCity={props.userCity} />;
           })}

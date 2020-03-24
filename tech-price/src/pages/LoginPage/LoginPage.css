@@ -12,7 +12,7 @@ a{
   color: none;
 }
 
-.page-flexbox {
+.page_flexbox {
   display: flex;
   justify-content: flex-start;
   align-items: center;
@@ -20,7 +20,7 @@ a{
   width: 100%;
 }
 
-.login-block{
+.login_block{
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -32,12 +32,12 @@ a{
   justify-content: center;
 }
 
-.bottom-text{
+.bottom_text{
   color: #3f51b5;
   margin: 8px;
 }
 
-.bottom-text:hover{
+.bottom_text:hover{
   text-decoration: underline;
   cursor: pointer;
 }

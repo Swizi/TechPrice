@@ -11,19 +11,19 @@ export function RedirectPage(props) {
   var href_index = href[href.length - 1];
   let history = useHistory();
   return (
-    <div className="page-flexbox">
-      <div className="navigation-menu">
-        <div className="default-menu-wrapper">
+    <div className="page_flexbox">
+      <div className="navigation_menu">
+        <div className="default_menu_wrapper">
           <IconButton onClick={() => history.goBack()}>
             <ArrowBackIcon />
           </IconButton>
-          <span className="menu-header-text">
+          <span className="menu_header_text">
             {props.catalog[href_index].name}
           </span>
         </div>
       </div>
       <div className="products">
-        <div className="redirect-page-cards">
+        <div className="redirect_page_cards">
           {props.catalog[href_index].items.map(function(item, index) {
             return (
               <React.Fragment>

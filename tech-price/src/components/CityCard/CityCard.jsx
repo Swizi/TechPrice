@@ -44,8 +44,8 @@ export default function CityCard(props) {
   }
 
   return (
-    <div className="city-card-block">
-      <h2 style={textStyle} className="city-card-text">{props.data}</h2>
+    <div className="city_card_block">
+      <h2 style={textStyle} className="city_card_text">{props.data}</h2>
       <hr className="hr"/>
     </div>
   );

@@ -60,34 +60,13 @@ const options = [
 const ITEM_HEIGHT = 48;
 
 export function MainPage(props) {
-  const [isVisible, changeVisible] = useState(true);
+  const [isFocused, changeStyle] = useState(true);
   console.log(props);
 
-  // const headerTextStyle = {
-  //   color: "red"
-  // }
-
-  // var city = "Йошкар-Ола";
-
-  // const [anchorEl, setAnchorEl] = React.useState(null);
-  // const open = Boolean(anchorEl);
-
-  // const handleClick = event => {
-  //   setAnchorEl(event.currentTarget);
-  // };
-
-  // const handleClose = event => {
-  //   setAnchorEl(null);
-  //   console.log(event.currentTarget.textContent);
-  //   city = event.currentTarget.textContent;
-  //   // Меняется список товаров на главной странице + весь поиск идёт только по этому городу
-  // };
-  // spareMenu.style.display = "none";
-
   return (
-    <div className="page-flexbox">
-      <div className="navigation-menu">
-        <div id="main-menu" className="menu-wrapper">
+    <div className="page_flexbox">
+      <div className="navigation_menu">
+        <div id="main-menu" className="menu_wrapper">
           <IconButton
             onClick={props.toggleDrawer("left", true)}
             edge="start"
@@ -99,8 +78,8 @@ export function MainPage(props) {
           </IconButton>
           <span
             id="pageHeader"
-            className="page-header"
-            style={{ fontSize: isVisible ? "24px" : "0px" }}
+            className="page_header"
+            style={{ fontSize: isFocused ? "24px" : "0px" }}
           >
             TechPrice
           </span>
@@ -108,43 +87,30 @@ export function MainPage(props) {
             className={props.classes.root}
             noValidate
             autoComplete="off"
-            className="search-form"
+            className="search_form"
           >
             <TextField
-              onClick={() => changeVisible(!isVisible)}
-              onMouseOut={() => changeVisible(!isVisible)}
+              style={{ width: isFocused ? "70px" : "200px" }}
+              onClick={() => changeStyle(!isFocused)}
+              onMouseOut={() => changeStyle(!isFocused)}
               className="textField"
               id="standard-basic"
-              label="Поиск"
             />
-            <SearchIcon className="search-icon" />
+            <SearchIcon className="search_icon" />
           </form>
         </div>
       </div>
-      {/* <TextField
-        className="text-field"
-        label="Искать товары"
-        variant="outlined"
-        InputProps={{
-          // className: 'text-field',
-          startAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon />
-            </InputAdornment>
-          )
-        }}
-      /> */}
       <div className="products">
-        <div className="items-header-block">
-          <p className="items-header">Каталог товаров</p>
-          <div className="city-block">
-            <LocationOnIcon className="location-on-icon" />
+        <div className="items_header_block">
+          <p className="items_header">Каталог товаров</p>
+          <div className="city_block">
+            <LocationOnIcon className="location_on_icon" />
             <Link to="/UserCityPage">
-              <span className="city-text">{props.userCity}</span>
+              <span className="city_text">{props.userCity}</span>
             </Link>
           </div>
         </div>
-        <div className="product-cards">
+        <div className="product_cards">
           {props.catalog.map(function(item, index) {
             return <ItemsCard key={index} data={item} />;
           })}

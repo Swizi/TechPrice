@@ -36,17 +36,17 @@ export function ShopPage(props) {
   let history = useHistory();
   console.log(props.catalog[href_index].items[items_index]);
   return (
-    <div className="page-flexbox">
-      <div className="navigation-menu">
-        <div className="default-menu-wrapper">
+    <div className="page_flexbox">
+      <div className="navigation_menu">
+        <div className="default_menu_wrapper">
           <IconButton onClick={() => history.goBack()}>
             <ArrowBackIcon />
           </IconButton>
-          <span className="menu-header-text">{props.catalog[href_index].items[items_index].name}</span>
+          <span className="menu_header_text">{props.catalog[href_index].items[items_index].name}</span>
         </div>
       </div>
       <div className="products">
-        <div className="product-cards">
+        <div className="product_cards">
           {props.catalog[href_index].items[items_index].items.map(function(item, index) {
             return <SaleProductCard key={index} data={item} />;
           })}

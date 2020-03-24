@@ -3,9 +3,9 @@ import "./ProductPageInfo.css";
 
 export default function ProductPageInfo(props) {
   return (
-    <div className="product-page-info">
-      <h3 className="info-header">Информация о товаре</h3>
-      <p className="info-text">
+    <div className="product_page_info">
+      <h3 className="info_header">Информация о товаре</h3>
+      <p className="info_text">
         {props.data.description}
       </p>
     </div>

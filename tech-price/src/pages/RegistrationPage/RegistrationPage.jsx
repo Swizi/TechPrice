@@ -12,7 +12,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      width: 300
+      width: "90%"
     }
   },
   margin: {
@@ -33,16 +33,16 @@ export function RegistrationPage(props) {
   const classes = useStyles();
 
   return (
-    <div className="page-flexbox">
-      <div className="navigation-menu">
-        <div className="default-menu-wrapper">
+    <div className="page_flexbox">
+      <div className="navigation_menu">
+        <div className="default_menu_wrapper">
           <IconButton onClick={() => history.goBack()}>
             <ArrowBackIcon />
           </IconButton>
-          <span className="menu-header-text">Заведение аккаунта</span>
+          <span className="menu_header_text">Заведение аккаунта</span>
         </div>
       </div>
-      <div className="login-block">
+      <div className="login_block">
         <form className={classes.root} noValidate autoComplete="off">
           <TextField id="standard-basic" label="Логин" />
           <TextField id="standard-basic" label="Пароль" />

@@ -1,4 +1,4 @@
-.shop-card {
+.shop_card {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -6,37 +6,37 @@
   margin-bottom: 20px;
 }
 
-.shop-description {
+.shop_description {
   display: flex;
   flex-direction: column;
 }
 
-.shop-rating-block {
+.shop_rating_block {
   display: flex;
   flex-direction: row;
   align-items: center;
   height: 20px;
 }
 
-.price-text {
+.price_text {
   font-size: 20px;
   line-height: 23px;
   margin: 10px 0 10px 0;
 }
 
-.price-name {
+.price_name {
   font-size: 14px;
   line-height: 16px;
   margin: 10px 0 10px 0;
 }
 
-.shop-button {
+.shop_button {
   width: 120px;
   height: 35px;
   text-align: center;
 }
 
-.shop-rating {
+.shop_rating {
   border-radius: 12px;
   font-size: 12px;
   line-height: 12px;
@@ -57,11 +57,11 @@
   transform: rotate(45deg);
 } */
 
-.shop-reviews-count {
+.shop_reviews_count {
   font-size: 14px;
   line-height: 14px;
 }
 
-.star-icon {
+.star_icon {
   margin: 0 5px 0 5p;
 }

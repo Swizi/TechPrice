@@ -6,10 +6,10 @@ export default function RedirectPageCard(props) {
   console.log(props.data);
   return (
     <Link
-      className="card-link"
+      className="card_link"
       to={`/ShopPage/${props.href_index}/${props.data.id}`}
     >
-      <span className="redirect-page-card-text">{props.data.name}</span>
+      <span className="redirect_page_card_text">{props.data.name}</span>
     </Link>
   );
 }

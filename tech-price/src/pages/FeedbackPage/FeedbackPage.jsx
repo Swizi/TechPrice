@@ -1,5 +1,5 @@
 import React from "react";
-import "./LoginPage.css";
+import "./FeedbackPage.css";
 import HomeIcon from "@material-ui/icons/Home";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
@@ -25,11 +25,8 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export function LoginPage(props) {
+export function FeedbackPage(props) {
   let history = useHistory();
-  // const headerTextStyle = {
-  //   color: "red"
-  // }
   const classes = useStyles();
 
   return (
@@ -39,28 +36,29 @@ export function LoginPage(props) {
           <IconButton onClick={() => history.goBack()}>
             <ArrowBackIcon />
           </IconButton>
-          <span className="menu_header_text">
-            Вход
-          </span>
+          <span className="menu_header_text">Обратная связь</span>
         </div>
       </div>
-      <div className="login_block">
+      <div className="feedback_block">
         <form className={classes.root} noValidate autoComplete="off">
-          <TextField id="standard-basic" label="Логин" />
-          <TextField id="standard-basic" label="Пароль" />
-          <TextField id="standard-basic" label="Номер карты сбербанка" />
+          <TextField id="standard-basic" label="Введите ФИО" />
+          <TextField id="standard-basic" label="Номер телефона" />
+          <TextField id="standard-basic" label="Введите e-mail" />
+          <TextField
+            id="standard-multiline-static"
+            label="Обращение"
+            multiline
+            rows="4"
+          />
           <Button
             variant="outlined"
             size="medium"
             color="primary"
             className={classes.margin}
           >
-            Зайти
+            Отправить
           </Button>
         </form>
-        <a href="/RegistrationPage" className="bottom_text">
-          Ещё не записался?
-        </a>
       </div>
     </div>
   );

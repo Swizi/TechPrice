@@ -7,19 +7,19 @@
   font-weight: normal;
 }
 
-.product-page-info {
+.product_page_info {
   display: flex;
   flex-direction: column;
   width: 90%;
 }
 
-.info-header {
+.info_header {
   font-size: 20px;
   line-height: 23px;
   margin: 19px 19px 19px 0;
 }
 
-.info-text {
+.info_text {
   font-size: 16px;
   line-height: 18px;
   margin: 19px 19px 19px 0;

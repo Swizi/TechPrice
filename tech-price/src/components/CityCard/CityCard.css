@@ -1,14 +1,14 @@
-.city-card-text {
+.city_card_text {
   font-size: 14px;
   color: #7e7e7e;
   margin: 10px 0 10px 0;
 }
 
-.city-card-text:hover{
+.city_card_text:hover{
   cursor: pointer;
 }
 
-.city-card-block {
+.city_card_block {
   width: 100%;
   display: flex;
   justify-content: flex-start;

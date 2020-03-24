@@ -11,6 +11,8 @@ import { SalesPage } from "./pages/SalesPage/SalesPage";
 import { ShopPage } from "./pages/ShopPage/ShopPage";
 import { RedirectPage } from "./pages/RedirectPage/RedirectPage";
 import { HelpPage } from "./pages/HelpPage/HelpPage";
+import { FAQPage } from "./pages/FAQPage/FAQPage";
+import { FeedbackPage } from "./pages/FeedbackPage/FeedbackPage";
 
 import { makeStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
@@ -55,18 +57,31 @@ const pageHeader = "2";
 
 const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
+const faq = [
+  {
+    question: "Часто ли вы занимаетесь распитием спиртосодержащих напитков?",
+    answer:
+      "Мы не любим пить пиво. Предпочитаем соли, спайсы. Очень обрадовались, что подросткам стали продавать снюс. Правда мы не знали как его использовать и просто жевали как жевачку."
+  },
+  {
+    question: "К какой ОПГ вы относитесь?",
+    answer: "К самой отмороженной"
+  }
+];
+
 const help_data = [
   {
     name: "Обратная связь",
     url: "https://is.gd/Xg7LQf",
-    data: ""
+    id: "feedback"
   },
 
   {
     name: "Частые вопросы",
-    url: "https://is.gd/pzm3TA"
+    url: "https://is.gd/pzm3TA",
+    id: "faq"
   }
-]
+];
 
 const cities = [
   "Москва",
@@ -76,7 +91,7 @@ const cities = [
   "Кировоград",
   "Днепр",
   "Евпатория"
-]
+];
 
 const data = [
   {
@@ -463,27 +478,30 @@ function App() {
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-        {["Домашняя страница", "Войти [Профиль]", "Акции", "Служба поддержки"].map(
-          (text, index) => (
-            <Link
-              key={index}
-              to={`${(index === 0 && "/") ||
-                (index === 1 && "/LoginPage") ||
-                (index === 2 && "/SalesPage") ||
-                (index === 3 && "/HelpPage")}`}
-            >
-              <ListItem button key={text}>
-                <ListItemIcon>
-                  {index === 0 && <HomeIcon />}
-                  {index === 1 && <AccountBoxIcon />}
-                  {index === 2 && <MonetizationOnIcon />}
-                  {index === 3 && <ContactSupportIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} className="list-text" />
-              </ListItem>
-            </Link>
-          )
-        )}
+        {[
+          "Домашняя страница",
+          "Войти [Профиль]",
+          "Акции",
+          "Служба поддержки"
+        ].map((text, index) => (
+          <Link
+            key={index}
+            to={`${(index === 0 && "/") ||
+              (index === 1 && "/LoginPage") ||
+              (index === 2 && "/SalesPage") ||
+              (index === 3 && "/HelpPage")}`}
+          >
+            <ListItem button key={text}>
+              <ListItemIcon>
+                {index === 0 && <HomeIcon />}
+                {index === 1 && <AccountBoxIcon />}
+                {index === 2 && <MonetizationOnIcon />}
+                {index === 3 && <ContactSupportIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} className="list_text" />
+            </ListItem>
+          </Link>
+        ))}
       </List>
       <Divider />
       <List>
@@ -500,7 +518,7 @@ function App() {
                 {index === 0 && <ExitToAppIcon />}
                 {index === 1 && <LocationCityIcon />}
               </ListItemIcon>
-              <ListItemText primary={text} className="list-text" />
+              <ListItemText primary={text} className="list_text" />
             </ListItem>
           </Link>
         ))}
@@ -553,8 +571,8 @@ function App() {
           <Drawer.Screen name="LoginPage" component={LoginPage} />
         </Drawer.Navigator>
       </NavigationContainer> */}
-      {/* <div className="navigation-menu">
-        <div id="main-menu" style={main_menu} className="menu-wrapper">
+      {/* <div className="navigation_menu">
+        <div id="main-menu" style={main_menu} className="menu_wrapper">
           <IconButton
             onClick={toggleDrawer("left", true)}
             edge="start"
@@ -564,22 +582,22 @@ function App() {
           >
             <MenuIcon />
           </IconButton>
-          <span className="page-header">TechPrice</span>
+          <span className="page_header">TechPrice</span>
           <form
             className={classes.root}
             noValidate
             autoComplete="off"
-            className="search-form"
+            className="search_form"
           >
             <TextField id="standard-basic" label="Поиск" />
-            <SearchIcon className="search-icon" />
+            <SearchIcon className="search_icon" />
           </form>
         </div>
-        <div style={default_menu} className="default-menu-wrapper">
+        <div style={default_menu} className="default_menu_wrapper">
           <IconButton>
             <ArrowBackIcon />
           </IconButton>
-          <span className="menu-header-text">
+          <span className="menu_header_text">
             {path === "LoginPage" && "Вход"}
             {path === "RegistrationPage" && "Регистрация"}
             {path === "ProductPage" && "Товар"}
@@ -631,7 +649,9 @@ function App() {
             exact
             header="Выбор города"
             path="/UserCityPage"
-            render={() => <UserCityPage data={data} cities={cities} userCity={userCity}/>}
+            render={() => (
+              <UserCityPage data={data} cities={cities} userCity={userCity} />
+            )}
           />
           <Route
             exact
@@ -652,7 +672,17 @@ function App() {
           <Route
             exact
             path="/HelpPage"
-            render={() => <HelpPage help_data={help_data}/>}
+            render={() => <HelpPage help_data={help_data} />}
+          />
+          <Route
+            exact
+            path="/HelpPage/faq"
+            render={() => <FAQPage faq={faq} />}
+          />
+          <Route
+            exact
+            path="/HelpPage/feedback"
+            component={FeedbackPage}
           />
           <Route
             render={() => (

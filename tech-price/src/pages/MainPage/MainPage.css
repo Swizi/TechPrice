@@ -11,7 +11,7 @@ a {
   text-decoration: none;
 }
 
-.page-flexbox {
+.page_flexbox {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -19,17 +19,17 @@ a {
   width: 100%;
 }
 
-.header-text {
+.header_text {
   font-size: 24px;
   line-height: 28px;
 }
 
-.city-text {
+.city_text {
   font-size: 18px;
   line-height: 21px;
 }
 
-.flex-box {
+.flex_box {
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -39,14 +39,14 @@ a {
   margin-top: 5px;
 }
 
-.flex-button {
+.flex_button {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   width: 100%;
 }
 
-.product-cards {
+.product_cards {
   display: flex;
   flex-direction: row;
   width: 100%;
@@ -62,12 +62,12 @@ a {
   }
 }
 
-.MuiButtonBase-root {
+.MuiButtonBase_root {
   background-color: #c9ffd9;
   border-radius: 10px;
 }
 
-.items-header {
+.items_header {
   font-family: Roboto;
   color: #7E7E7E;
   font-style: normal;
@@ -84,48 +84,40 @@ a {
   margin-top: 30px;
 }
 
-.city-block{
+.city_block{
   display: flex;
   flex-direction: row;
   align-items: flex-end;
 }
 
-.city-text {
+.city_text {
   font-size: 14px;
   line-height: 16px;
   color: #7E7E7E;
 }
 
-.city-text:hover, .city-text:focus{
+.city_text:hover, .city_text:focus{
   text-decoration: underline;
   cursor: pointer;
 }
 
-.items-header-block{
+.items_header_block{
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 
-.location-on-icon{
+.location_on_icon{
   font-size: 18;
   color: #7E7E7E !important;
 }
 
-.page-header{
-  transition: 1s ease;
-}
-
 #standard-basic{
   transition: 1s ease;
-  width: 70px;
+  width: 100%;
 }
 
-#standard-basic:focus{
-  width: 250px;
-}
-
-#standard-basic:focus ~ .page-header{
+#standard-basic:focus ~ .page_header{
   display: none;
 }
