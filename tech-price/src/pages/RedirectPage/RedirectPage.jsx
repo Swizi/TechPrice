@@ -3,7 +3,8 @@ import RedirectPageCard from "../../components/RedirectPageCard/RedirectPageCard
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { useHistory } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
-import "./RedirectPage.css"
+import "./RedirectPage.css";
+import LongCard from "../../components/LongCard/LongCard";
 
 export function RedirectPage(props) {
   var href = window.location.href;
@@ -23,7 +24,7 @@ export function RedirectPage(props) {
         </div>
       </div>
       <div className="products">
-        <div className="redirect_page_cards">
+        {/* <div className="redirect_page_cards">
           {props.catalog[href_index].items.map(function(item, index) {
             return (
               <React.Fragment>
@@ -35,6 +36,11 @@ export function RedirectPage(props) {
                 <hr className="hr" />
               </React.Fragment>
             );
+          })}
+        </div> */}
+        <div className="help_cards">
+          {props.catalog[href_index].items.map(function(item, index) {
+            return <LongCard key={index} data={item} href_index={href_index} />;
           })}
         </div>
       </div>

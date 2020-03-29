@@ -27,6 +27,8 @@ import LocationCityIcon from "@material-ui/icons/LocationCity";
 //C:\Users\denis\Desktop\TechPrice\tech-price\src\pages\SalesPage\SalesPage.jsx
 //C:\Users\denis\Desktop\TechPrice\tech-price\src\components\SaleProductCard\SaleProductCard.jsx
 import SaleProductCard from "../../components/SaleProductCard/SaleProductCard";
+import SortingBlock from "../../components/SortingBlock/SortingBlock";
+
 export function ShopPage(props) {
   console.log(props);
   var href = window.location.href;
@@ -34,6 +36,7 @@ export function ShopPage(props) {
   var items_index = href[href.length - 1];
   var href_index = href[href.length - 2];
   let history = useHistory();
+  var products = props.catalog[href_index].items[items_index].items;
   console.log(props.catalog[href_index].items[items_index]);
   return (
     <div className="page_flexbox">
@@ -42,12 +45,18 @@ export function ShopPage(props) {
           <IconButton onClick={() => history.goBack()}>
             <ArrowBackIcon />
           </IconButton>
-          <span className="menu_header_text">{props.catalog[href_index].items[items_index].name}</span>
+          <span className="menu_header_text">
+            {props.catalog[href_index].items[items_index].name}
+          </span>
         </div>
       </div>
       <div className="products">
+        <SortingBlock products={products} sorting_text={props.sorting_text}/>
         <div className="product_cards">
-          {props.catalog[href_index].items[items_index].items.map(function(item, index) {
+          {products.map(function(
+            item,
+            index
+          ) {
             return <SaleProductCard key={index} data={item} />;
           })}
         </div>

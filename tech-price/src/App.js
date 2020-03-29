@@ -71,21 +71,29 @@ const faq = [
 
 const help_data = [
   {
+    block_id: 0,
     name: "Обратная связь",
     url: "https://is.gd/Xg7LQf",
     id: "feedback"
   },
 
   {
+    block_id: 0,
     name: "Частые вопросы",
     url: "https://is.gd/pzm3TA",
     id: "faq"
   }
 ];
 
+const sorting_text = [
+  "По популярности",
+  "По цене по возрастанию",
+  "По цене по убыванию"
+];
+
 const cities = [
   "Москва",
-  "Краснодар",
+  "Ханты-Мансийск",
   "Санкт-Петербург",
   "Йошкар-Ола",
   "Кировоград",
@@ -288,34 +296,46 @@ const catalog = [
     url: "https://is.gd/3ZM9lY",
     items: [
       {
+        block_id: 1,
         id: 0,
         name: "Крупная бытовая техника",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 1,
         name: "Техника для дома",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 2,
         name: "Техника для кухни",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 3,
         name: "Техника для красоты и здоровья",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 4,
         name: "Встраиваемая техника",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 5,
         name: "Климатическая техника",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       }
     ]
   },
@@ -325,34 +345,46 @@ const catalog = [
     url: "https://is.gd/7KJAEw",
     items: [
       {
+        block_id: 1,
         id: 0,
         name: "Крупная бытовая техника",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 1,
         name: "Техника для дома",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 2,
         name: "Техника для кухни",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 3,
         name: "Техника для красоты и здоровья",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 4,
         name: "Встраиваемая техника",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 5,
         name: "Климатическая техника",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       }
     ]
   },
@@ -362,34 +394,46 @@ const catalog = [
     url: "https://is.gd/Tdmnc1",
     items: [
       {
+        block_id: 1,
         id: 0,
         name: "Крупная бытовая техника",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 1,
         name: "Техника для дома",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 2,
         name: "Техника для кухни",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 3,
         name: "Техника для красоты и здоровья",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 4,
         name: "Встраиваемая техника",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 5,
         name: "Климатическая техника",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       }
     ]
   },
@@ -399,34 +443,46 @@ const catalog = [
     url: "https://is.gd/OEquVx",
     items: [
       {
+        block_id: 1,
         id: 0,
         name: "Крупная бытовая техника",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 1,
         name: "Техника для дома",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 2,
         name: "Техника для кухни",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 3,
         name: "Техника для красоты и здоровья",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 4,
         name: "Встраиваемая техника",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       },
       {
+        block_id: 1,
         id: 5,
         name: "Климатическая техника",
-        items: data
+        items: data,
+        url: "https://is.gd/6EvpgB"
       }
     ]
   }
@@ -667,7 +723,7 @@ function App() {
           <Route
             exact
             path="/ShopPage/:id/:id"
-            render={() => <ShopPage catalog={catalog} />}
+            render={() => <ShopPage catalog={catalog} sorting_text={sorting_text} />}
           />
           <Route
             exact
