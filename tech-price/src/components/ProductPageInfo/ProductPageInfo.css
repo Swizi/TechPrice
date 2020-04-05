@@ -1,26 +1,24 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
-* {
-  margin: 0;
-  padding: 0;
-  font-family: Roboto;
-  font-style: normal;
-  font-weight: normal;
-}
+.product_description {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+    width: 80%;
+  }
 
-.product_page_info {
-  display: flex;
-  flex-direction: column;
-  width: 90%;
-}
+  .product_page_header {
+    font-size: 20px;
+    line-height: 23px;
+    margin-top: 22px;
+    margin: 0 0 20px 0;
+  }
 
-.info_header {
-  font-size: 20px;
-  line-height: 23px;
-  margin: 19px 19px 19px 0;
-}
+  .product_images_carousel {
+    height: 250px !important;
+    margin: 0 0 20px 0;
+  }
 
-.info_text {
-  font-size: 16px;
-  line-height: 18px;
-  margin: 19px 19px 19px 0;
-}
+  .product_page_image {
+    height: 200px;
+    margin-top: 15px;
+  }

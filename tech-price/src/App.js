@@ -21,9 +21,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-import MenuIcon from "@material-ui/icons/Menu";
-import IconButton from "@material-ui/core/IconButton";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
+import AccountBoxIcon from '@material-ui/icons/AccountBox';
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
@@ -104,7 +102,7 @@ const cities = [
 const data = [
   {
     id: 0,
-    urls: ["https://is.gd/zwDw5r", "https://is.gd/pBN9Ss"],
+    urls: ["https://is.gd/zwDw5r", "https://is.gd/lfHeuN"],
     name: "Ноутбук ASUS",
     description: "Зашибенный ноут",
     reviews: [
@@ -145,7 +143,7 @@ const data = [
   },
   {
     id: 1,
-    urls: ["https://is.gd/7ty7or", "https://is.gd/pBN9Ss"],
+    urls: ["https://is.gd/7ty7or", "https://is.gd/lfHeuN"],
     name: "Мышь компьютерная AlohaGaming",
     description: "Зашибенная мышка",
     reviews: [
@@ -186,7 +184,7 @@ const data = [
   },
   {
     id: 2,
-    urls: ["https://is.gd/j0kecm", "https://is.gd/pBN9Ss"],
+    urls: ["https://is.gd/j0kecm", "https://is.gd/lfHeuN"],
     name: "Наушники Xiaomi redmi airdots",
     description: "Зашибенные наушники",
     reviews: [
@@ -248,7 +246,7 @@ const data = [
   },
   {
     id: 3,
-    urls: ["https://is.gd/mkEyDx", "https://is.gd/pBN9Ss"],
+    urls: ["https://is.gd/mkEyDx", "https://is.gd/lfHeuN"],
     name: "Видеокарта MSI nVidia GeForce GTX 1650",
     description: "Зашибенная видюха",
     reviews: [

@@ -1,0 +1,32 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: normal;
+}
+
+.product_page_info {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  background: #ffffff;
+  border: 1px solid #f0f0f0;
+  box-sizing: border-box;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
+}
+
+.info_header {
+  font-size: 20px;
+  line-height: 23px;
+  margin: 19px 19px 19px 0;
+}
+
+.info_text {
+  font-size: 16px;
+  line-height: 18px;
+  margin: 19px 19px 19px 0;
+}

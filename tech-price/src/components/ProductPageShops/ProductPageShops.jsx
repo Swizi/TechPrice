@@ -8,12 +8,9 @@ export default function ProductPageShops(props) {
     <div className="product_page_price_block">
       <h3 className="price_header">Цены и магазины</h3>
       <div className="prices_block">
-        {props.data.shops.map(function(item, index) {
+        {props.data.shops.map(function (item, index) {
           return (
-            <React.Fragment key={index}>
-              <Divider />
-              <ShopCard data={item} />
-            </React.Fragment>
+            <ShopCard data={item} key={index} />
           );
         })}
       </div>
