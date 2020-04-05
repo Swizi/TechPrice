@@ -8,15 +8,9 @@
 }
 
 .product_page_info {
-  padding: 10px;
   display: flex;
   flex-direction: column;
   width: 90%;
-  background: #ffffff;
-  border: 1px solid #f0f0f0;
-  box-sizing: border-box;
-  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.05);
-  border-radius: 10px;
 }
 
 .info_header {
@@ -26,7 +20,13 @@
 }
 
 .info_text {
+  padding: 10px;
   font-size: 16px;
   line-height: 18px;
   margin: 19px 19px 19px 0;
+  background: #ffffff;
+  border: 1px solid #f0f0f0;
+  box-sizing: border-box;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.05);
+  border-radius: 10px;
 }

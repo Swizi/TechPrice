@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { useHistory } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -44,6 +45,7 @@ export function LoginPage(props) {
           </span>
         </div>
       </div>
+      <Alert severity="success">Ок, ща всё буит!</Alert>
       <div className="login_block">
         <form className={classes.root} noValidate autoComplete="off">
           <TextField id="standard-basic" label="Логин" />
