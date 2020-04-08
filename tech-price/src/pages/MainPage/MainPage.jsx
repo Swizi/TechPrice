@@ -111,7 +111,7 @@ export function MainPage(props) {
           </div>
         </div>
         <div className="product_cards">
-          {props.catalog.map(function(item, index) {
+          {props.catalog.map(function (item, index) {
             return <ItemsCard key={index} data={item} />;
           })}
         </div>
