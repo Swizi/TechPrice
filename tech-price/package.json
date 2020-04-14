@@ -25,7 +25,8 @@
     "react-slick": "^0.25.2",
     "react-swipe": "^6.0.4",
     "slick-carousel": "^1.8.1",
-    "swipe-js-iso": "^2.1.5"
+    "swipe-js-iso": "^2.1.5",
+    "universal-cookie": "^4.0.3"
   },
   "scripts": {
     "start": "react-scripts start",

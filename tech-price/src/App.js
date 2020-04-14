@@ -1,4 +1,4 @@
-import React, { Suspense } from "react";
+import React, { useState } from "react";
 import "./App.css";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { MainPage } from "./pages/MainPage/MainPage";
@@ -29,6 +29,11 @@ import LocationCityIcon from "@material-ui/icons/LocationCity";
 import HomeIcon from "@material-ui/icons/Home";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { isVariableDeclarator } from "@babel/types";
+import UserContext from './UserContext';
+
+import Cookies from 'universal-cookie';
+
+// import { UserProvider } from './UserContext'
 // import { Button, View } from 'react-native';
 // import { createDrawerNavigator } from "@react-navigation/drawer";
 // import { NavigationContainer } from "@react-navigation/native";
@@ -49,7 +54,7 @@ const useStyles = makeStyles({
   }
 });
 
-var userCity = "Йошкар-Ола";
+// var userCity = "Москва";
 
 const pageHeader = "2";
 
@@ -89,22 +94,56 @@ const sorting_text = [
   "По цене по убыванию"
 ];
 
-const cities = [
-  "Москва",
-  "Ханты-Мансийск",
-  "Санкт-Петербург",
-  "Йошкар-Ола",
-  "Кировоград",
-  "Днепр",
-  "Евпатория"
+const city_list = [
+  {
+    city: "Москва",
+    latitude: 55.7522,
+    longitude: 37.6156
+  },
+  {
+    city: "Ханты-Мансийск",
+    latitude: 61.0042,
+    longitude: 69.0019
+  },
+  {
+    city: "Санкт-Петербург",
+    latitude: 59.9386,
+    longitude: 30.3141
+  },
+  {
+    city: "Йошкар-Ола",
+    latitude: 56.6388,
+    longitude: 47.8908
+  },
+  {
+    city: "Кировоград",
+    latitude: 48.5132,
+    longitude: 32.2597
+  },
+  {
+    city: "Днепр",
+    latitude: 48.4593,
+    longitude: 35.0387
+  },
+  {
+    city: "Евпатория",
+    latitude: 45.2009,
+    longitude: 33.3666
+  },
+  {
+    city: "Севастополь",
+    latitude: 44.5888,
+    longitude: 33.5224
+  }
 ];
 
 const data = [
   {
     id: 0,
     urls: ["https://is.gd/zwDw5r", "https://is.gd/lfHeuN"],
+    popularity: 4,
     name: "Ноутбук ASUS",
-    description: "Зашибенный ноут. С другой стороны начало повседневной работы по формированию позиции обеспечивает широкому кругу (специалистов) участие в формировании форм развития. Равным образом консультация с широким активом представляет собой интересный эксперимент проверки систем массового участия. Идейные соображения высшего порядка, а также реализация намеченных плановых заданий обеспечивает широкому кругу (специалистов) участие в формировании позиций, занимаемых участниками в отношении поставленных задач.",
+    description: "Производитель ; Xiaomi ; Страна ; Китай ; Диапазон частот ; 2.4 ГГц ",
     reviews: [
       {
         id: 0,
@@ -144,8 +183,9 @@ const data = [
   {
     id: 1,
     urls: ["https://is.gd/7ty7or", "https://is.gd/lfHeuN"],
+    popularity: 5,
     name: "Мышь компьютерная AlohaGaming",
-    description: "Зашибенная мышка. С другой стороны начало повседневной работы по формированию позиции обеспечивает широкому кругу (специалистов) участие в формировании форм развития. Равным образом консультация с широким активом представляет собой интересный эксперимент проверки систем массового участия. Идейные соображения высшего порядка, а также реализация намеченных плановых заданий обеспечивает широкому кругу (специалистов) участие в формировании позиций, занимаемых участниками в отношении поставленных задач.",
+    description: "Производитель ; Xiaomi ; Страна ; Китай ; Диапазон частот ; 2.4 ГГц ",
     reviews: [
       {
         id: 0,
@@ -159,7 +199,7 @@ const data = [
       {
         id: 0,
         name: "TehVolt",
-        price: 14599,
+        price: 4599,
         rating: 4.7,
         reviews: 150,
         link: "https://www.dns-shop.ru/"
@@ -167,7 +207,7 @@ const data = [
       {
         id: 1,
         name: "DNS",
-        price: 14799,
+        price: 4799,
         rating: 4.5,
         reviews: 79,
         link: "https://www.dns-shop.ru/"
@@ -175,7 +215,7 @@ const data = [
       {
         id: 2,
         name: "Citilink",
-        price: 14999,
+        price: 4999,
         rating: 4.1,
         reviews: 45,
         link: "https://www.dns-shop.ru/"
@@ -185,8 +225,9 @@ const data = [
   {
     id: 2,
     urls: ["https://is.gd/j0kecm", "https://is.gd/lfHeuN"],
+    popularity: 3,
     name: "Наушники Xiaomi redmi airdots",
-    description: "Зашибенные наушники. С другой стороны начало повседневной работы по формированию позиции обеспечивает широкому кругу (специалистов) участие в формировании форм развития. Равным образом консультация с широким активом представляет собой интересный эксперимент проверки систем массового участия. Идейные соображения высшего порядка, а также реализация намеченных плановых заданий обеспечивает широкому кругу (специалистов) участие в формировании позиций, занимаемых участниками в отношении поставленных задач.",
+    description: "Производитель ; Xiaomi ; Страна ; Китай ; Диапазон частот ; 2.4 ГГц ",
     reviews: [
       {
         id: 0,
@@ -221,7 +262,7 @@ const data = [
       {
         id: 0,
         name: "TehVolt",
-        price: 14599,
+        price: 300,
         rating: 4.7,
         reviews: 150,
         link: "https://www.dns-shop.ru/"
@@ -229,7 +270,7 @@ const data = [
       {
         id: 1,
         name: "DNS",
-        price: 14799,
+        price: 400,
         rating: 4.5,
         reviews: 79,
         link: "https://www.dns-shop.ru/"
@@ -237,7 +278,7 @@ const data = [
       {
         id: 2,
         name: "Citilink",
-        price: 14999,
+        price: 500,
         rating: 4.1,
         reviews: 45,
         link: "https://www.dns-shop.ru/"
@@ -247,8 +288,9 @@ const data = [
   {
     id: 3,
     urls: ["https://is.gd/mkEyDx", "https://is.gd/lfHeuN"],
+    popularity: 1,
     name: "Видеокарта MSI nVidia GeForce GTX 1650",
-    description: "Зашибенная видюха. С другой стороны начало повседневной работы по формированию позиции обеспечивает широкому кругу (специалистов) участие в формировании форм развития. Равным образом консультация с широким активом представляет собой интересный эксперимент проверки систем массового участия. Идейные соображения высшего порядка, а также реализация намеченных плановых заданий обеспечивает широкому кругу (специалистов) участие в формировании позиций, занимаемых участниками в отношении поставленных задач.",
+    description: "Производитель ; Xiaomi ; Страна ; Китай ; Диапазон частот ; 2.4 ГГц ",
     reviews: [
       {
         id: 0,
@@ -262,7 +304,7 @@ const data = [
       {
         id: 0,
         name: "TehVolt",
-        price: 14599,
+        price: 104599,
         rating: 4.7,
         reviews: 150,
         link: "https://www.dns-shop.ru/"
@@ -270,7 +312,7 @@ const data = [
       {
         id: 1,
         name: "DNS",
-        price: 14799,
+        price: 104799,
         rating: 4.5,
         reviews: 79,
         link: "https://www.dns-shop.ru/"
@@ -278,7 +320,7 @@ const data = [
       {
         id: 2,
         name: "Citilink",
-        price: 14999,
+        price: 104999,
         rating: 4.1,
         reviews: 45,
         link: "https://www.dns-shop.ru/"
@@ -489,24 +531,83 @@ const catalog = [
 // const Drawer = createDrawerNavigator();
 
 function App() {
-  // const history = useHistory();
-  // const location = useLocation();
-  // const history = useHistory();
-  // const location = history.location;
-  // var location_history = [];
-  // location_history.push(location.pathname);
-  // const unlisten = history.listen((location, action) => {
-  //   // location is an object like window.location
-  //   console.log("Location = ", action, location.pathname, location.state);
-  // });
+  const cookies = new Cookies();
 
-  // function goToPreviosPage() {
-  //   console.log(history);
-  //   console.log(location_history);
-  //   console.log(location_history.pop());
-  // }
 
-  // console.log("Location - ", location);
+  navigator.geolocation.getCurrentPosition(
+
+    // Функция обратного вызова при успешном извлечении локации
+    function (position) {
+
+      var min_city = "";
+
+      console.log("Широта ", position.coords.latitude);
+      console.log("Долгота ", position.coords.longitude);
+
+      var min_difference = 400;
+
+      var value = "";
+
+      var location_value = position.coords.latitude + position.coords.longitude;
+
+      for (var i = 0; i < city_list.length; i++) {
+        value = city_list[i].latitude + city_list[i].longitude;
+        if (Math.abs(location_value - value) < min_difference) {
+          min_difference = Math.abs(location_value - value);
+          min_city = city_list[i].city;
+        }
+      }
+
+      cookies.set("Location_city", min_city, { path: '/' });
+
+      console.log(cookies.get("Location_city"));
+
+      setCity(cookies.get("Location_city"));
+
+      /*
+      В объекте position изложена подробная информация
+      о позиции устройства:
+ 
+      position = {
+          coords: {
+              latitude - Широта.
+              longitude - Долгота.
+              altitude - Высота в метрах над уровнем моря.
+              accuracy - Погрешность в метрах.
+              altitudeAccuracy - Погрешность высоты над уровнем моря в метрах.
+              heading - Направление устройства по отношению к северу.
+              speed - Скорость в метрах в секунду.
+          }
+          timestamp - Время извлечения информации.
+      }
+      */
+
+    },
+
+    // Функция обратного вызова при неуспешном извлечении локации
+    function (error) {
+
+      /*
+      При неудаче, будет доступен объект error:
+ 
+      error = {
+          code - Тип ошибки
+                  1 - PERMISSION_DENIED
+                  2 - POSITION_UNAVAILABLE
+                  3 - TIMEOUT
+ 
+          message - Детальная информация.
+      }
+      */
+      console.log(error.code);
+      console.log(error.message);
+
+    }
+  );
+  const [userCity, setCity] = useState("Москва");
+  const value = { userCity, setCity };
+
+
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false
@@ -559,12 +660,6 @@ function App() {
       </List>
       <Divider />
       <List>
-        {/* <ListItem>
-          <ListItemIcon button key={"Выйти"}>
-            <ExitToAppIcon />
-          </ListItemIcon>
-          <ListItemText primary="Выйти" />
-        </ListItem> */}
         {["Выйти", `Город: ${userCity}`].map((text, index) => (
           <Link key={index} to={`${index === 1 && "/UserCityPage"}`}>
             <ListItem button key={text}>
@@ -579,88 +674,9 @@ function App() {
       </List>
     </div>
   );
-  // var href = window.location.href;
-  // href = href.split("/");
-  // var path = "";
-  // var len = href.length;
-  // console.log(href);
-  // console.log("Длина - ", len);
-  // if (len == 4) {
-  //   path = href[len - 1];
-  // } else if (len == 5) {
-  //   path = href[len - 2];
-  // }
-  // if (path == "") {
-  //   path = "MainPage";
-  // }
-  // console.log("Путь - ", path);
-  // var main_menu = {};
-  // var default_menu = {};
-  // if (
-  //   path == "LoginPage" ||
-  //   path == "RegistrationPage" ||
-  //   path == "UserCityPage" ||
-  //   path == "SalesPage" ||
-  //   path == "Contacts"
-  // ) {
-  //   main_menu = {
-  //     display: "none"
-  //   };
-  // }
-  // if (path == "MainPage") {
-  //   default_menu = {
-  //     display: "none"
-  //   };
-  // }
-  // var spareMenu = document.getElementById("main-menu");
-  // console.log(spareMenu);
-  // if (path == "LoginPage"){
-  //   spareMenu.style.display = "none";
-  // }
+
   return (
     <BrowserRouter>
-      {/* <NavigationContainer>
-        <Drawer.Navigator initialRouteName="MainPage">
-          <Drawer.Screen name="MainPage" component={MainPage} />
-          <Drawer.Screen name="LoginPage" component={LoginPage} />
-        </Drawer.Navigator>
-      </NavigationContainer> */}
-      {/* <div className="navigation_menu">
-        <div id="main-menu" style={main_menu} className="menu_wrapper">
-          <IconButton
-            onClick={toggleDrawer("left", true)}
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <span className="page_header">TechPrice</span>
-          <form
-            className={classes.root}
-            noValidate
-            autoComplete="off"
-            className="search_form"
-          >
-            <TextField id="standard-basic" label="Поиск" />
-            <SearchIcon className="search_icon" />
-          </form>
-        </div>
-        <div style={default_menu} className="default_menu_wrapper">
-          <IconButton>
-            <ArrowBackIcon />
-          </IconButton>
-          <span className="menu_header_text">
-            {path === "LoginPage" && "Вход"}
-            {path === "RegistrationPage" && "Регистрация"}
-            {path === "ProductPage" && "Товар"}
-            {path === "UserCityPage" && "Выбор города"}
-            {path === "SalesPage" && "Акции"}
-            {path == "Contacts" && "Служба поддержки"}
-          </span>
-        </div>
-      </div> */}
       <div className="App">
         <SwipeableDrawer
           disableBackdropTransition={!iOS}
@@ -671,81 +687,84 @@ function App() {
         >
           {sideList("left")}
         </SwipeableDrawer>
-        <Switch>
-          <Route path="/LoginPage" header="Вход" component={LoginPage} />
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <MainPage
-                catalog={catalog}
-                toggleDrawer={toggleDrawer}
-                data={data}
-                classes={classes}
-                toggleDrawer={toggleDrawer}
-                userCity={userCity}
-              />
-            )}
-          />
-          <Route
-            exact
-            path="/RegistrationPage"
-            header="Регистрация"
-            component={RegistrationPage}
-          />
-          <Route
-            exact
-            header="Товар"
-            path="/ProductPage/:id"
-            render={() => <ProductPage data={data} />}
-          />
-          <Route
-            exact
-            header="Выбор города"
-            path="/UserCityPage"
-            render={() => (
-              <UserCityPage data={data} cities={cities} userCity={userCity} />
-            )}
-          />
-          <Route
-            exact
-            header="Акции"
-            path="/SalesPage"
-            render={() => <SalesPage data={data} />}
-          />
-          <Route
-            exact
-            path="/RedirectPage/:id"
-            render={() => <RedirectPage catalog={catalog} />}
-          />
-          <Route
-            exact
-            path="/ShopPage/:id/:id"
-            render={() => <ShopPage catalog={catalog} sorting_text={sorting_text} />}
-          />
-          <Route
-            exact
-            path="/HelpPage"
-            render={() => <HelpPage help_data={help_data} />}
-          />
-          <Route
-            exact
-            path="/HelpPage/faq"
-            render={() => <FAQPage faq={faq} />}
-          />
-          <Route
-            exact
-            path="/HelpPage/feedback"
-            component={FeedbackPage}
-          />
-          <Route
-            render={() => (
-              <h1 style={{ textAlign: "center", marginTop: 300 }}>
-                404: page not found
-              </h1>
-            )}
-          />
-        </Switch>
+        <UserContext.Provider value={value}>
+          <Switch>
+            <Route path="/LoginPage" header="Вход" component={LoginPage} />
+            <Route
+              exact
+              path="/"
+              render={() => (
+                <MainPage
+                  catalog={catalog}
+                  toggleDrawer={toggleDrawer}
+                  data={data}
+                  classes={classes}
+                  toggleDrawer={toggleDrawer}
+                />
+              )}
+            />
+            <Route
+              exact
+              path="/RegistrationPage"
+              header="Регистрация"
+              component={RegistrationPage}
+            />
+            <Route
+              exact
+              header="Товар"
+              path="/ProductPage/:id"
+              render={() => <ProductPage data={data} />}
+            />
+            <Route
+              exact
+              header="Выбор города"
+              path="/UserCityPage"
+              render={() => (
+                <UserContext.Provider value={value}>
+                  <UserCityPage data={data} cities={city_list} />
+                </UserContext.Provider>
+              )}
+            />
+            <Route
+              exact
+              header="Акции"
+              path="/SalesPage"
+              render={() => <SalesPage data={data} />}
+            />
+            <Route
+              exact
+              path="/RedirectPage/:id"
+              render={() => <RedirectPage catalog={catalog} />}
+            />
+            <Route
+              exact
+              path="/ShopPage/:id/:id"
+              render={() => <ShopPage catalog={catalog} sorting_text={sorting_text} />}
+            />
+            <Route
+              exact
+              path="/HelpPage"
+              render={() => <HelpPage help_data={help_data} />}
+            />
+            <Route
+              exact
+              path="/HelpPage/faq"
+              render={() => <FAQPage faq={faq} />}
+            />
+            <Route
+              exact
+              path="/HelpPage/feedback"
+              component={FeedbackPage}
+            />
+            <Route
+              render={() => (
+                <h1 style={{ textAlign: "center", marginTop: 300 }}>
+                  404: page not found
+                </h1>
+              )}
+            />
+          </Switch>
+        </UserContext.Provider>
       </div>
     </BrowserRouter>
   );

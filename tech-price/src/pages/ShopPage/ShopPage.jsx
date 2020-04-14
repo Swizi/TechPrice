@@ -29,7 +29,22 @@ import LocationCityIcon from "@material-ui/icons/LocationCity";
 import SaleProductCard from "../../components/SaleProductCard/SaleProductCard";
 import SortingBlock from "../../components/SortingBlock/SortingBlock";
 
+import Collapse from "@material-ui/core/Collapse";
+import HelpIcon from "@material-ui/icons/Help";
+import ExpandLess from "@material-ui/icons/ExpandLess";
+import ExpandMore from "@material-ui/icons/ExpandMore";
+import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
+
+const useStyles = makeStyles(theme => ({
+  nested: {
+    paddingLeft: theme.spacing(4)
+  }
+}));
+
 export function ShopPage(props) {
+  const classes = useStyles();
+
+
   console.log(props);
   var href = window.location.href;
   href = href.split("/");
@@ -38,6 +53,93 @@ export function ShopPage(props) {
   let history = useHistory();
   var products = props.catalog[href_index].items[items_index].items;
   console.log(props.catalog[href_index].items[items_index]);
+
+  const [open, setOpen] = React.useState(false);
+  const [products_array, setProducts] = React.useState(products);
+
+  const handleClick = () => {
+    setOpen(!open);
+  };
+
+  const toDescendingPrice = () => {
+    var prices = [];
+    for (var i = 0; i < products.length; i++){
+      prices.push(products[i].shops[0].price);
+    }
+    console.log(prices.sort((a, b) => a - b));
+
+    // products sort by prices array
+
+    var sorted_array = [];
+    for(var i = 0; i < products.length; i++){
+      for(var j = 0; j < products.length; j++){
+        if ( prices[i] === products[j].shops[0].price){
+          sorted_array.push(products[j]);
+        }
+      }
+    }
+
+    products = sorted_array;
+
+    console.log(products);
+
+    setProducts(products);
+
+  };
+
+  const toAscendingPrice = () => {
+    var prices = [];
+    for (var i = 0; i < products.length; i++){
+      prices.push(products[i].shops[0].price);
+    }
+    console.log(prices.sort((a, b) => b - a));
+
+    // products sort by prices array
+
+    var sorted_array = [];
+    for(var i = 0; i < products.length; i++){
+      for(var j = 0; j < products.length; j++){
+        if ( prices[i] === products[j].shops[0].price){
+          sorted_array.push(products[j]);
+        }
+      }
+    }
+
+    products = sorted_array;
+
+    console.log(products);
+
+    setProducts(products);
+
+  };
+
+  const toPopularity = () => {
+    var popularity_array = [];
+    for (var i = 0; i < products.length; i++){
+      popularity_array.push(products[i].popularity);
+    }
+    console.log(popularity_array.sort((a, b) => b - a));
+
+    // products sort by prices array
+
+    var sorted_array = [];
+    for(var i = 0; i < products.length; i++){
+      for(var j = 0; j < products.length; j++){
+        if ( popularity_array[i] === products[j].popularity){
+          sorted_array.push(products[j]);
+        }
+      }
+    }
+
+    products = sorted_array;
+
+    console.log(products);
+
+    setProducts(products);
+
+  };
+
+
   return (
     <div className="page_flexbox">
       <div className="navigation_menu">
@@ -51,9 +153,26 @@ export function ShopPage(props) {
         </div>
       </div>
       <div className="products">
-        <SortingBlock products={products} sorting_text={props.sorting_text}/>
+        {/* <SortingBlock products={products} sorting_text={props.sorting_text}/> */}
+        <ListItem button onClick={handleClick}>
+          <ListItemText primary={props.sorting_text[0]} />
+          {open ? <ExpandLess /> : <ExpandMore />}
+        </ListItem>
+        <Collapse in={open} timeout="auto" unmountOnExit>
+          <List component="div" disablePadding>
+            <ListItem onClick={toPopularity} button className={classes.nested}>
+              <ListItemText primary={props.sorting_text[0]} />
+            </ListItem>
+            <ListItem onClick={toAscendingPrice} button className={classes.nested}>
+              <ListItemText primary={props.sorting_text[1]} />
+            </ListItem>
+            <ListItem onClick={toDescendingPrice} button className={classes.nested}>
+              <ListItemText primary={props.sorting_text[2]} />
+            </ListItem>
+          </List>
+        </Collapse>
         <div className="product_cards">
-          {products.map(function(
+          {products_array.map(function (
             item,
             index
           ) {

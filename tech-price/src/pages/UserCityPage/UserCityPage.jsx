@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import HomeIcon from "@material-ui/icons/Home";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,7 +9,17 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import { useHistory } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import "./UserCityPage.css";
-import CityCard from "../../components/CityCard/CityCard"
+import CityCard from "../../components/CityCard/CityCard";
+
+import Dialog from '@material-ui/core/Dialog';
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import DialogTitle from '@material-ui/core/DialogTitle';
+import useMediaQuery from '@material-ui/core/useMediaQuery';
+import { useTheme } from '@material-ui/core/styles';
+
+import UserContext from '../.././UserContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -28,9 +38,29 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export function UserCityPage(props) {
-  // const headerTextStyle = {
-  //   color: "red"
-  // }
+  const { userCity, setCity } = useContext(UserContext);
+  const [search_value, changeSearchValue] = React.useState("");
+  const [cities, changeCitiesValue] = React.useState(props.cities);
+
+  var value = "";
+  
+  const makeSearchingRequest = () => {
+    value = document.getElementById("standard-search").value;
+    value = value.toLowerCase();
+    console.log(value);
+    var sorted_cities = [];
+    for (var i = 0; i < cities.length; i++) {
+      if (cities[i].city.toLowerCase().substring(0, value.length) == value) {
+        sorted_cities.push(cities[i]);
+      }
+    }
+    if (value === "") {
+      sorted_cities = props.cities;
+    }
+    changeSearchValue(value);
+    changeCitiesValue(sorted_cities);
+  }
+
   let history = useHistory();
   const classes = useStyles();
 
@@ -45,11 +75,11 @@ export function UserCityPage(props) {
         </div>
       </div>
       <div className="cities_block">
-        <form className={classes.root} noValidate autoComplete="off">
+        <form className={classes.root} autoComplete="on">
           <TextField
             className="text_field"
             id="standard-search"
-            label="Місто"
+            onChange={makeSearchingRequest}
             type="search"
             InputProps={{
               startAdornment: (
@@ -59,13 +89,15 @@ export function UserCityPage(props) {
               )
             }}
           />
+
         </form>
         <div className="city_cards_block">
-          {props.cities.map(function(item, index) {
-            return <CityCard key={index} data={item} userCity={props.userCity} />;
+          {cities.map(function (item, index) {
+            return <CityCard key={index} data={item} />;
           })}
         </div>
       </div>
     </div>
   );
 }
+

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import HomeIcon from "@material-ui/icons/Home";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
@@ -9,6 +9,8 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import { useHistory } from "react-router-dom";
 import IconButton from "@material-ui/core/IconButton";
 import "./CityCard.css";
+
+import UserContext from '../.././UserContext';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -30,22 +32,24 @@ export default function CityCard(props) {
   // const headerTextStyle = {
   //   color: "red"
   // }
+  const {userCity, setCity} = useContext(UserContext);
+
   let history = useHistory();
   const classes = useStyles();
   var textStyle = {};
-  if (props.userCity == props.data){
+  if (userCity == props.data.city){
     textStyle = {
       color: "#FFD600"
     }
   }
 
-  function chooseCity(){
-    props.userCity = props.data;
+  const changeLocation = () => {
+    setCity(props.data.city);
   }
 
   return (
-    <div className="city_card_block">
-      <h2 style={textStyle} className="city_card_text">{props.data}</h2>
+    <div className="city_card_block" onClick={changeLocation}>
+      <h2 style={textStyle} className="city_card_text">{props.data.city}</h2>
       <hr className="hr"/>
     </div>
   );

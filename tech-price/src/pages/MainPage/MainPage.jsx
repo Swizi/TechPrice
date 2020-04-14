@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import LoginButton from "../../components/LoginButton/LoginButton";
 import ProductCard from "../../components/ProductCard/ProductCard";
@@ -27,6 +27,7 @@ import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 import LocationCityIcon from "@material-ui/icons/LocationCity";
 
+import UserContext from '../.././UserContext';
 // import { Router } from "react-router-dom"
 // import {createBrowserHistory} from 'history'
 
@@ -57,11 +58,13 @@ const options = [
   "Йошкар-Ола"
 ];
 
-const ITEM_HEIGHT = 48;
-
 export function MainPage(props) {
+
+
   const [isFocused, changeStyle] = useState(true);
   console.log(props);
+
+  const { userCity, setCity } = useContext(UserContext);
 
   return (
     <div className="page_flexbox">
@@ -106,7 +109,7 @@ export function MainPage(props) {
           <div className="city_block">
             <LocationOnIcon className="location_on_icon" />
             <Link to="/UserCityPage">
-              <span className="city_text">{props.userCity}</span>
+              <span className="city_text">{userCity}</span>
             </Link>
           </div>
         </div>

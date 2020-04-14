@@ -22,39 +22,15 @@ export default function SortingBlock(props) {
   let history = useHistory();
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
-  const [popularRating, ascendingPrice, descendingPrice, setRefresh] = React.useState(true, false, false);
 
   const handleClick = () => {
     setOpen(!open);
   };
 
-  const toPopularSort = () => {
-    history.go(0);
-    setRefresh(!popularRating);
-  };
-
-  const toAscendingPrice = () => {
-    var list = props.products;
-    // max_price = list[0].price;
-    // for(var i = 0; i <= list.length; i++){
-    //   if list_price[i] > max_price
-    // }
-    history.go(0);
-    setRefresh(!ascendingPrice);
-  };
-
   const toDescendingPrice = () => {
-    var list = props.products;
-    history.go(0);
-    setRefresh(!descendingPrice);
+    alert("Alert");
   };
 
-
-
-
-//   function toSortItems(event) {
-//     window.location.reload();
-//   }
   return (
     <React.Fragment>
       <ListItem button onClick={handleClick}>
@@ -63,10 +39,10 @@ export default function SortingBlock(props) {
       </ListItem>
       <Collapse in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
-          <ListItem onClick={toPopularSort} button className={classes.nested}>
+          <ListItem button className={classes.nested}>
             <ListItemText primary={props.sorting_text[0]} />
           </ListItem>
-          <ListItem onClick={toAscendingPrice} button className={classes.nested}>
+          <ListItem button className={classes.nested}>
             <ListItemText primary={props.sorting_text[1]} />
           </ListItem>
           <ListItem onClick={toDescendingPrice} button className={classes.nested}>
