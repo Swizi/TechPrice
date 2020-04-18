@@ -104,6 +104,9 @@ export function LoginPage(props) {
         <a href="/RegistrationPage" className="bottom_text">
           Ещё не записался?
         </a>
+        <a href="/ProfilePage" className="bottom_text">
+          Профиль 
+        </a>
       </div>
     </div>
   );

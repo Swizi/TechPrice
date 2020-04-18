@@ -13,6 +13,7 @@ import { RedirectPage } from "./pages/RedirectPage/RedirectPage";
 import { HelpPage } from "./pages/HelpPage/HelpPage";
 import { FAQPage } from "./pages/FAQPage/FAQPage";
 import { FeedbackPage } from "./pages/FeedbackPage/FeedbackPage";
+import { ProfilePage } from "./pages/ProfilePage/ProfilePage";
 
 import { makeStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
@@ -755,6 +756,11 @@ function App() {
               exact
               path="/HelpPage/feedback"
               component={FeedbackPage}
+            />
+            <Route
+              exact
+              path="/ProfilePage"
+              component={ProfilePage}
             />
             <Route
               render={() => (

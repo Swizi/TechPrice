@@ -49,7 +49,7 @@ export default function CityCard(props) {
 
   return (
     <div className="city_card_block" onClick={changeLocation}>
-      <h2 style={textStyle} className="city_card_text">{props.data.city}</h2>
+      <h2 style={textStyle} className="default_gray_text">{props.data.city}</h2>
       <hr className="hr"/>
     </div>
   );

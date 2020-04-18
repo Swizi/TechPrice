@@ -1,13 +1,29 @@
-import React from "react";
+import React, { useState }  from "react";
 import "./ProductPageInfo.css";
 import Divider from "@material-ui/core/Divider";
+import { makeStyles } from "@material-ui/core/styles";
 import Carousel from "nuka-carousel";
+import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
+import FavoriteIcon from '@material-ui/icons/Favorite';
+
+const useStyles = makeStyles(theme => ({
+    favouriteIcon: {
+      fontSize: "35px",
+      color: "#ffd600"
+    }
+  }));
 
 export default function ProductPageInfo(props) {
+    const classes = useStyles();
+    const [isClicked, changeStyle] = useState(false);
     return (
         <div className="product_description">
-            <h1 className="product_page_header">{props.data.name}</h1>
-            <Divider />
+            <div className="product_description_header_block">
+                <h1 className="product_page_header">{props.data.name}</h1>
+                <div className="favourite_button" onClick={() => changeStyle(!isClicked)}>
+                { isClicked ? <FavoriteIcon className={classes.favouriteIcon} /> : <FavoriteBorderIcon className={classes.favouriteIcon} /> }
+                </div>
+            </div>
             <Carousel
                 slidesToShow={1}
                 cellSpacing={10}

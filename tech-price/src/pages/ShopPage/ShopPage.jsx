@@ -163,10 +163,10 @@ export function ShopPage(props) {
             <ListItem onClick={toPopularity} button className={classes.nested}>
               <ListItemText primary={props.sorting_text[0]} />
             </ListItem>
-            <ListItem onClick={toAscendingPrice} button className={classes.nested}>
+            <ListItem onClick={toDescendingPrice} button className={classes.nested}>
               <ListItemText primary={props.sorting_text[1]} />
             </ListItem>
-            <ListItem onClick={toDescendingPrice} button className={classes.nested}>
+            <ListItem onClick={toAscendingPrice} button className={classes.nested}>
               <ListItemText primary={props.sorting_text[2]} />
             </ListItem>
           </List>

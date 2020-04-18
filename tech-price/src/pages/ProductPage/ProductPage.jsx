@@ -15,7 +15,7 @@ const useStyles = makeStyles(theme => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      width: 300
+      width: 300,
     }
   },
   margin: {
@@ -33,7 +33,6 @@ export function ProductPage(props) {
   var index = href[href.length - 1];
   console.log(index);
   let history = useHistory();
-  const classes = useStyles();
   return (
     <div className="page_flexbox">
       <div className="navigation_menu">
@@ -45,8 +44,8 @@ export function ProductPage(props) {
         </div>
       </div>
       <div className="product_page">
-        <ProductPageInfo data={props.data[index]}/>
-        <Divider /> 
+        <ProductPageInfo data={props.data[index]} />
+        <Divider />
         <ProductPageDescription data={props.data[index]} />
         <Divider />
         <ProductPageReviews data={props.data[index]} />
