@@ -523,6 +523,7 @@ const catalog = [
 ];
 
 // const Drawer = createDrawerNavigator();
+var isSet = false;
 
 function App() {
   const cookies = new Cookies();
@@ -554,9 +555,11 @@ function App() {
 
       cookies.set("Location_city", min_city, { path: '/' });
 
-      console.log(cookies.get("Location_city"));
-
-      setCity(cookies.get("Location_city"));
+      if (!isSet){
+        console.log(cookies.get("Location_city"));
+        setCity(cookies.get("Location_city"));
+        isSet = true;
+      }
 
       /*
       В объекте position изложена подробная информация

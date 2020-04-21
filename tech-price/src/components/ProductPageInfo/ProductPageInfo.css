@@ -9,6 +9,7 @@
   .product_page_header {
     font-size: 20px;
     line-height: 23px;
+    flex-basis: 80%;
   }
 
   .product_images_carousel {

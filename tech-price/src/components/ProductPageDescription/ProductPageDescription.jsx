@@ -20,13 +20,13 @@ export default function ProductPageDescription(props) {
   return (
     <div className="product_page_info">
       <h3 className="info_header">Информация о товаре</h3>
-      <p className="info_text">
+      <div className="info_text">
         <ul className="description_list">
           {array_array_description.map(function (item, index) {
             return <li key={index} className="description_list_item"><p>{item[0]}</p><p>{item[1]}</p></li>;
           })}
         </ul>
-      </p>
+      </div>
     </div>
   );
 }
