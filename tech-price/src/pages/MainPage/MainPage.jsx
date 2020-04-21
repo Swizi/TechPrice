@@ -12,6 +12,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
+import SearchTab from "../../components/SearchTab/SearchTab"
 
 import { makeStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
@@ -24,10 +25,12 @@ import MenuIcon from "@material-ui/icons/Menu";
 import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
-import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 import LocationCityIcon from "@material-ui/icons/LocationCity";
+import ContactSupportIcon from "@material-ui/icons/ContactSupport";
+import HomeIcon from "@material-ui/icons/Home";
 
 import UserContext from '../.././UserContext';
+import SearchContext from '../.././SearchContext';
 // import { Router } from "react-router-dom"
 // import {createBrowserHistory} from 'history'
 
@@ -41,22 +44,108 @@ import UserContext from '../.././UserContext';
 //     history.push(path);
 //   }
 
+
+const useStyles = makeStyles({
+  list: {
+    width: 200
+  }
+});
+
+const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
+
+
 export function MainPage(props) {
+  const classes = useStyles();
+  const [state, setState] = React.useState({
+    left: false
+  });
+
+  const toggleDrawer = (side, open) => event => {
+    if (
+      event &&
+      event.type === "keydown" &&
+      (event.key === "Tab" || event.key === "Shift")
+    ) {
+      return;
+    }
+
+    setState({ ...state, [side]: open });
+  };
+
+  const sideList = side => (
+    <div
+      className={classes.fullList}
+      role="presentation"
+      onClick={toggleDrawer(side, false)}
+      onKeyDown={toggleDrawer(side, false)}
+    >
+      <List>
+        {[
+          "Домашняя страница",
+          "Войти [Профиль]",
+          "Акции",
+          "Служба поддержки"
+        ].map((text, index) => (
+          <Link
+            key={index}
+            to={`${(index === 0 && "/") ||
+              (index === 1 && "/LoginPage") ||
+              (index === 2 && "/SalesPage") ||
+              (index === 3 && "/HelpPage")}`}
+          >
+            <ListItem button key={text}>
+              <ListItemIcon>
+                {index === 0 && <HomeIcon />}
+                {index === 1 && <AccountBoxIcon />}
+                {index === 2 && <MonetizationOnIcon />}
+                {index === 3 && <ContactSupportIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} className="list_text" />
+            </ListItem>
+          </Link>
+        ))}
+      </List>
+      <Divider />
+      <List>
+        {["Выйти", `Город: ${userCity}`].map((text, index) => (
+          <Link key={index} to={`${index === 1 && "/UserCityPage"}`}>
+            <ListItem button key={text}>
+              <ListItemIcon>
+                {index === 0 && <ExitToAppIcon />}
+                {index === 1 && <LocationCityIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} className="list_text" />
+            </ListItem>
+          </Link>
+        ))}
+      </List>
+    </div>
+  );
 
 
-  const [isFocused, changeStyle] = useState(true);
+  const { isClicked, editSearchTab } = useContext(SearchContext);
   console.log(props);
 
   const { userCity, setCity } = useContext(UserContext);
 
   return (
     <div className="page_flexbox">
+      <SwipeableDrawer
+        disableBackdropTransition={!iOS}
+        disableDiscovery={iOS}
+        open={state.left}
+        onClose={toggleDrawer("left", false)}
+        onOpen={toggleDrawer("left", true)}
+      >
+        {sideList("left")}
+      </SwipeableDrawer>
+      <SearchTab />
       <div className="navigation_menu">
         <div id="main-menu" className="menu_wrapper">
           <IconButton
-            onClick={props.toggleDrawer("left", true)}
+            onClick={toggleDrawer("left", true)}
             edge="start"
-            className={props.classes.menuButton}
+            className={classes.menuButton}
             color="inherit"
             aria-label="menu"
           >
@@ -65,25 +154,10 @@ export function MainPage(props) {
           <span
             id="pageHeader"
             className="page_header"
-            style={{ fontSize: isFocused ? "24px" : "0px" }}
           >
             TechPrice
           </span>
-          <form
-            className={props.classes.root}
-            noValidate
-            autoComplete="off"
-            className="search_form"
-          >
-            <TextField
-              style={{ width: isFocused ? "70px" : "200px" }}
-              onClick={() => changeStyle(!isFocused)}
-              onMouseOut={() => changeStyle(!isFocused)}
-              className="textField"
-              id="standard-basic"
-            />
-            <SearchIcon className="search_icon" />
-          </form>
+          <SearchIcon onClick={() => editSearchTab(!isClicked)} className="search_icon" />
         </div>
       </div>
       <div className="products">

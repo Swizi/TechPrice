@@ -31,6 +31,7 @@ import HomeIcon from "@material-ui/icons/Home";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { isVariableDeclarator } from "@babel/types";
 import UserContext from './UserContext';
+import SearchContext from './SearchContext';
 
 import Cookies from 'universal-cookie';
 
@@ -49,17 +50,9 @@ const LoadingPage = () => <div>Loading...</div>;
 // const SalesPage = React.lazy(() => import("./pages/SalesPage/SalesPage"));
 // const RedirectPage = React.lazy(() => import("./pages/RedirectPage/RedirectPage"));
 
-const useStyles = makeStyles({
-  list: {
-    width: 200
-  }
-});
-
 // var userCity = "Москва";
 
 const pageHeader = "2";
-
-const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 const faq = [
   {
@@ -606,171 +599,166 @@ function App() {
     }
   );
   const [userCity, setCity] = useState("Москва");
-  const value = { userCity, setCity };
+  const user_value = { userCity, setCity };
+
+  const [isClicked, editSearchTab] = useState(false);
+  const search_value = { isClicked, editSearchTab };
 
 
-  const classes = useStyles();
-  const [state, setState] = React.useState({
-    left: false
-  });
+  // const classes = useStyles();
+  // const [state, setState] = React.useState({
+  //   left: false
+  // });
 
-  const toggleDrawer = (side, open) => event => {
-    if (
-      event &&
-      event.type === "keydown" &&
-      (event.key === "Tab" || event.key === "Shift")
-    ) {
-      return;
-    }
+  // const toggleDrawer = (side, open) => event => {
+  //   if (
+  //     event &&
+  //     event.type === "keydown" &&
+  //     (event.key === "Tab" || event.key === "Shift")
+  //   ) {
+  //     return;
+  //   }
 
-    setState({ ...state, [side]: open });
-  };
+  //   setState({ ...state, [side]: open });
+  // };
 
-  const sideList = side => (
-    <div
-      className={classes.fullList}
-      role="presentation"
-      onClick={toggleDrawer(side, false)}
-      onKeyDown={toggleDrawer(side, false)}
-    >
-      <List>
-        {[
-          "Домашняя страница",
-          "Войти [Профиль]",
-          "Акции",
-          "Служба поддержки"
-        ].map((text, index) => (
-          <Link
-            key={index}
-            to={`${(index === 0 && "/") ||
-              (index === 1 && "/LoginPage") ||
-              (index === 2 && "/SalesPage") ||
-              (index === 3 && "/HelpPage")}`}
-          >
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index === 0 && <HomeIcon />}
-                {index === 1 && <AccountBoxIcon />}
-                {index === 2 && <MonetizationOnIcon />}
-                {index === 3 && <ContactSupportIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} className="list_text" />
-            </ListItem>
-          </Link>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {["Выйти", `Город: ${userCity}`].map((text, index) => (
-          <Link key={index} to={`${index === 1 && "/UserCityPage"}`}>
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index === 0 && <ExitToAppIcon />}
-                {index === 1 && <LocationCityIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} className="list_text" />
-            </ListItem>
-          </Link>
-        ))}
-      </List>
-    </div>
-  );
+  // const sideList = side => (
+  //   <div
+  //     className={classes.fullList}
+  //     role="presentation"
+  //     onClick={toggleDrawer(side, false)}
+  //     onKeyDown={toggleDrawer(side, false)}
+  //   >
+  //     <List>
+  //       {[
+  //         "Домашняя страница",
+  //         "Войти [Профиль]",
+  //         "Акции",
+  //         "Служба поддержки"
+  //       ].map((text, index) => (
+  //         <Link
+  //           key={index}
+  //           to={`${(index === 0 && "/") ||
+  //             (index === 1 && "/LoginPage") ||
+  //             (index === 2 && "/SalesPage") ||
+  //             (index === 3 && "/HelpPage")}`}
+  //         >
+  //           <ListItem button key={text}>
+  //             <ListItemIcon>
+  //               {index === 0 && <HomeIcon />}
+  //               {index === 1 && <AccountBoxIcon />}
+  //               {index === 2 && <MonetizationOnIcon />}
+  //               {index === 3 && <ContactSupportIcon />}
+  //             </ListItemIcon>
+  //             <ListItemText primary={text} className="list_text" />
+  //           </ListItem>
+  //         </Link>
+  //       ))}
+  //     </List>
+  //     <Divider />
+  //     <List>
+  //       {["Выйти", `Город: ${userCity}`].map((text, index) => (
+  //         <Link key={index} to={`${index === 1 && "/UserCityPage"}`}>
+  //           <ListItem button key={text}>
+  //             <ListItemIcon>
+  //               {index === 0 && <ExitToAppIcon />}
+  //               {index === 1 && <LocationCityIcon />}
+  //             </ListItemIcon>
+  //             <ListItemText primary={text} className="list_text" />
+  //           </ListItem>
+  //         </Link>
+  //       ))}
+  //     </List>
+  //   </div>
+  // );
 
   return (
     <BrowserRouter>
       <div className="App">
-        <SwipeableDrawer
-          disableBackdropTransition={!iOS}
-          disableDiscovery={iOS}
-          open={state.left}
-          onClose={toggleDrawer("left", false)}
-          onOpen={toggleDrawer("left", true)}
-        >
-          {sideList("left")}
-        </SwipeableDrawer>
-        <UserContext.Provider value={value}>
-          <Switch>
-            <Route path="/LoginPage" header="Вход" component={LoginPage} />
-            <Route
-              exact
-              path="/"
-              render={() => (
-                <MainPage
-                  catalog={catalog}
-                  toggleDrawer={toggleDrawer}
-                  data={data}
-                  classes={classes}
-                  toggleDrawer={toggleDrawer}
-                />
-              )}
-            />
-            <Route
-              exact
-              path="/RegistrationPage"
-              header="Регистрация"
-              component={RegistrationPage}
-            />
-            <Route
-              exact
-              header="Товар"
-              path="/ProductPage/:id"
-              render={() => <ProductPage data={data} />}
-            />
-            <Route
-              exact
-              header="Выбор города"
-              path="/UserCityPage"
-              render={() => (
-                <UserContext.Provider value={value}>
-                  <UserCityPage data={data} cities={city_list} />
+        <Switch>
+          <Route path="/LoginPage" header="Вход" component={LoginPage} />
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <SearchContext.Provider value={search_value}>
+                <UserContext.Provider value={user_value}>
+                  <MainPage
+                    catalog={catalog}
+                    // toggleDrawer={toggleDrawer}
+                    // data={data}
+                    // classes={classes}
+                  />
                 </UserContext.Provider>
-              )}
-            />
-            <Route
-              exact
-              header="Акции"
-              path="/SalesPage"
-              render={() => <SalesPage data={data} />}
-            />
-            <Route
-              exact
-              path="/RedirectPage/:id"
-              render={() => <RedirectPage catalog={catalog} />}
-            />
-            <Route
-              exact
-              path="/ShopPage/:id/:id"
-              render={() => <ShopPage catalog={catalog} sorting_text={sorting_text} />}
-            />
-            <Route
-              exact
-              path="/HelpPage"
-              render={() => <HelpPage help_data={help_data} />}
-            />
-            <Route
-              exact
-              path="/HelpPage/faq"
-              render={() => <FAQPage faq={faq} />}
-            />
-            <Route
-              exact
-              path="/HelpPage/feedback"
-              component={FeedbackPage}
-            />
-            <Route
-              exact
-              path="/ProfilePage"
-              component={ProfilePage}
-            />
-            <Route
+              </SearchContext.Provider>
+            )}
+          />
+          <Route
+            exact
+            path="/RegistrationPage"
+            header="Регистрация"
+            component={RegistrationPage}
+          />
+          <Route
+            exact
+            header="Товар"
+            path="/ProductPage/:id"
+            render={() => <ProductPage data={data} />}
+          />
+          <Route
+            exact
+            header="Выбор города"
+            path="/UserCityPage"
+            render={() => (
+              <UserContext.Provider value={user_value}>
+                <UserCityPage data={data} cities={city_list} />
+              </UserContext.Provider>
+            )}
+          />
+          <Route
+            exact
+            header="Акции"
+            path="/SalesPage"
+            render={() => <SalesPage data={data} />}
+          />
+          <Route
+            exact
+            path="/RedirectPage/:id"
+            render={() => <RedirectPage catalog={catalog} />}
+          />
+          <Route
+            exact
+            path="/ShopPage/:id/:id"
+            render={() => <ShopPage catalog={catalog} sorting_text={sorting_text} />}
+          />
+          <Route
+            exact
+            path="/HelpPage"
+            render={() => <HelpPage help_data={help_data} />}
+          />
+          <Route
+            exact
+            path="/HelpPage/faq"
+            render={() => <FAQPage faq={faq} />}
+          />
+          <Route
+            exact
+            path="/HelpPage/feedback"
+            component={FeedbackPage}
+          />
+          <Route
+            exact
+            path="/ProfilePage"
+            component={ProfilePage}
+          />
+          {/* <Route
               render={() => (
                 <h1 style={{ textAlign: "center", marginTop: 300 }}>
                   404: page not found
                 </h1>
               )}
-            />
-          </Switch>
-        </UserContext.Provider>
+            /> */}
+        </Switch>
       </div>
     </BrowserRouter>
   );
