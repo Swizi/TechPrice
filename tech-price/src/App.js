@@ -35,6 +35,11 @@ import SearchContext from './SearchContext';
 
 import Cookies from 'universal-cookie';
 
+import ajax_request from "./ajax/index.php";
+
+import $ from 'jquery';
+
+var response;
 // import { UserProvider } from './UserContext'
 // import { Button, View } from 'react-native';
 // import { createDrawerNavigator } from "@react-navigation/drawer";
@@ -528,6 +533,11 @@ var isSet = false;
 function App() {
   const cookies = new Cookies();
 
+  // $.post(ajax_request, ajaxSuccess);
+
+  // function ajaxSuccess(response) {
+  //   console.log(response);
+  // }
 
   navigator.geolocation.getCurrentPosition(
 
@@ -555,7 +565,7 @@ function App() {
 
       cookies.set("Location_city", min_city, { path: '/' });
 
-      if (!isSet){
+      if (!isSet) {
         console.log(cookies.get("Location_city"));
         setCity(cookies.get("Location_city"));
         isSet = true;
@@ -688,9 +698,9 @@ function App() {
                 <UserContext.Provider value={user_value}>
                   <MainPage
                     catalog={catalog}
-                    // toggleDrawer={toggleDrawer}
-                    // data={data}
-                    // classes={classes}
+                  // toggleDrawer={toggleDrawer}
+                  // data={data}
+                  // classes={classes}
                   />
                 </UserContext.Provider>
               </SearchContext.Provider>

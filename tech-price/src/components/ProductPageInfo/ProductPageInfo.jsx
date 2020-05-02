@@ -6,22 +6,14 @@ import Carousel from "nuka-carousel";
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
-const useStyles = makeStyles(theme => ({
-    favouriteIcon: {
-      fontSize: "35px",
-      color: "#ffd600"
-    }
-  }));
-
 export default function ProductPageInfo(props) {
-    const classes = useStyles();
     const [isClicked, changeStyle] = useState(false);
     return (
         <div className="product_description">
             <div className="product_description_header_block">
                 <h1 className="product_page_header">{props.data.name}</h1>
                 <div className="favourite_button" onClick={() => changeStyle(!isClicked)}>
-                { isClicked ? <FavoriteIcon className={classes.favouriteIcon} /> : <FavoriteBorderIcon className={classes.favouriteIcon} /> }
+                { isClicked ? <FavoriteIcon className="favorite_icon" /> : <FavoriteBorderIcon className="favorite_icon" /> }
                 </div>
             </div>
             <Carousel

@@ -31,6 +31,9 @@ import HomeIcon from "@material-ui/icons/Home";
 
 import UserContext from '../.././UserContext';
 import SearchContext from '../.././SearchContext';
+import Collapse from '@material-ui/core/Collapse';
+
+import TransitionGroup from 'react-transition-group/TransitionGroup';
 // import { Router } from "react-router-dom"
 // import {createBrowserHistory} from 'history'
 
@@ -139,7 +142,9 @@ export function MainPage(props) {
       >
         {sideList("left")}
       </SwipeableDrawer>
+      {/* <Collapse in={!isClicked} timeout={1}> */}
       <SearchTab />
+      {/* </Collapse> */}
       <div className="navigation_menu">
         <div id="main-menu" className="menu_wrapper">
           <IconButton

@@ -8,6 +8,8 @@
   justify-content: flex-start;
   flex-direction: column;
   align-items: center;
+  animation-name: search-tab;
+  animation-duration: 500ms;
 }
 
 .exit_icon{
@@ -19,4 +21,15 @@
 .exit_icon:hover{
   cursor: pointer;
   color: blue;
+}
+
+@keyframes search-tab{
+  0%{
+    top: 100%;
+    opacity: 0.3;
+  }
+  100%{
+    top: 0%;
+    opacity: 1;
+  }
 }

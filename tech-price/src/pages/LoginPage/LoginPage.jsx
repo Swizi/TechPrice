@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import "./LoginPage.css";
 import clsx from 'clsx';
 import HomeIcon from "@material-ui/icons/Home";
@@ -16,6 +16,10 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
+import Php from "../../ajax/index.php";
+
+import request from "superagent";
+
 const useStyles = makeStyles(theme => ({
   root: {
     "& > *": {
@@ -32,6 +36,7 @@ const useStyles = makeStyles(theme => ({
     marginRight: theme.spacing(1)
   }
 }));
+
 
 export function LoginPage(props) {
   let history = useHistory();
@@ -54,6 +59,26 @@ export function LoginPage(props) {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
+  
+  useEffect(() => {
+    fetch("https://api.github.com/users/Swizi")
+      .then(res => res.json())
+      .then(
+        (result) => {
+          // setIsLoaded(true);
+          // setItems(result.items);
+          console.log(result.items);
+        },
+        // Примечание: Обрабатывать ошибки необходимо именно здесь
+        // вместо блока catch(), чтобы не пропустить
+        // исключения из реальных ошибок в компонентах.
+        (error) => {
+          // setIsLoaded(true);
+          // setError(error);
+          console.log(error);
+        }
+      )
+  }, [])
 
   return (
     <div className="page_flexbox">
@@ -105,7 +130,7 @@ export function LoginPage(props) {
           Ещё не записался?
         </a>
         <a href="/ProfilePage" className="bottom_text">
-          Профиль 
+          Профиль
         </a>
       </div>
     </div>
