@@ -59,15 +59,21 @@ export function LoginPage(props) {
   const handleMouseDownPassword = (event) => {
     event.preventDefault();
   };
-  
+
   useEffect(() => {
-    fetch("https://api.github.com/users/Swizi")
+    fetch(Php,  
+      {           
+      headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Content-Type': 'application/json',
+      'Accept': 'application/json',                  
+  }})
       .then(res => res.json())
       .then(
         (result) => {
           // setIsLoaded(true);
           // setItems(result.items);
-          console.log(result.items);
+          console.log(result);
         },
         // Примечание: Обрабатывать ошибки необходимо именно здесь
         // вместо блока catch(), чтобы не пропустить
