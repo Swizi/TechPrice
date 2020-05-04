@@ -35,9 +35,6 @@ import SearchContext from './SearchContext';
 
 import Cookies from 'universal-cookie';
 
-import ajax_request from "./ajax/index.php";
-
-import $ from 'jquery';
 
 var response;
 // import { UserProvider } from './UserContext'
