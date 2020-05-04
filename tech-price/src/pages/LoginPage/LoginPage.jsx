@@ -16,7 +16,7 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
-import Php from "../../ajax/index.php";
+import Php from "../../ajax/login.php";
 
 import $ from 'jquery';
 
@@ -60,6 +60,39 @@ export function LoginPage(props) {
     event.preventDefault();
   };
 
+  const makeRequest = () => {
+    console.log("Entered");
+    var login_form = document.getElementById("standard-basic");
+    var password_form = document.getElementById("standard-adornment-password");
+    var login_val = login_form.value;
+    var password_val = password_form.value;
+    if (login_val != ""){
+      console.log(login_val);
+    } else {
+      login_val = "";
+    }
+    if (password_val != "") {
+      console.log(password_val);
+    } else {
+      password_val = "";
+    }
+    $.ajax({
+      url: Php,
+      dataType: 'json',
+      cache: false,
+      data: {
+        login: login_val,
+        password: password_val
+      },
+      success: function(data) {
+        console.log(data);
+      },
+      error: function(xhr, status, err) {
+        console.log(status);
+      }
+    });
+
+  };
   // useEffect(() => {
   //   fetch(Php,  
   //     {           
@@ -146,6 +179,7 @@ export function LoginPage(props) {
             size="medium"
             color="primary"
             className={classes.margin}
+            onClick={makeRequest}
           >
             Зайти
           </Button>
