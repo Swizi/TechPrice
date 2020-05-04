@@ -18,8 +18,6 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 import Php from "../../ajax/index.php";
 
-import request from "superagent";
-
 const useStyles = makeStyles(theme => ({
   root: {
     "& > *": {
@@ -60,31 +58,49 @@ export function LoginPage(props) {
     event.preventDefault();
   };
 
+  // useEffect(() => {
+  //   fetch(Php,  
+  //     {           
+  //     headers: {
+  //     'Access-Control-Allow-Origin': '*',
+  //     'Content-Type': 'application/json',
+  //     'Accept': 'application/json',                  
+  // }})
+  //     .then(res => res.json())
+  //     .then(
+  //       (result) => {
+  //         // setIsLoaded(true);
+  //         // setItems(result.items);
+  //         console.log(result);
+  //       },
+  //       // Примечание: Обрабатывать ошибки необходимо именно здесь
+  //       // вместо блока catch(), чтобы не пропустить
+  //       // исключения из реальных ошибок в компонентах.
+  //       (error) => {
+  //         // setIsLoaded(true);
+  //         // setError(error);
+  //         console.log(error);
+  //       }
+  //     )
+  // }, [])
   useEffect(() => {
-    fetch(Php,  
-      {           
-      headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Content-Type': 'application/json',
-      'Accept': 'application/json',                  
-  }})
-      .then(res => res.json())
-      .then(
-        (result) => {
-          // setIsLoaded(true);
-          // setItems(result.items);
-          console.log(result);
-        },
-        // Примечание: Обрабатывать ошибки необходимо именно здесь
-        // вместо блока catch(), чтобы не пропустить
-        // исключения из реальных ошибок в компонентах.
-        (error) => {
-          // setIsLoaded(true);
-          // setError(error);
-          console.log(error);
-        }
-      )
+    $.ajax({
+      url: Php,
+      dataType: 'json',
+      cache: false,
+      success: function(data) {
+        console.log(data);
+      },
+      error: function(xhr, status, err) {
+        console.log(status);
+      }
+    });
   }, [])
+  // $.post(Php, ajaxSuccess);
+
+  // function ajaxSuccess(data) {
+  //   console.log(data);
+  // }
 
   return (
     <div className="page_flexbox">
