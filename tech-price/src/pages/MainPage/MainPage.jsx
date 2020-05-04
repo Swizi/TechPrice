@@ -34,6 +34,8 @@ import SearchContext from '../.././SearchContext';
 import Collapse from '@material-ui/core/Collapse';
 
 import TransitionGroup from 'react-transition-group/TransitionGroup';
+
+import Cookies from 'universal-cookie';
 // import { Router } from "react-router-dom"
 // import {createBrowserHistory} from 'history'
 
@@ -58,6 +60,9 @@ const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 
 export function MainPage(props) {
+
+  const cookies = new Cookies();
+
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false

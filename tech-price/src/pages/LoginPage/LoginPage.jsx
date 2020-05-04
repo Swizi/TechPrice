@@ -48,6 +48,8 @@ export function LoginPage(props) {
     showPassword: false,
   });
 
+  const [error, setError] = React.useState(false);
+
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
   };
@@ -86,6 +88,9 @@ export function LoginPage(props) {
       },
       success: function(data) {
         console.log(data);
+        if (data == "ERROR"){
+          setError(!error);
+        }
       },
       error: function(xhr, status, err) {
         console.log(status);
@@ -93,31 +98,7 @@ export function LoginPage(props) {
     });
 
   };
-  // useEffect(() => {
-  //   fetch(Php,  
-  //     {           
-  //     headers: {
-  //     'Access-Control-Allow-Origin': '*',
-  //     'Content-Type': 'application/json',
-  //     'Accept': 'application/json',                  
-  // }})
-  //     .then(res => res.json())
-  //     .then(
-  //       (result) => {
-  //         // setIsLoaded(true);
-  //         // setItems(result.items);
-  //         console.log(result);
-  //       },
-  //       // Примечание: Обрабатывать ошибки необходимо именно здесь
-  //       // вместо блока catch(), чтобы не пропустить
-  //       // исключения из реальных ошибок в компонентах.
-  //       (error) => {
-  //         // setIsLoaded(true);
-  //         // setError(error);
-  //         console.log(error);
-  //       }
-  //     )
-  // }, [])
+
   useEffect(() => {
     $.ajax({
       url: Php,
@@ -131,11 +112,6 @@ export function LoginPage(props) {
       }
     });
   }, [])
-  // $.post(Php, ajaxSuccess);
-
-  // function ajaxSuccess(data) {
-  //   console.log(data);
-  // }
 
   return (
     <div className="page_flexbox">
@@ -149,7 +125,7 @@ export function LoginPage(props) {
           </span>
         </div>
       </div>
-      <Alert severity="success">Ок, ща всё буит!</Alert>
+      <Alert severity="error" className="error_alert" style={{display : error ? "flex" : "none"}}>Ок, ща всё буит!</Alert>
       <div className="login_block">
         <form className={classes.root} noValidate autoComplete="off">
           <TextField id="standard-basic" label="Логин" />
