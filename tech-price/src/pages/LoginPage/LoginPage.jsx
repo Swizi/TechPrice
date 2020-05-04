@@ -18,6 +18,8 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 
 import Php from "../../ajax/index.php";
 
+import $ from 'jquery';
+
 const useStyles = makeStyles(theme => ({
   root: {
     "& > *": {
