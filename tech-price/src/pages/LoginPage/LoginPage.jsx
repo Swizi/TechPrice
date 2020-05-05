@@ -16,6 +16,8 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
+import Cookies from 'universal-cookie';
+
 import Php from "../../ajax/login.php";
 
 import $ from 'jquery';
@@ -40,6 +42,8 @@ const useStyles = makeStyles(theme => ({
 
 export function LoginPage(props) {
   let history = useHistory();
+
+  const cookies = new Cookies();
   // const headerTextStyle = {
   //   color: "red"
   // }
@@ -87,9 +91,12 @@ export function LoginPage(props) {
         password: password_val
       },
       success: function(data) {
-        console.log(data);
-        if (data == "ERROR"){
+        console.log(data[0]);
+        if (data['error'] == "true"){
           setError(!error);
+        } else {
+          cookies.set("user_id", data["user_id"], { path: "/"});
+          cookies.set("user_login", data["user_login"], { path: "/"});
         }
       },
       error: function(xhr, status, err) {
@@ -99,19 +106,19 @@ export function LoginPage(props) {
 
   };
 
-  useEffect(() => {
-    $.ajax({
-      url: Php,
-      dataType: 'json',
-      cache: false,
-      success: function(data) {
-        console.log(data);
-      },
-      error: function(xhr, status, err) {
-        console.log(status);
-      }
-    });
-  }, [])
+  // useEffect(() => {
+  //   $.ajax({
+  //     url: Php,
+  //     dataType: 'json',
+  //     cache: false,
+  //     success: function(data) {
+  //       console.log(data);
+  //     },
+  //     error: function(xhr, status, err) {
+  //       console.log(status);
+  //     }
+  //   });
+  // }, [])
 
   return (
     <div className="page_flexbox">

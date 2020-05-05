@@ -80,6 +80,13 @@ export function MainPage(props) {
     setState({ ...state, [side]: open });
   };
 
+  const { userCity, setCity } = useContext(UserContext);
+
+  var second_menu_list = [`Город: ${userCity}`]
+  if (cookies.get("user_id")){
+    second_menu_list.push("Выйти");
+  }
+
   const sideList = side => (
     <div
       className={classes.fullList}
@@ -115,7 +122,7 @@ export function MainPage(props) {
       </List>
       <Divider />
       <List>
-        {["Выйти", `Город: ${userCity}`].map((text, index) => (
+        {second_menu_list.map((text, index) => (
           <Link key={index} to={`${index === 1 && "/UserCityPage"}`}>
             <ListItem button key={text}>
               <ListItemIcon>
@@ -133,8 +140,6 @@ export function MainPage(props) {
 
   const { isClicked, editSearchTab } = useContext(SearchContext);
   console.log(props);
-
-  const { userCity, setCity } = useContext(UserContext);
 
   return (
     <div className="page_flexbox">
