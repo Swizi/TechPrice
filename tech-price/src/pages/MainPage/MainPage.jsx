@@ -12,7 +12,7 @@ import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
-import SearchTab from "../../components/SearchTab/SearchTab"
+import SearchTab from "../../components/SearchTab/SearchTab";
 
 import { makeStyles } from "@material-ui/core/styles";
 import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
@@ -36,6 +36,8 @@ import Collapse from '@material-ui/core/Collapse';
 import TransitionGroup from 'react-transition-group/TransitionGroup';
 
 import Cookies from 'universal-cookie';
+import $ from 'jquery';
+import { Redirect } from "react-router-dom";
 // import { Router } from "react-router-dom"
 // import {createBrowserHistory} from 'history'
 
@@ -63,6 +65,8 @@ export function MainPage(props) {
 
   const cookies = new Cookies();
 
+  const [redirect, setRedirect] = React.useState(false);
+
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false
@@ -82,10 +86,35 @@ export function MainPage(props) {
 
   const { userCity, setCity } = useContext(UserContext);
 
-  var second_menu_list = [`Город: ${userCity}`]
-  if (cookies.get("user_id")){
+  var second_menu_list = [`Город: ${userCity}`];
+  var first_menu_list = ["Домашняя страница"];
+
+  var auth = false;
+  $.post("", {target: "checking"}, function(data){
+    var response = $.parseJSON(data);
+    if (response.error == "false"){
+      auth = true;
+    }
+  });
+
+  const logoutRequest = () => {
+    $.post("", {target: "logout"}, function(data){
+      var response = $.parseJSON(data);
+      if (response.error == "false"){
+        setRedirect(true);
+      }
+    });
+  };
+
+  if (auth){
     second_menu_list.push("Выйти");
+    first_menu_list.push("Профиль");
+  } else {
+    first_menu_list.push("Войти");
   }
+
+  first_menu_list.push("Акции");
+  first_menu_list.push("Служба поддержки");
 
   const sideList = side => (
     <div
@@ -95,16 +124,12 @@ export function MainPage(props) {
       onKeyDown={toggleDrawer(side, false)}
     >
       <List>
-        {[
-          "Домашняя страница",
-          "Войти [Профиль]",
-          "Акции",
-          "Служба поддержки"
-        ].map((text, index) => (
+        {first_menu_list.map((text, index) => (
           <Link
             key={index}
             to={`${(index === 0 && "/") ||
-              (index === 1 && "/LoginPage") ||
+              (index === 1 && !cookies.get("user_id") && "/LoginPage") ||
+              (index === 1 && cookies.get("user_id") && "/ProfilePage") ||
               (index === 2 && "/SalesPage") ||
               (index === 3 && "/HelpPage")}`}
           >
@@ -126,7 +151,7 @@ export function MainPage(props) {
           <Link key={index} to={`${index === 1 && "/UserCityPage"}`}>
             <ListItem button key={text}>
               <ListItemIcon>
-                {index === 0 && <ExitToAppIcon />}
+                {index === 0 && <ExitToAppIcon onClick={logoutRequest}/>}
                 {index === 1 && <LocationCityIcon />}
               </ListItemIcon>
               <ListItemText primary={text} className="list_text" />
@@ -143,6 +168,7 @@ export function MainPage(props) {
 
   return (
     <div className="page_flexbox">
+      {redirect ? <Redirect to="" /> : <React.Fragment></React.Fragment>}
       <SwipeableDrawer
         disableBackdropTransition={!iOS}
         disableDiscovery={iOS}

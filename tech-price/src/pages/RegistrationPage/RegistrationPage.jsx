@@ -15,6 +15,9 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import clsx from 'clsx';
+import Cookies from 'universal-cookie';
+import { Redirect } from "react-router-dom";
+import $ from 'jquery';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -47,9 +50,25 @@ const validate = values => {
 };
 
 export function RegistrationPage(props) {
+  const cookies = new Cookies();
+
   const [values, setValues] = React.useState({
     showPassword: false,
   });
+
+  const [redirect, setRedirect] = React.useState(false);
+
+  var auth = false;
+  $.post("", {target: "checking"}, function(data){
+    var response = $.parseJSON(data);
+    if (response.error == "false"){
+      auth = true;
+    }
+  })
+
+  if(auth){
+    setRedirect(true);
+  }
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -101,6 +120,7 @@ export function RegistrationPage(props) {
 
   return (
     <div className="page_flexbox">
+      {redirect ? <Redirect to="" /> : <React.Fragment></React.Fragment>}
       <div className="navigation_menu">
         <div className="default_menu_wrapper">
           <IconButton onClick={() => history.goBack()}>

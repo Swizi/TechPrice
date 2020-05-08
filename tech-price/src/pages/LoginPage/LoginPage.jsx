@@ -16,6 +16,8 @@ import Input from '@material-ui/core/Input';
 import InputLabel from '@material-ui/core/InputLabel';
 import InputAdornment from '@material-ui/core/InputAdornment';
 
+import { Redirect } from "react-router-dom";
+
 import Cookies from 'universal-cookie';
 
 import Php from "../../ajax/login.php";
@@ -53,6 +55,7 @@ export function LoginPage(props) {
   });
 
   const [error, setError] = React.useState(false);
+  const [redirect, setRedirect] = React.useState(false);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -66,7 +69,19 @@ export function LoginPage(props) {
     event.preventDefault();
   };
 
-  const makeRequest = () => {
+  var auth = false;
+  $.post("", {target: "checking"}, function(data){
+    var response = $.parseJSON(data);
+    if (response.error == "false"){
+      auth = true;
+    }
+  })
+
+  if(auth){
+    setRedirect(true);
+  }
+
+  const loginRequest = () => {
     console.log("Entered");
     var login_form = document.getElementById("standard-basic");
     var password_form = document.getElementById("standard-adornment-password");
@@ -82,28 +97,30 @@ export function LoginPage(props) {
     } else {
       password_val = "";
     }
-    $.ajax({
-      url: Php,
-      dataType: 'json',
-      cache: false,
-      data: {
-        login: login_val,
-        password: password_val
-      },
-      success: function(data) {
-        console.log(data[0]);
-        if (data['error'] == "true"){
-          setError(!error);
-        } else {
-          cookies.set("user_id", data["user_id"], { path: "/"});
-          cookies.set("user_login", data["user_login"], { path: "/"});
+    if ((password_val != "") && (login_val != "")){
+      $.ajax({
+        url: Php,
+        dataType: 'json',
+        cache: false,
+        data: {
+          login: login_val,
+          password: password_val
+        },
+        success: function(data) {
+          console.log(data[0]);
+          if (data['error'] == "true"){
+            setError(true);
+          } else {
+            setRedirect(true);
+            cookies.set("user_id", data["user_id"], { path: "/"});
+            cookies.set("user_login", data["user_login"], { path: "/"});
+          }
+        },
+        error: function(xhr, status, err) {
+          console.log(status);
         }
-      },
-      error: function(xhr, status, err) {
-        console.log(status);
-      }
-    });
-
+      });
+    }
   };
 
   // useEffect(() => {
@@ -122,6 +139,7 @@ export function LoginPage(props) {
 
   return (
     <div className="page_flexbox">
+      {redirect ? <Redirect to="" /> : <React.Fragment></React.Fragment>}
       <div className="navigation_menu">
         <div className="default_menu_wrapper">
           <IconButton onClick={() => history.goBack()}>
@@ -132,7 +150,7 @@ export function LoginPage(props) {
           </span>
         </div>
       </div>
-      <Alert severity="error" className="error_alert" style={{display : error ? "flex" : "none"}}>Ок, ща всё буит!</Alert>
+      <Alert severity="error" className="error_alert" style={{display : error ? "flex" : "none"}}>Ошибка при вводе данных в форму</Alert>
       <div className="login_block">
         <form className={classes.root} noValidate autoComplete="off">
           <TextField id="standard-basic" label="Логин" />
@@ -162,7 +180,7 @@ export function LoginPage(props) {
             size="medium"
             color="primary"
             className={classes.margin}
-            onClick={makeRequest}
+            onClick={loginRequest}
           >
             Зайти
           </Button>

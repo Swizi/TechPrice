@@ -24,6 +24,11 @@ import { useTheme } from '@material-ui/core/styles';
 
 import UserContext from '../../UserContext';
 
+import { Redirect } from "react-router-dom";
+
+import Cookies from 'universal-cookie';
+import $ from 'jquery';
+
 // const useStyles = makeStyles(theme => ({
 //   root: {
 //     "& > *": {
@@ -42,6 +47,21 @@ import UserContext from '../../UserContext';
 
 export function ProfilePage(props) {
 
+  const [redirect, setRedirect] = React.useState(false);
+  const cookies = new Cookies();
+
+  var auth = false;
+  $.post("", {target: "checking"}, function(data){
+    var response = $.parseJSON(data);
+    if (response.error == "false"){
+      auth = true;
+    }
+  })
+
+  if(!auth){
+    setRedirect(true);
+  }
+
   const [state, setState] = React.useState({
     checkedA: true,
   });
@@ -54,6 +74,7 @@ export function ProfilePage(props) {
 
   return (
     <div className="page_flexbox">
+      {redirect ? <Redirect to="/RegistrationPage" /> : <React.Fragment></React.Fragment>}
       <div className="navigation_menu">
         <div className="default_menu_wrapper">
           <IconButton onClick={() => history.goBack()}>
