@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import HomeIcon from "@material-ui/icons/Home";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
@@ -29,6 +29,7 @@ import { Redirect } from "react-router-dom";
 import Cookies from 'universal-cookie';
 import $ from 'jquery';
 
+import CircularProgress from '@material-ui/core/CircularProgress';
 // const useStyles = makeStyles(theme => ({
 //   root: {
 //     "& > *": {
@@ -48,14 +49,18 @@ import $ from 'jquery';
 export function ProfilePage(props) {
 
   const [redirect, setRedirect] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
   const cookies = new Cookies();
-
-  $.post("", {target: "checking"}, function(data){
-    var response = $.parseJSON(data);
-    if (response.error == "false"){
-      setRedirect(true);
-    }
-  })
+  
+  useEffect(() => {
+    $.post("http://localhost/ajax/check_auth.php", {target: "checking"}, function(data){
+      var response = $.parseJSON(data);
+      if (response.error == "false"){
+        setRedirect(true);
+      }
+    })
+    setLoading(false);
+  });
 
   const [state, setState] = React.useState({
     checkedA: true,
@@ -68,8 +73,14 @@ export function ProfilePage(props) {
   let history = useHistory();
 
   if (redirect){
+    window.location.href = "/LoginPage";
+  }
+
+  if (loading){
     return (
-      <Redirect to="" />
+      <div class="loading_screen">
+        <CircularProgress class="circular_progress" />
+      </div>
     );
   }
 

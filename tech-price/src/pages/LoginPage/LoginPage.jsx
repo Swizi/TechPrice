@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import "./LoginPage.css";
 import clsx from 'clsx';
 import HomeIcon from "@material-ui/icons/Home";
@@ -20,9 +20,9 @@ import { Redirect } from "react-router-dom";
 
 import Cookies from 'universal-cookie';
 
-import Php from "../../ajax/login.php";
-
 import $ from 'jquery';
+
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -56,6 +56,7 @@ export function LoginPage(props) {
 
   const [error, setError] = React.useState(false);
   const [redirect, setRedirect] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -69,12 +70,15 @@ export function LoginPage(props) {
     event.preventDefault();
   };
 
-  $.post("", {target: "checking"}, function(data){
-    var response = $.parseJSON(data);
-    if (response.error == "false"){
-      setRedirect(true);
-    }
-  })
+  useEffect(() => {
+    $.post("http://localhost/ajax/check_auth.php", {target: "checking"}, function(data){
+      var response = $.parseJSON(data);
+      if (response.error == "false"){
+        setRedirect(true);
+      }
+    })
+    setLoading(false);
+  });
 
   const loginRequest = () => {
     console.log("Entered");
@@ -93,50 +97,30 @@ export function LoginPage(props) {
       password_val = "";
     }
     if ((password_val != "") && (login_val != "")){
-      $.ajax({
-        url: Php,
-        dataType: 'json',
-        cache: false,
-        data: {
-          login: login_val,
-          password: password_val
-        },
-        success: function(data) {
-          console.log(data[0]);
-          if (data['error'] == "true"){
-            setError(true);
-          } else {
-            setRedirect(true);
-            cookies.set("user_id", data["user_id"], { path: "/"});
-            cookies.set("user_login", data["user_login"], { path: "/"});
-          }
-        },
-        error: function(xhr, status, err) {
-          console.log(status);
-        }
+      $.post("http://localhost/ajax/login.php", {target: 'logination', login: login_val, password: password_val}, function(data) {
+      	var response = $.parseJSON(data);
+      	if (response.error == "true"){
+      		console.log("error");
+      		setError(true);
+      	} else {
+      		console.log("OK");
+      		window.location.href = "/";
+      	}
       });
     }
   };
 
   if (redirect){
-    return (
-      <Redirect to="" />
-    );
+    window.location.href = "";
   }
 
-  // useEffect(() => {
-  //   $.ajax({
-  //     url: Php,
-  //     dataType: 'json',
-  //     cache: false,
-  //     success: function(data) {
-  //       console.log(data);
-  //     },
-  //     error: function(xhr, status, err) {
-  //       console.log(status);
-  //     }
-  //   });
-  // }, [])
+  if (loading){
+    return (
+      <div class="loading_screen">
+        <CircularProgress class="circular_progress" />
+      </div>
+    );
+  }
 
   return (
     <div className="page_flexbox">

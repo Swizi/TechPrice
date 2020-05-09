@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./RegistrationPage.css";
 import HomeIcon from "@material-ui/icons/Home";
 import TextField from "@material-ui/core/TextField";
@@ -18,6 +18,7 @@ import clsx from 'clsx';
 import Cookies from 'universal-cookie';
 import { Redirect } from "react-router-dom";
 import $ from 'jquery';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -57,13 +58,17 @@ export function RegistrationPage(props) {
   });
 
   const [redirect, setRedirect] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
 
-  $.post("", {target: "checking"}, function(data){
-    var response = $.parseJSON(data);
-    if (response.error == "false"){
-      setRedirect(true);
-    }
-  })
+  useEffect(() => {
+    $.post("http://localhost/ajax/check_auth.php", {target: "checking"}, function(data){
+      var response = $.parseJSON(data);
+      if (response.error == "false"){
+        setRedirect(true);
+      }
+    })
+    setLoading(false);
+  });
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -113,8 +118,14 @@ export function RegistrationPage(props) {
 
   // }
   if (redirect){
+    window.location.href = "";
+  }
+
+  if (loading){
     return (
-      <Redirect to="" />
+      <div class="loading_screen">
+        <CircularProgress class="circular_progress" />
+      </div>
     );
   }
 

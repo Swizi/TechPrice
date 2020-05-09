@@ -42,7 +42,7 @@ var response;
 // import { createDrawerNavigator } from "@react-navigation/drawer";
 // import { NavigationContainer } from "@react-navigation/native";
 
-const LoadingPage = () => <div>Loading...</div>;
+const LoadingPage = () => < div > Loading... < /div>;
 
 // const MainPage = React.lazy(() => import("./pages/MainPage/MainPage"));
 // const LoginPage = React.lazy(() => import("./pages/LoginPage/LoginPage"));
@@ -56,11 +56,9 @@ const LoadingPage = () => <div>Loading...</div>;
 
 const pageHeader = "2";
 
-const faq = [
-  {
+const faq = [{
     question: "Часто ли вы занимаетесь распитием спиртосодержащих напитков?",
-    answer:
-      "Мы не любим пить пиво. Предпочитаем соли, спайсы. Очень обрадовались, что подросткам стали продавать снюс. Правда мы не знали как его использовать и просто жевали как жевачку."
+    answer: "Мы не любим пить пиво. Предпочитаем соли, спайсы. Очень обрадовались, что подросткам стали продавать снюс. Правда мы не знали как его использовать и просто жевали как жевачку."
   },
   {
     question: "К какой ОПГ вы относитесь?",
@@ -68,8 +66,7 @@ const faq = [
   }
 ];
 
-const help_data = [
-  {
+const help_data = [{
     block_id: 0,
     name: "Обратная связь",
     url: "https://is.gd/Xg7LQf",
@@ -90,8 +87,7 @@ const sorting_text = [
   "По цене по убыванию"
 ];
 
-const city_list = [
-  {
+const city_list = [{
     city: "Москва",
     latitude: 55.7522,
     longitude: 37.6156
@@ -133,24 +129,20 @@ const city_list = [
   }
 ];
 
-const data = [
-  {
+const data = [{
     id: 0,
     urls: ["https://is.gd/zwDw5r", "https://is.gd/lfHeuN"],
     popularity: 4,
     name: "Ноутбук ASUS",
     description: "Производитель ; Xiaomi ; Страна ; Китай ; Диапазон частот ; 2.4 ГГц ",
-    reviews: [
-      {
-        id: 0,
-        url: "https://is.gd/8AzG0h",
-        name: "Egor Komaroff",
-        review: "Всё понравилось, рекомендую.",
-        isLiked: true
-      }
-    ],
-    shops: [
-      {
+    reviews: [{
+      id: 0,
+      url: "https://is.gd/8AzG0h",
+      name: "Egor Komaroff",
+      review: "Всё понравилось, рекомендую.",
+      isLiked: true
+    }],
+    shops: [{
         id: 0,
         name: "TehVolt",
         price: 14599,
@@ -182,17 +174,14 @@ const data = [
     popularity: 5,
     name: "Мышь компьютерная AlohaGaming",
     description: "Производитель ; Xiaomi ; Страна ; Китай ; Диапазон частот ; 2.4 ГГц ",
-    reviews: [
-      {
-        id: 0,
-        url: "https://is.gd/8AzG0h",
-        name: "Egor Komaroff",
-        review: "Всё понравилось, рекомендую",
-        isLiked: true
-      }
-    ],
-    shops: [
-      {
+    reviews: [{
+      id: 0,
+      url: "https://is.gd/8AzG0h",
+      name: "Egor Komaroff",
+      review: "Всё понравилось, рекомендую",
+      isLiked: true
+    }],
+    shops: [{
         id: 0,
         name: "TehVolt",
         price: 4599,
@@ -224,8 +213,7 @@ const data = [
     popularity: 3,
     name: "Наушники Xiaomi redmi airdots",
     description: "Производитель ; Xiaomi ; Страна ; Китай ; Диапазон частот ; 2.4 ГГц ",
-    reviews: [
-      {
+    reviews: [{
         id: 0,
         url: "https://is.gd/8AzG0h",
         name: "Egor Komaroff",
@@ -254,8 +242,7 @@ const data = [
         isLiked: false
       }
     ],
-    shops: [
-      {
+    shops: [{
         id: 0,
         name: "TehVolt",
         price: 300,
@@ -287,17 +274,14 @@ const data = [
     popularity: 1,
     name: "Видеокарта MSI nVidia GeForce GTX 1650",
     description: "Производитель ; Xiaomi ; Страна ; Китай ; Диапазон частот ; 2.4 ГГц ",
-    reviews: [
-      {
-        id: 0,
-        url: "https://is.gd/8AzG0h",
-        name: "Egor Komaroff",
-        review: "Всё понравилось, рекомендую",
-        isLiked: true
-      }
-    ],
-    shops: [
-      {
+    reviews: [{
+      id: 0,
+      url: "https://is.gd/8AzG0h",
+      name: "Egor Komaroff",
+      review: "Всё понравилось, рекомендую",
+      isLiked: true
+    }],
+    shops: [{
         id: 0,
         name: "TehVolt",
         price: 104599,
@@ -325,13 +309,11 @@ const data = [
   }
 ];
 
-const catalog = [
-  {
+const catalog = [{
     id: 0,
     name: "Бытовая техника",
     url: "https://is.gd/3ZM9lY",
-    items: [
-      {
+    items: [{
         block_id: 1,
         id: 0,
         name: "Крупная бытовая техника",
@@ -379,8 +361,7 @@ const catalog = [
     id: 1,
     name: "Ноутбуки и аксессуары",
     url: "https://is.gd/7KJAEw",
-    items: [
-      {
+    items: [{
         block_id: 1,
         id: 0,
         name: "Крупная бытовая техника",
@@ -428,8 +409,7 @@ const catalog = [
     id: 2,
     name: "Телефоны",
     url: "https://is.gd/Tdmnc1",
-    items: [
-      {
+    items: [{
         block_id: 1,
         id: 0,
         name: "Крупная бытовая техника",
@@ -477,8 +457,7 @@ const catalog = [
     id: 3,
     name: "Периферийные устройства",
     url: "https://is.gd/OEquVx",
-    items: [
-      {
+    items: [{
         block_id: 1,
         id: 0,
         name: "Крупная бытовая техника",
@@ -539,7 +518,7 @@ function App() {
   navigator.geolocation.getCurrentPosition(
 
     // Функция обратного вызова при успешном извлечении локации
-    function (position) {
+    function(position) {
 
       var min_city = "";
 
@@ -589,7 +568,7 @@ function App() {
     },
 
     // Функция обратного вызова при неуспешном извлечении локации
-    function (error) {
+    function(error) {
 
       /*
       При неудаче, будет доступен объект error:
@@ -682,96 +661,124 @@ function App() {
   //   </div>
   // );
 
-  return (
-    <BrowserRouter>
-      <div className="App">
-        <Switch>
-          <Route path="/LoginPage" header="Вход" component={LoginPage} />
-          <Route
+  return ( <
+      BrowserRouter >
+      <
+      div className = "App" >
+      <
+      Switch >
+      <
+      Route path = "/LoginPage"
+      header = "Вход"
+      component = { LoginPage }
+      /> <
+      Route exact path = "/"
+      render = {
+        () => ( <
+          SearchContext.Provider value = { search_value } >
+          <
+          UserContext.Provider value = { user_value } >
+          <
+          MainPage catalog = { catalog }
+          // toggleDrawer={toggleDrawer}
+          // data={data}
+          // classes={classes}
+          /> <
+          /UserContext.Provider> <
+          /SearchContext.Provider>
+        )
+      }
+      /> <
+      Route exact path = "/RegistrationPage"
+      header = "Регистрация"
+      component = { RegistrationPage }
+      /> <
+      Route exact header = "Товар"
+      path = "/ProductPage/:id"
+      render = {
+        () => < ProductPage data = { data }
+        />} /
+        >
+        <
+        Route
+        exact
+        header = "Выбор города"
+        path = "/UserCityPage"
+        render = {
+          () => ( <
+            UserContext.Provider value = { user_value } >
+            <
+            UserCityPage data = { data }
+            cities = { city_list }
+            /> <
+            /UserContext.Provider>
+          )
+        }
+        /> <
+        Route
+        exact
+        header = "Акции"
+        path = "/SalesPage"
+        render = {
+          () => < SalesPage data = { data }
+          />} /
+          >
+          <
+          Route
+          exact
+          path = "/RedirectPage/:id"
+          render = {
+            () => < RedirectPage catalog = { catalog }
+            />} /
+            >
+            <
+            Route
             exact
-            path="/"
-            render={() => (
-              <SearchContext.Provider value={search_value}>
-                <UserContext.Provider value={user_value}>
-                  <MainPage
-                    catalog={catalog}
-                  // toggleDrawer={toggleDrawer}
-                  // data={data}
-                  // classes={classes}
-                  />
-                </UserContext.Provider>
-              </SearchContext.Provider>
-            )}
-          />
-          <Route
-            exact
-            path="/RegistrationPage"
-            header="Регистрация"
-            component={RegistrationPage}
-          />
-          <Route
-            exact
-            header="Товар"
-            path="/ProductPage/:id"
-            render={() => <ProductPage data={data} />}
-          />
-          <Route
-            exact
-            header="Выбор города"
-            path="/UserCityPage"
-            render={() => (
-              <UserContext.Provider value={user_value}>
-                <UserCityPage data={data} cities={city_list} />
-              </UserContext.Provider>
-            )}
-          />
-          <Route
-            exact
-            header="Акции"
-            path="/SalesPage"
-            render={() => <SalesPage data={data} />}
-          />
-          <Route
-            exact
-            path="/RedirectPage/:id"
-            render={() => <RedirectPage catalog={catalog} />}
-          />
-          <Route
-            exact
-            path="/ShopPage/:id/:id"
-            render={() => <ShopPage catalog={catalog} sorting_text={sorting_text} />}
-          />
-          <Route
-            exact
-            path="/HelpPage"
-            render={() => <HelpPage help_data={help_data} />}
-          />
-          <Route
-            exact
-            path="/HelpPage/faq"
-            render={() => <FAQPage faq={faq} />}
-          />
-          <Route
-            exact
-            path="/HelpPage/feedback"
-            component={FeedbackPage}
-          />
-          <Route
-            exact
-            path="/ProfilePage"
-            component={ProfilePage}
-          />
-          {/* <Route
-              render={() => (
-                <h1 style={{ textAlign: "center", marginTop: 300 }}>
-                  404: page not found
-                </h1>
-              )}
-            /> */}
-        </Switch>
-      </div>
-    </BrowserRouter>
-  );
-}
+            path = "/ShopPage/:id/:id"
+            render = {
+              () => < ShopPage catalog = { catalog }
+              sorting_text = { sorting_text }
+              />} /
+              >
+              <
+              Route
+              exact
+              path = "/HelpPage"
+              render = {
+                () => < HelpPage help_data = { help_data }
+                />} /
+                >
+                <
+                Route
+                exact
+                path = "/HelpPage/faq"
+                render = {
+                  () => < FAQPage faq = { faq }
+                  />} /
+                  >
+                  <
+                  Route
+                  exact
+                  path = "/HelpPage/feedback"
+                  component = { FeedbackPage }
+                  /> <
+                  Route
+                  exact
+                  path = "/ProfilePage"
+                  component = { ProfilePage }
+                  /> {
+                    /* <Route
+                                  render={() => (
+                                    <h1 style={{ textAlign: "center", marginTop: 300 }}>
+                                      404: page not found
+                                    </h1>
+                                  )}
+                                /> */
+                  } <
+                  /Switch> <
+                  /div> <
+                  /BrowserRouter>
+                );
+              }
 
-export default App;
+              export default App;

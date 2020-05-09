@@ -13,12 +13,12 @@ export default function ProductPageInfo(props) {
 
     const [auth, setAuth] = React.useState(false);
 
-    $.post("", {target: "checking"}, function(data){
-        var response = $.parseJSON(data);
-        if (response.error == "false"){
-          setAuth(true);
-        }
-      })
+    $.post("http://localhost/ajax/check_auth.php", {target: "checking"}, function(data){
+      var response = $.parseJSON(data);
+      if (response.error == "false"){
+        setAuth(true);
+      }
+    })
     return (
         <div className="product_description">
             <div className="product_description_header_block">

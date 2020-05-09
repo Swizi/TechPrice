@@ -1,16 +1,27 @@
-.profile_block{
+.profile_block {
   display: flex;
   flex-direction: column;
   width: 90%;
   margin-top: 30px;
 }
 
-.default_black_text{
+.default_black_text {
   font-size: 16px;
   color: black;
   margin: 10px 0 10px 0;
 }
 
-.checkbox_label{
+.checkbox_label {
   margin: 40px 0 10px 0;
+}
+
+.loading_screen {
+  margin: 50% 0 0 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.circular_progress {
+  color: #FFD600;
 }

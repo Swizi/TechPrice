@@ -65,7 +65,7 @@ export function MainPage(props) {
 
   const cookies = new Cookies();
 
-  const [auth, setAuth] = React.useState(false);
+  const [auth, setAuth] = React.useState(true);
 
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -149,10 +149,12 @@ export function MainPage(props) {
       <Divider />
       <List>
         {second_menu_list.map((text, index) => (
-          <Link key={index} to={`${index === 0 && "/UserCityPage"}`}>
+          <Link key={index} to={`${(index === 0 && "/UserCityPage") ||
+                               (index === 1 && "/")}`}
+                               onClick={index ? logoutRequest : console.log("VSEM PRIVETIK")}>
             <ListItem button key={text}>
               <ListItemIcon>
-                {index === 0 && <ExitToAppIcon onClick={logoutRequest}/>}
+                {index === 0 && <ExitToAppIcon />}
                 {index === 1 && <LocationCityIcon />}
               </ListItemIcon>
               <ListItemText primary={text} className="list_text" />
