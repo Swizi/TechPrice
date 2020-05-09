@@ -67,9 +67,15 @@ export function ProfilePage(props) {
 
   let history = useHistory();
 
+  if (redirect){
+    return (
+      <Redirect to="" />
+    );
+  }
+
+
   return (
     <div className="page_flexbox">
-      {redirect ? <Redirect to="/RegistrationPage" /> : <React.Fragment></React.Fragment>}
       <div className="navigation_menu">
         <div className="default_menu_wrapper">
           <IconButton onClick={() => history.goBack()}>

@@ -65,8 +65,6 @@ export function MainPage(props) {
 
   const cookies = new Cookies();
 
-  const [redirect, setRedirect] = React.useState(false);
-
   const [auth, setAuth] = React.useState(false);
 
   const classes = useStyles();
@@ -102,7 +100,7 @@ export function MainPage(props) {
     $.post("", {target: "logout"}, function(data){
       var response = $.parseJSON(data);
       if (response.error == "false"){
-        setRedirect(true);
+        setAuth(false);
       }
     });
   };
@@ -171,7 +169,6 @@ export function MainPage(props) {
 
   return (
     <div className="page_flexbox">
-      {redirect ? <Redirect to="" /> : <React.Fragment></React.Fragment>}
       <SwipeableDrawer
         disableBackdropTransition={!iOS}
         disableDiscovery={iOS}

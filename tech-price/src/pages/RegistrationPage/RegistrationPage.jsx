@@ -112,10 +112,14 @@ export function RegistrationPage(props) {
   //   }
 
   // }
+  if (redirect){
+    return (
+      <Redirect to="" />
+    );
+  }
 
   return (
     <div className="page_flexbox">
-      {redirect ? <Redirect to="" /> : <React.Fragment></React.Fragment>}
       <div className="navigation_menu">
         <div className="default_menu_wrapper">
           <IconButton onClick={() => history.goBack()}>

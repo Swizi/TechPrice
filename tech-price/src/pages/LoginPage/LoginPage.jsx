@@ -118,6 +118,12 @@ export function LoginPage(props) {
     }
   };
 
+  if (redirect){
+    return (
+      <Redirect to="" />
+    );
+  }
+
   // useEffect(() => {
   //   $.ajax({
   //     url: Php,
@@ -134,7 +140,6 @@ export function LoginPage(props) {
 
   return (
     <div className="page_flexbox">
-      {redirect ? <Redirect to="" /> : <React.Fragment></React.Fragment>}
       <div className="navigation_menu">
         <div className="default_menu_wrapper">
           <IconButton onClick={() => history.goBack()}>
