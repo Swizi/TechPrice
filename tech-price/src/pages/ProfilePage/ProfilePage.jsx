@@ -50,17 +50,12 @@ export function ProfilePage(props) {
   const [redirect, setRedirect] = React.useState(false);
   const cookies = new Cookies();
 
-  var auth = false;
   $.post("", {target: "checking"}, function(data){
     var response = $.parseJSON(data);
     if (response.error == "false"){
-      auth = true;
+      setRedirect(true);
     }
   })
-
-  if(!auth){
-    setRedirect(true);
-  }
 
   const [state, setState] = React.useState({
     checkedA: true,

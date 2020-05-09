@@ -6,14 +6,25 @@ import Carousel from "nuka-carousel";
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 
+import $ from 'jquery';
+
 export default function ProductPageInfo(props) {
     const [isClicked, changeStyle] = useState(false);
+
+    const [auth, setAuth] = React.useState(false);
+
+    $.post("", {target: "checking"}, function(data){
+        var response = $.parseJSON(data);
+        if (response.error == "false"){
+          setAuth(true);
+        }
+      })
     return (
         <div className="product_description">
             <div className="product_description_header_block">
                 <h1 className="product_page_header">{props.data.name}</h1>
                 <div className="favourite_button" onClick={() => changeStyle(!isClicked)}>
-                { isClicked ? <FavoriteIcon className="favorite_icon" /> : <FavoriteBorderIcon className="favorite_icon" /> }
+                { isClicked ? <FavoriteIcon className="favorite_icon" style={{display: auth ? "flex" : "none"}}/> : <FavoriteBorderIcon className="favorite_icon" style={{display: auth ? "flex" : "none"}}/> }
                 </div>
             </div>
             <Carousel

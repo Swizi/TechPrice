@@ -58,17 +58,12 @@ export function RegistrationPage(props) {
 
   const [redirect, setRedirect] = React.useState(false);
 
-  var auth = false;
   $.post("", {target: "checking"}, function(data){
     var response = $.parseJSON(data);
     if (response.error == "false"){
-      auth = true;
+      setRedirect(true);
     }
   })
-
-  if(auth){
-    setRedirect(true);
-  }
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });

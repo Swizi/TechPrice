@@ -67,6 +67,8 @@ export function MainPage(props) {
 
   const [redirect, setRedirect] = React.useState(false);
 
+  const [auth, setAuth] = React.useState(false);
+
   const classes = useStyles();
   const [state, setState] = React.useState({
     left: false
@@ -89,11 +91,10 @@ export function MainPage(props) {
   var second_menu_list = [`Город: ${userCity}`];
   var first_menu_list = ["Домашняя страница"];
 
-  var auth = false;
   $.post("", {target: "checking"}, function(data){
     var response = $.parseJSON(data);
     if (response.error == "false"){
-      auth = true;
+      setAuth(true);
     }
   });
 
@@ -105,6 +106,8 @@ export function MainPage(props) {
       }
     });
   };
+  
+  console.log("Auth - ", auth); 
 
   if (auth){
     second_menu_list.push("Выйти");
@@ -128,8 +131,8 @@ export function MainPage(props) {
           <Link
             key={index}
             to={`${(index === 0 && "/") ||
-              (index === 1 && !cookies.get("user_id") && "/LoginPage") ||
-              (index === 1 && cookies.get("user_id") && "/ProfilePage") ||
+              (index === 1 && !auth && "/LoginPage") ||
+              (index === 1 && auth && "/ProfilePage") ||
               (index === 2 && "/SalesPage") ||
               (index === 3 && "/HelpPage")}`}
           >
@@ -148,7 +151,7 @@ export function MainPage(props) {
       <Divider />
       <List>
         {second_menu_list.map((text, index) => (
-          <Link key={index} to={`${index === 1 && "/UserCityPage"}`}>
+          <Link key={index} to={`${index === 0 && "/UserCityPage"}`}>
             <ListItem button key={text}>
               <ListItemIcon>
                 {index === 0 && <ExitToAppIcon onClick={logoutRequest}/>}

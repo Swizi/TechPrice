@@ -69,17 +69,12 @@ export function LoginPage(props) {
     event.preventDefault();
   };
 
-  var auth = false;
   $.post("", {target: "checking"}, function(data){
     var response = $.parseJSON(data);
     if (response.error == "false"){
-      auth = true;
+      setRedirect(true);
     }
   })
-
-  if(auth){
-    setRedirect(true);
-  }
 
   const loginRequest = () => {
     console.log("Entered");
@@ -150,7 +145,7 @@ export function LoginPage(props) {
           </span>
         </div>
       </div>
-      <Alert severity="error" className="error_alert" style={{display : error ? "flex" : "none"}}>Ошибка при вводе данных в форму</Alert>
+      <Alert severity="error" className="error_alert" style={{display: error ? "flex" : "none"}}>Ошибка при вводе данных в форму</Alert>
       <div className="login_block">
         <form className={classes.root} noValidate autoComplete="off">
           <TextField id="standard-basic" label="Логин" />
