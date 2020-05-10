@@ -99,6 +99,7 @@ export function MainPage(props) {
     } else {
       setAuth(false);
     }
+    setLoading(false);
   });
 
   const logoutRequest = () => {
