@@ -38,6 +38,7 @@ import TransitionGroup from 'react-transition-group/TransitionGroup';
 import Cookies from 'universal-cookie';
 import $ from 'jquery';
 import { Redirect } from "react-router-dom";
+import CircularProgress from '@material-ui/core/CircularProgress';
 // import { Router } from "react-router-dom"
 // import {createBrowserHistory} from 'history'
 
@@ -66,6 +67,7 @@ export function MainPage(props) {
   const cookies = new Cookies();
 
   const [auth, setAuth] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
 
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -89,9 +91,10 @@ export function MainPage(props) {
   var second_menu_list = [`Город: ${userCity}`];
   var first_menu_list = ["Домашняя страница"];
 
-  $.post("", {target: "checking"}, function(data){
+  $.post("", { target: "checking" }, function (data) {
+    setLoading(true);
     var response = $.parseJSON(data);
-    if (response.error == "false"){
+    if (response.error == "false") {
       setAuth(true);
     } else {
       setAuth(false);
@@ -99,19 +102,21 @@ export function MainPage(props) {
   });
 
   const logoutRequest = () => {
-    $.post("", {target: "logout"}, function(data){
+    $.post("", { target: "logout" }, function (data) {
+      setLoading(true);
       var response = $.parseJSON(data);
-      if (response.error == "false"){
+      if (response.error == "false") {
         setAuth(false);
       } else {
         setAuth(true);
       }
+      setLoading(false);
     });
   };
-  
-  console.log("Auth - ", auth); 
 
-  if (auth){
+  console.log("Auth - ", auth);
+
+  if (auth) {
     second_menu_list.push("Выйти");
     first_menu_list.push("Профиль");
   } else {
@@ -128,44 +133,49 @@ export function MainPage(props) {
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
     >
-      <List>
-        {first_menu_list.map((text, index) => (
-          <Link
-            key={index}
-            to={`${(index === 0 && "/") ||
-              (index === 1 && !auth && "/LoginPage") ||
-              (index === 1 && auth && "/ProfilePage") ||
-              (index === 2 && "/SalesPage") ||
-              (index === 3 && "/HelpPage")}`}
-          >
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index === 0 && <HomeIcon />}
-                {index === 1 && <AccountBoxIcon />}
-                {index === 2 && <MonetizationOnIcon />}
-                {index === 3 && <ContactSupportIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} className="list_text" />
-            </ListItem>
-          </Link>
-        ))}
-      </List>
-      <Divider />
-      <List>
-        {second_menu_list.map((text, index) => (
-          <Link key={index} to={`${(index === 0 && "/UserCityPage") ||
-                               (index === 1 && "/")}`}
-                               onClick={index ? logoutRequest : console.log("VSEM PRIVETIK")}>
-            <ListItem button key={text}>
-              <ListItemIcon>
-                {index === 0 && <ExitToAppIcon />}
-                {index === 1 && <LocationCityIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} className="list_text" />
-            </ListItem>
-          </Link>
-        ))}
-      </List>
+      {loading ? <div class="loading_screen">
+        <CircularProgress class="circular_progress" />
+      </div> : <React.Fragment>
+          <List>
+            {first_menu_list.map((text, index) => (
+              <Link
+                key={index}
+                to={`${(index === 0 && "/") ||
+                  (index === 1 && !auth && "/LoginPage") ||
+                  (index === 1 && auth && "/ProfilePage") ||
+                  (index === 2 && "/SalesPage") ||
+                  (index === 3 && "/HelpPage")}`}
+              >
+                <ListItem button key={text}>
+                  <ListItemIcon>
+                    {index === 0 && <HomeIcon />}
+                    {index === 1 && <AccountBoxIcon />}
+                    {index === 2 && <MonetizationOnIcon />}
+                    {index === 3 && <ContactSupportIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} className="list_text" />
+                </ListItem>
+              </Link>
+            ))}
+          </List>
+          <Divider />
+          <List>
+            {second_menu_list.map((text, index) => (
+              <Link key={index} to={`${(index === 0 && "/UserCityPage") ||
+                (index === 1 && "/")}`}
+                onClick={index ? logoutRequest : console.log("VSEM PRIVETIK")}>
+                <ListItem button key={text}>
+                  <ListItemIcon>
+                    {index === 0 && <ExitToAppIcon />}
+                    {index === 1 && <LocationCityIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} className="list_text" />
+                </ListItem>
+              </Link>
+            ))}
+          </List>
+        </React.Fragment>
+        }
     </div>
   );
 
