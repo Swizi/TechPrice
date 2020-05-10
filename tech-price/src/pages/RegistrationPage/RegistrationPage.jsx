@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./RegistrationPage.css";
 import HomeIcon from "@material-ui/icons/Home";
 import TextField from "@material-ui/core/TextField";
@@ -60,15 +60,15 @@ export function RegistrationPage(props) {
   const [redirect, setRedirect] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
 
-  useEffect(() => {
-    $.post("http://localhost/ajax/check_auth.php", {target: "checking"}, function(data){
-      var response = $.parseJSON(data);
-      if (response.error == "false"){
-        setRedirect(true);
-      }
-    })
+  $.post("http://localhost/ajax/check_auth.php", { target: "checking" }, function (data) {
+    var response = $.parseJSON(data);
+    if (response.error == "false") {
+      setRedirect(true);
+    } else {
+      setRedirect(false);
+    }
     setLoading(false);
-  });
+  })
 
   const handleChange = (prop) => (event) => {
     setValues({ ...values, [prop]: event.target.value });
@@ -87,7 +87,7 @@ export function RegistrationPage(props) {
   let history = useHistory();
   const classes = useStyles();
 
-  
+
   const formik = useFormik({
     initialValues: {
       firstName: '',
@@ -117,83 +117,84 @@ export function RegistrationPage(props) {
   //   }
 
   // }
-  if (redirect){
+  if (redirect) {
     window.location.href = "";
   }
 
-  if (loading){
+  if (loading) {
     return (
       <div class="loading_screen">
         <CircularProgress class="circular_progress" />
       </div>
     );
-  }
+  } else {
 
-  return (
-    <div className="page_flexbox">
-      <div className="navigation_menu">
-        <div className="default_menu_wrapper">
-          <IconButton onClick={() => history.goBack()}>
-            <ArrowBackIcon />
-          </IconButton>
-          <span className="menu_header_text">Заведение аккаунта</span>
+    return (
+      <div className="page_flexbox">
+        <div className="navigation_menu">
+          <div className="default_menu_wrapper">
+            <IconButton onClick={() => history.goBack()}>
+              <ArrowBackIcon />
+            </IconButton>
+            <span className="menu_header_text">Заведение аккаунта</span>
+          </div>
+        </div>
+        <div className="login_block">
+          <form className={classes.root} onSubmit={formik.handleSubmit} autoComplete="on">
+            <TextField id={formik.errors.firstName ? "standard-error-helper-text" : "standard-basic"} label="Логин" type="text" onChange={formik.handleChange} value={formik.values.firstName} name="firstName" id="firstName" helperText={formik.errors.firstName ? formik.errors.firstName : null} />
+            <TextField id="standard-helperText" id="email" name="email" type="email" onChange={formik.handleChange} value={formik.values.email} label="Введите e-mail" helperText={formik.errors.email ? formik.errors.email : null} />
+            <FormControl className={clsx(classes.textField)}>
+              <InputLabel htmlFor="standard-adornment-password">Пароль</InputLabel>
+              <Input
+                id="standard-adornment-password"
+                type={values.showPassword ? 'text' : 'password'}
+                value={values.password}
+                onChange={handleChange('password')}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            <FormControl className={clsx(classes.textField)}>
+              <InputLabel htmlFor="standard-adornment-password">Пароль ещё раз</InputLabel>
+              <Input
+                id="standard-adornment-password"
+                type={values.showPassword ? 'text' : 'password'}
+                value={values.password}
+                onChange={handleChange('password')}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            <Button
+              type="submit"
+              variant="outlined"
+              size="medium"
+              color="primary"
+              className={classes.margin}
+            >
+              Завести аккаунт
+          </Button>
+          </form>
         </div>
       </div>
-      <div className="login_block">
-        <form className={classes.root} onSubmit={formik.handleSubmit} autoComplete="on">
-          <TextField id={formik.errors.firstName ? "standard-error-helper-text" : "standard-basic"} label="Логин" type="text" onChange={formik.handleChange} value={formik.values.firstName} name="firstName" id="firstName" helperText={formik.errors.firstName ? formik.errors.firstName : null}/>
-          <TextField id="standard-helperText" id="email" name="email" type="email" onChange={formik.handleChange} value={formik.values.email} label="Введите e-mail" helperText={formik.errors.email ? formik.errors.email : null} />
-          <FormControl className={clsx(classes.textField)}>
-            <InputLabel htmlFor="standard-adornment-password">Пароль</InputLabel>
-            <Input
-              id="standard-adornment-password"
-              type={values.showPassword ? 'text' : 'password'}
-              value={values.password}
-              onChange={handleChange('password')}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                  >
-                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
-          <FormControl className={clsx(classes.textField)}>
-            <InputLabel htmlFor="standard-adornment-password">Пароль ещё раз</InputLabel>
-            <Input
-              id="standard-adornment-password"
-              type={values.showPassword ? 'text' : 'password'}
-              value={values.password}
-              onChange={handleChange('password')}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                  >
-                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
-          <Button
-            type="submit"
-            variant="outlined"
-            size="medium"
-            color="primary"
-            className={classes.margin}
-          >
-            Завести аккаунт
-          </Button>
-        </form>
-      </div>
-    </div>
-  );
+    );
+  }
 }

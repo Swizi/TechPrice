@@ -65,7 +65,7 @@ export function MainPage(props) {
 
   const cookies = new Cookies();
 
-  const [auth, setAuth] = React.useState(true);
+  const [auth, setAuth] = React.useState(false);
 
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -93,6 +93,8 @@ export function MainPage(props) {
     var response = $.parseJSON(data);
     if (response.error == "false"){
       setAuth(true);
+    } else {
+      setAuth(false);
     }
   });
 
@@ -101,6 +103,8 @@ export function MainPage(props) {
       var response = $.parseJSON(data);
       if (response.error == "false"){
         setAuth(false);
+      } else {
+        setAuth(true);
       }
     });
   };

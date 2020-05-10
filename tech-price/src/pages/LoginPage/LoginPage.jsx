@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./LoginPage.css";
 import clsx from 'clsx';
 import HomeIcon from "@material-ui/icons/Home";
@@ -70,15 +70,15 @@ export function LoginPage(props) {
     event.preventDefault();
   };
 
-  useEffect(() => {
-    $.post("http://localhost/ajax/check_auth.php", {target: "checking"}, function(data){
-      var response = $.parseJSON(data);
-      if (response.error == "false"){
-        setRedirect(true);
-      }
-    })
+  $.post("http://localhost/ajax/check_auth.php", { target: "checking" }, function (data) {
+    var response = $.parseJSON(data);
+    if (response.error == "false") {
+      setRedirect(true);
+    } else {
+      setRedirect(false);
+    }
     setLoading(false);
-  });
+  })
 
   const loginRequest = () => {
     console.log("Entered");
@@ -86,7 +86,7 @@ export function LoginPage(props) {
     var password_form = document.getElementById("standard-adornment-password");
     var login_val = login_form.value;
     var password_val = password_form.value;
-    if (login_val != ""){
+    if (login_val != "") {
       console.log(login_val);
     } else {
       login_val = "";
@@ -96,86 +96,87 @@ export function LoginPage(props) {
     } else {
       password_val = "";
     }
-    if ((password_val != "") && (login_val != "")){
-      $.post("http://localhost/ajax/login.php", {target: 'logination', login: login_val, password: password_val}, function(data) {
-      	var response = $.parseJSON(data);
-      	if (response.error == "true"){
-      		console.log("error");
-      		setError(true);
-      	} else {
-      		console.log("OK");
-      		window.location.href = "/";
-      	}
+    if ((password_val != "") && (login_val != "")) {
+      $.post("http://localhost/ajax/login.php", { target: 'logination', login: login_val, password: password_val }, function (data) {
+        var response = $.parseJSON(data);
+        if (response.error == "true") {
+          console.log("error");
+          setError(true);
+        } else {
+          console.log("OK");
+          window.location.href = "/";
+        }
       });
     }
   };
 
-  if (redirect){
+  if (redirect) {
     window.location.href = "";
   }
 
-  if (loading){
+  if (loading) {
     return (
       <div class="loading_screen">
         <CircularProgress class="circular_progress" />
       </div>
     );
-  }
+  } else {
 
-  return (
-    <div className="page_flexbox">
-      <div className="navigation_menu">
-        <div className="default_menu_wrapper">
-          <IconButton onClick={() => history.goBack()}>
-            <ArrowBackIcon />
-          </IconButton>
-          <span className="menu_header_text">
-            Вход
+    return (
+      <div className="page_flexbox">
+        <div className="navigation_menu">
+          <div className="default_menu_wrapper">
+            <IconButton onClick={() => history.goBack()}>
+              <ArrowBackIcon />
+            </IconButton>
+            <span className="menu_header_text">
+              Вход
           </span>
+          </div>
+        </div>
+        <Alert severity="error" className="error_alert" style={{ display: error ? "flex" : "none" }}>Ошибка при вводе данных в форму</Alert>
+        <div className="login_block">
+          <form className={classes.root} noValidate autoComplete="off">
+            <TextField id="standard-basic" label="Логин" />
+            {/* <TextField id="standard-password-input" label="Пароль" type="password"  autoComplete="current-password"/> */}
+            <FormControl className={clsx(classes.textField)}>
+              <InputLabel htmlFor="standard-adornment-password">Пароль</InputLabel>
+              <Input
+                id="standard-adornment-password"
+                type={values.showPassword ? 'text' : 'password'}
+                value={values.password}
+                onChange={handleChange('password')}
+                endAdornment={
+                  <InputAdornment position="end">
+                    <IconButton
+                      aria-label="toggle password visibility"
+                      onClick={handleClickShowPassword}
+                      onMouseDown={handleMouseDownPassword}
+                    >
+                      {values.showPassword ? <Visibility /> : <VisibilityOff />}
+                    </IconButton>
+                  </InputAdornment>
+                }
+              />
+            </FormControl>
+            <Button
+              variant="outlined"
+              size="medium"
+              color="primary"
+              className={classes.margin}
+              onClick={loginRequest}
+            >
+              Зайти
+          </Button>
+          </form>
+          <a href="/RegistrationPage" className="bottom_text">
+            Ещё не записался?
+        </a>
+          <a href="/ProfilePage" className="bottom_text">
+            Профиль
+        </a>
         </div>
       </div>
-      <Alert severity="error" className="error_alert" style={{display: error ? "flex" : "none"}}>Ошибка при вводе данных в форму</Alert>
-      <div className="login_block">
-        <form className={classes.root} noValidate autoComplete="off">
-          <TextField id="standard-basic" label="Логин" />
-          {/* <TextField id="standard-password-input" label="Пароль" type="password"  autoComplete="current-password"/> */}
-          <FormControl className={clsx(classes.textField)}>
-            <InputLabel htmlFor="standard-adornment-password">Пароль</InputLabel>
-            <Input
-              id="standard-adornment-password"
-              type={values.showPassword ? 'text' : 'password'}
-              value={values.password}
-              onChange={handleChange('password')}
-              endAdornment={
-                <InputAdornment position="end">
-                  <IconButton
-                    aria-label="toggle password visibility"
-                    onClick={handleClickShowPassword}
-                    onMouseDown={handleMouseDownPassword}
-                  >
-                    {values.showPassword ? <Visibility /> : <VisibilityOff />}
-                  </IconButton>
-                </InputAdornment>
-              }
-            />
-          </FormControl>
-          <Button
-            variant="outlined"
-            size="medium"
-            color="primary"
-            className={classes.margin}
-            onClick={loginRequest}
-          >
-            Зайти
-          </Button>
-        </form>
-        <a href="/RegistrationPage" className="bottom_text">
-          Ещё не записался?
-        </a>
-        <a href="/ProfilePage" className="bottom_text">
-          Профиль
-        </a>
-      </div>
-    </div>
-  );
+    );
+  }
 }

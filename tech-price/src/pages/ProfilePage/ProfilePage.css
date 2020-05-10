@@ -14,14 +14,3 @@
 .checkbox_label {
   margin: 40px 0 10px 0;
 }
-
-.loading_screen {
-  margin: 50% 0 0 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.circular_progress {
-  color: #FFD600;
-}

@@ -17,6 +17,8 @@ export default function ProductPageInfo(props) {
       var response = $.parseJSON(data);
       if (response.error == "false"){
         setAuth(true);
+      } else {
+        setAuth(false);
       }
     })
     return (

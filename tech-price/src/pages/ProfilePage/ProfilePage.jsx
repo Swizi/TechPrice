@@ -57,6 +57,8 @@ export function ProfilePage(props) {
       var response = $.parseJSON(data);
       if (response.error == "false"){
         setRedirect(true);
+      } else {
+        setRedirect(false);
       }
     })
     setLoading(false);
