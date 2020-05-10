@@ -51,18 +51,16 @@ export function ProfilePage(props) {
   const [redirect, setRedirect] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const cookies = new Cookies();
-  
-  useEffect(() => {
-    $.post("http://localhost/ajax/check_auth.php", {target: "checking"}, function(data){
-      var response = $.parseJSON(data);
-      if (response.error == "false"){
-        setRedirect(true);
-      } else {
-        setRedirect(false);
-      }
-    })
+
+  $.post("http://localhost/ajax/check_auth.php", { target: "checking" }, function (data) {
+    var response = $.parseJSON(data);
+    if (response.error == "false") {
+      setRedirect(true);
+    } else {
+      setRedirect(false);
+    }
     setLoading(false);
-  });
+  })
 
   const [state, setState] = React.useState({
     checkedA: true,
@@ -74,44 +72,44 @@ export function ProfilePage(props) {
 
   let history = useHistory();
 
-  if (redirect){
+  if (redirect) {
     window.location.href = "/LoginPage";
   }
 
-  if (loading){
+  if (loading) {
     return (
       <div class="loading_screen">
         <CircularProgress class="circular_progress" />
       </div>
     );
-  }
+  } else {
 
+    return (
+      <div className="page_flexbox">
+        <div className="navigation_menu">
+          <div className="default_menu_wrapper">
+            <IconButton onClick={() => history.goBack()}>
+              <ArrowBackIcon />
+            </IconButton>
+            <span className="menu_header_text">Личные данные</span>
+          </div>
+        </div>
+        <div className="profile_block">
+          <span className="default_gray_text">Электроная почта</span>
+          <span className="default_black_text">denis.bosiiy@gmail.com</span>
+          <span className="default_gray_text">Текущий пароль</span>
+          <span className="default_black_text password_text">шолупонь</span>
 
-  return (
-    <div className="page_flexbox">
-      <div className="navigation_menu">
-        <div className="default_menu_wrapper">
-          <IconButton onClick={() => history.goBack()}>
-            <ArrowBackIcon />
-          </IconButton>
-          <span className="menu_header_text">Личные данные</span>
+          <span className="default_gray_text">ФИО</span>
+          <span className="default_black_text">Босый Денис Владиславович</span>
+          <FormControlLabel className="checkbox_label"
+            control={<Checkbox checked={state.checkedA} onChange={handleChange} name="checkedA" />}
+            label="Отправлять выгодные предложения из желаемых"
+          />
+          {/* <span>checkbox на рассылку желаемых товаров</span> */}
         </div>
       </div>
-      <div className="profile_block">
-        <span className="default_gray_text">Электроная почта</span>
-        <span className="default_black_text">denis.bosiiy@gmail.com</span>
-        <span className="default_gray_text">Текущий пароль</span>
-        <span className="default_black_text password_text">шолупонь</span>
-
-        <span className="default_gray_text">ФИО</span>
-        <span className="default_black_text">Босый Денис Владиславович</span>
-        <FormControlLabel className="checkbox_label"
-          control={<Checkbox checked={state.checkedA} onChange={handleChange} name="checkedA" />}
-          label="Отправлять выгодные предложения из желаемых"
-        />
-        {/* <span>checkbox на рассылку желаемых товаров</span> */}
-      </div>
-    </div>
-  );
+    );
+  }
 }
 
