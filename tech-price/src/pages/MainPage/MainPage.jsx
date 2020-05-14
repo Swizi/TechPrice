@@ -133,7 +133,7 @@ export function MainPage(props) {
   }
 
   useEffect(() => {
-    if (loading){
+    if (loading) {
       console.log("LOADING IS TRUE");
     } else {
       console.log("LOADING IS FALSE");
@@ -145,7 +145,7 @@ export function MainPage(props) {
   }, [loading]);
 
   useEffect(() => {
-    if (menuAction){
+    if (menuAction) {
       console.log("MENU ACTION IS TRUE");
       $.post("http://localhost/ajax/logout.php", { target: "logout" }, function (data) {
         var response = $.parseJSON(data);
@@ -230,61 +230,59 @@ export function MainPage(props) {
 
   if (loading) {
     return <CircularProgress className="circular_progress" />
-
-  } else {
-
-    return (
-      < div className="page_flexbox" >
-        <SwipeableDrawer
-          disableBackdropTransition={!iOS}
-          disableDiscovery={iOS}
-          open={state.left}
-          onClose={toggleDrawer("left", false)}
-          onOpen={toggleDrawer("left", true)}
-          style={{ display: loading ? "none" : "block" }}
-        >
-          {sideList("left")}
-        </SwipeableDrawer>
-        {/* <Collapse in={!isClicked} timeout={1}> */}
-        <SearchTab />
-        {/* </Collapse> */}
-        <div className="navigation_menu">
-          <div id="main-menu" className="menu_wrapper">
-            <IconButton
-              onClick={toggleDrawer("left", true)}
-              edge="start"
-              className={classes.menuButton}
-              color="inherit"
-              aria-label="menu"
-            >
-              <MenuIcon />
-            </IconButton>
-            <span
-              id="pageHeader"
-              className="page_header"
-            >
-              TechPrice
-          </span>
-            <SearchIcon onClick={() => editSearchTab(!isClicked)} className="search_icon" />
-          </div>
-        </div>
-        <div className="products">
-          <div className="items_header_block">
-            <p className="items_header">Каталог товаров</p>
-            <div className="city_block">
-              <LocationOnIcon className="location_on_icon" />
-              <Link to="/UserCityPage">
-                <span className="city_text">{userCity}</span>
-              </Link>
-            </div>
-          </div>
-          <div className="product_cards">
-            {props.catalog.map(function (item, index) {
-              return <ItemsCard key={index} data={item} />;
-            })}
-          </div>
-        </div>
-      </div >
-    );
   }
+  
+  return (
+    < div className="page_flexbox" >
+      <SwipeableDrawer
+        disableBackdropTransition={!iOS}
+        disableDiscovery={iOS}
+        open={state.left}
+        onClose={toggleDrawer("left", false)}
+        onOpen={toggleDrawer("left", true)}
+        style={{ display: loading ? "none" : "block" }}
+      >
+        {sideList("left")}
+      </SwipeableDrawer>
+      {/* <Collapse in={!isClicked} timeout={1}> */}
+      <SearchTab />
+      {/* </Collapse> */}
+      <div className="navigation_menu">
+        <div id="main-menu" className="menu_wrapper">
+          <IconButton
+            onClick={toggleDrawer("left", true)}
+            edge="start"
+            className={classes.menuButton}
+            color="inherit"
+            aria-label="menu"
+          >
+            <MenuIcon />
+          </IconButton>
+          <span
+            id="pageHeader"
+            className="page_header"
+          >
+            TechPrice
+          </span>
+          <SearchIcon onClick={() => editSearchTab(!isClicked)} className="search_icon" />
+        </div>
+      </div>
+      <div className="products">
+        <div className="items_header_block">
+          <p className="items_header">Каталог товаров</p>
+          <div className="city_block">
+            <LocationOnIcon className="location_on_icon" />
+            <Link to="/UserCityPage">
+              <span className="city_text">{userCity}</span>
+            </Link>
+          </div>
+        </div>
+        <div className="product_cards">
+          {props.catalog.map(function (item, index) {
+            return <ItemsCard key={index} data={item} />;
+          })}
+        </div>
+      </div>
+    </div >
+  );
 }

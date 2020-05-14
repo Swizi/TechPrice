@@ -155,3 +155,8 @@ link {
   flex-direction: column;
   width: 100%;
 }
+
+.info_circular_progress {
+  width: 1rem !important;
+  height: 1rem !important;
+}
