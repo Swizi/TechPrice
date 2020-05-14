@@ -145,7 +145,7 @@ link {
 }
 
 .circular_progress {
-  color: #FFD600;
+  color: #FFD600 !important;
 }
 
 .page_flexbox {

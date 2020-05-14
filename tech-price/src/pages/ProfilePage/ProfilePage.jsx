@@ -54,7 +54,7 @@ export function ProfilePage(props) {
 
   $.post("http://localhost/ajax/check_auth.php", { target: "checking" }, function (data) {
     var response = $.parseJSON(data);
-    if (response.error == "false") {
+    if (response.error == "true") {
       setRedirect(true);
     } else {
       setRedirect(false);
@@ -73,7 +73,7 @@ export function ProfilePage(props) {
   let history = useHistory();
 
   if (redirect) {
-    window.location.href = "/LoginPage";
+    return <Redirect to="/" />
   }
 
   if (loading) {

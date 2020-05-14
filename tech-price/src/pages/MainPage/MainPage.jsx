@@ -1,4 +1,5 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import useStateWithCallback from "use-state-with-callback";
 import { Link } from "react-router-dom";
 import LoginButton from "../../components/LoginButton/LoginButton";
 import ProductCard from "../../components/ProductCard/ProductCard";
@@ -63,11 +64,16 @@ const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 
 export function MainPage(props) {
+  const { isClicked, editSearchTab } = useContext(SearchContext);
+  const { userCity, setCity } = useContext(UserContext);
 
   const cookies = new Cookies();
 
   const [auth, setAuth] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
+  const [loading, setLoading] = React.useState(true);
+  const [menuAction, setAction] = React.useState(false);
+
+  // const [loading, setLoading] = React.useState(true);
 
   const classes = useStyles();
   const [state, setState] = React.useState({
@@ -86,34 +92,74 @@ export function MainPage(props) {
     setState({ ...state, [side]: open });
   };
 
-  const { userCity, setCity } = useContext(UserContext);
-
   var second_menu_list = [`Город: ${userCity}`];
   var first_menu_list = ["Домашняя страница"];
 
-  $.post("", { target: "checking" }, function (data) {
-    setLoading(true);
-    var response = $.parseJSON(data);
-    if (response.error == "false") {
-      setAuth(true);
-    } else {
-      setAuth(false);
-    }
-    setLoading(false);
-  });
-
-  const logoutRequest = () => {
-    $.post("", { target: "logout" }, function (data) {
-      setLoading(true);
+  useEffect(() => {
+    console.log("Ajax request");
+    $.post("http://localhost/ajax/check_auth.php", { target: "checking" }, function (data) {
       var response = $.parseJSON(data);
+      if (response.error == "false") {
+        setAuth(true);
+      } else {
+        setAuth(false);
+      }
+      setLoading(false);
+    });
+  }, []);
+
+  // useEffect(()=> {
+  //   if (loading){
+  //     return  <CircularProgress className="circular_progress" />
+  //     setLoading(false);
+  //   }
+  // });
+
+  const logoutRequest = async () => {
+    setLoading(true);
+    $.post("http://localhost/ajax/logout.php", { target: "logout" }, async function (data) {
+      console.log("Loading 1 - ", loading);
+      console.log(auth);
+      var response = await $.parseJSON(data);
       if (response.error == "false") {
         setAuth(false);
       } else {
         setAuth(true);
       }
-      setLoading(false);
+      console.log("Loading 2 - ", loading);
+      console.log(auth);
     });
-  };
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    if (loading){
+      console.log("LOADING IS TRUE");
+    } else {
+      console.log("LOADING IS FALSE");
+    }
+    // if (loading) {
+    //   return <CircularProgress className="circular_progress" />
+
+    // }
+  }, [loading]);
+
+  useEffect(() => {
+    if (menuAction){
+      console.log("MENU ACTION IS TRUE");
+      $.post("http://localhost/ajax/logout.php", { target: "logout" }, function (data) {
+        var response = $.parseJSON(data);
+        if (response.error == "false") {
+          setAuth(false);
+        } else {
+          setAuth(true);
+        }
+        setAction(false);
+      });
+    } else {
+      console.log("MENU ACTION IS FALSE");
+    }
+  }, [menuAction]);
 
   console.log("Auth - ", auth);
 
@@ -127,6 +173,8 @@ export function MainPage(props) {
   first_menu_list.push("Акции");
   first_menu_list.push("Служба поддержки");
 
+  console.log("Loading = ", loading);
+
   const sideList = side => (
     <div
       className={classes.fullList}
@@ -134,106 +182,109 @@ export function MainPage(props) {
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
     >
-      {loading ? <div class="loading_screen">
-        <CircularProgress class="circular_progress" />
-      </div> : <React.Fragment>
-          <List>
-            {first_menu_list.map((text, index) => (
-              <Link
-                key={index}
-                to={`${(index === 0 && "/") ||
-                  (index === 1 && !auth && "/LoginPage") ||
-                  (index === 1 && auth && "/ProfilePage") ||
-                  (index === 2 && "/SalesPage") ||
-                  (index === 3 && "/HelpPage")}`}
-              >
-                <ListItem button key={text}>
-                  <ListItemIcon>
-                    {index === 0 && <HomeIcon />}
-                    {index === 1 && <AccountBoxIcon />}
-                    {index === 2 && <MonetizationOnIcon />}
-                    {index === 3 && <ContactSupportIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} className="list_text" />
-                </ListItem>
-              </Link>
-            ))}
-          </List>
-          <Divider />
-          <List>
-            {second_menu_list.map((text, index) => (
-              <Link key={index} to={`${(index === 0 && "/UserCityPage") ||
-                (index === 1 && "/")}`}
-                onClick={index ? logoutRequest : console.log("VSEM PRIVETIK")}>
-                <ListItem button key={text}>
-                  <ListItemIcon>
-                    {index === 0 && <ExitToAppIcon />}
-                    {index === 1 && <LocationCityIcon />}
-                  </ListItemIcon>
-                  <ListItemText primary={text} className="list_text" />
-                </ListItem>
-              </Link>
-            ))}
-          </List>
-        </React.Fragment>
-        }
+      <CircularProgress className="circular_progress" style={{ display: menuAction ? "block" : "none" }} />
+      <List style={{ display: menuAction ? "none" : "block" }}>
+        {first_menu_list.map((text, index) => (
+          <Link
+            key={index}
+            to={`${(index === 0 && "/") ||
+              (index === 1 && !auth && "/LoginPage") ||
+              (index === 1 && auth && "/ProfilePage") ||
+              (index === 2 && "/SalesPage") ||
+              (index === 3 && "/HelpPage")}`}
+          >
+            <ListItem button key={text}>
+              <ListItemIcon>
+                {index === 0 && <HomeIcon />}
+                {index === 1 && <AccountBoxIcon />}
+                {index === 2 && <MonetizationOnIcon />}
+                {index === 3 && <ContactSupportIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} className="list_text" />
+            </ListItem>
+          </Link>
+        ))}
+      </List>
+      <Divider />
+      <CircularProgress className="circular_progress" style={{ display: menuAction ? "block" : "none" }} />
+      <List style={{ display: menuAction ? "none" : "block" }}>
+        {second_menu_list.map((text, index) => (
+          <Link key={index} to={`${(index === 0 && "/UserCityPage") ||
+            (index === 1 && "/")}`}
+            onClick={index ? () => setAction(!menuAction) : console.log("VSEM PRIVETIK")}>
+            <ListItem button key={text}>
+              <ListItemIcon>
+                {index === 1 && <ExitToAppIcon onClick={(e) => setAction(true)} />}
+                {index === 0 && <LocationCityIcon />}
+              </ListItemIcon>
+              <ListItemText primary={text} className="list_text" />
+            </ListItem>
+          </Link>
+        ))}
+      </List>
     </div>
   );
 
-
-  const { isClicked, editSearchTab } = useContext(SearchContext);
   console.log(props);
+  // setLoading(true);
 
-  return (
-    <div className="page_flexbox">
-      <SwipeableDrawer
-        disableBackdropTransition={!iOS}
-        disableDiscovery={iOS}
-        open={state.left}
-        onClose={toggleDrawer("left", false)}
-        onOpen={toggleDrawer("left", true)}
-      >
-        {sideList("left")}
-      </SwipeableDrawer>
-      {/* <Collapse in={!isClicked} timeout={1}> */}
-      <SearchTab />
-      {/* </Collapse> */}
-      <div className="navigation_menu">
-        <div id="main-menu" className="menu_wrapper">
-          <IconButton
-            onClick={toggleDrawer("left", true)}
-            edge="start"
-            className={classes.menuButton}
-            color="inherit"
-            aria-label="menu"
-          >
-            <MenuIcon />
-          </IconButton>
-          <span
-            id="pageHeader"
-            className="page_header"
-          >
-            TechPrice
+  if (loading) {
+    return <CircularProgress className="circular_progress" />
+
+  } else {
+
+    return (
+      < div className="page_flexbox" >
+        <SwipeableDrawer
+          disableBackdropTransition={!iOS}
+          disableDiscovery={iOS}
+          open={state.left}
+          onClose={toggleDrawer("left", false)}
+          onOpen={toggleDrawer("left", true)}
+          style={{ display: loading ? "none" : "block" }}
+        >
+          {sideList("left")}
+        </SwipeableDrawer>
+        {/* <Collapse in={!isClicked} timeout={1}> */}
+        <SearchTab />
+        {/* </Collapse> */}
+        <div className="navigation_menu">
+          <div id="main-menu" className="menu_wrapper">
+            <IconButton
+              onClick={toggleDrawer("left", true)}
+              edge="start"
+              className={classes.menuButton}
+              color="inherit"
+              aria-label="menu"
+            >
+              <MenuIcon />
+            </IconButton>
+            <span
+              id="pageHeader"
+              className="page_header"
+            >
+              TechPrice
           </span>
-          <SearchIcon onClick={() => editSearchTab(!isClicked)} className="search_icon" />
-        </div>
-      </div>
-      <div className="products">
-        <div className="items_header_block">
-          <p className="items_header">Каталог товаров</p>
-          <div className="city_block">
-            <LocationOnIcon className="location_on_icon" />
-            <Link to="/UserCityPage">
-              <span className="city_text">{userCity}</span>
-            </Link>
+            <SearchIcon onClick={() => editSearchTab(!isClicked)} className="search_icon" />
           </div>
         </div>
-        <div className="product_cards">
-          {props.catalog.map(function (item, index) {
-            return <ItemsCard key={index} data={item} />;
-          })}
+        <div className="products">
+          <div className="items_header_block">
+            <p className="items_header">Каталог товаров</p>
+            <div className="city_block">
+              <LocationOnIcon className="location_on_icon" />
+              <Link to="/UserCityPage">
+                <span className="city_text">{userCity}</span>
+              </Link>
+            </div>
+          </div>
+          <div className="product_cards">
+            {props.catalog.map(function (item, index) {
+              return <ItemsCard key={index} data={item} />;
+            })}
+          </div>
         </div>
-      </div>
-    </div>
-  );
+      </div >
+    );
+  }
 }

@@ -1,4 +1,4 @@
-import React, { useState }  from "react";
+import React, { useState, useEffect } from "react";
 import "./ProductPageInfo.css";
 import Divider from "@material-ui/core/Divider";
 import { makeStyles } from "@material-ui/core/styles";
@@ -13,20 +13,22 @@ export default function ProductPageInfo(props) {
 
     const [auth, setAuth] = React.useState(false);
 
-    $.post("http://localhost/ajax/check_auth.php", {target: "checking"}, function(data){
-      var response = $.parseJSON(data);
-      if (response.error == "false"){
-        setAuth(true);
-      } else {
-        setAuth(false);
-      }
-    })
+    useEffect(() => {
+        $.post("http://localhost/ajax/check_auth.php", { target: "checking" }, function (data) {
+            var response = $.parseJSON(data);
+            if (response.error == "false") {
+                setAuth(true);
+            } else {
+                setAuth(false);
+            }
+        })
+    }, []);
     return (
         <div className="product_description">
             <div className="product_description_header_block">
                 <h1 className="product_page_header">{props.data.name}</h1>
                 <div className="favourite_button" onClick={() => changeStyle(!isClicked)}>
-                { isClicked ? <FavoriteIcon className="favorite_icon" style={{display: auth ? "flex" : "none"}}/> : <FavoriteBorderIcon className="favorite_icon" style={{display: auth ? "flex" : "none"}}/> }
+                    {isClicked ? <FavoriteIcon className="favorite_icon" style={{ display: auth ? "flex" : "none" }} /> : <FavoriteBorderIcon className="favorite_icon" style={{ display: auth ? "flex" : "none" }} />}
                 </div>
             </div>
             <Carousel
