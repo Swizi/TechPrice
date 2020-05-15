@@ -683,8 +683,8 @@ function App() {
           // toggleDrawer={toggleDrawer}
           // data={data}
           // classes={classes}
-          /> <
-          /UserContext.Provider> <
+          /> < /
+          UserContext.Provider > <
           /SearchContext.Provider>
         )
       }
@@ -697,8 +697,7 @@ function App() {
       path = "/ProductPage/:id"
       render = {
         () => < ProductPage data = { data }
-        />} /
-        >
+        />} / >
         <
         Route
         exact
@@ -710,8 +709,8 @@ function App() {
             <
             UserCityPage data = { data }
             cities = { city_list }
-            /> <
-            /UserContext.Provider>
+            /> < /
+            UserContext.Provider >
           )
         }
         /> <
@@ -721,16 +720,14 @@ function App() {
         path = "/SalesPage"
         render = {
           () => < SalesPage data = { data }
-          />} /
-          >
+          />} / >
           <
           Route
           exact
           path = "/RedirectPage/:id"
           render = {
             () => < RedirectPage catalog = { catalog }
-            />} /
-            >
+            />} / >
             <
             Route
             exact
@@ -738,24 +735,21 @@ function App() {
             render = {
               () => < ShopPage catalog = { catalog }
               sorting_text = { sorting_text }
-              />} /
-              >
+              />} / >
               <
               Route
               exact
               path = "/HelpPage"
               render = {
                 () => < HelpPage help_data = { help_data }
-                />} /
-                >
+                />} / >
                 <
                 Route
                 exact
                 path = "/HelpPage/faq"
                 render = {
                   () => < FAQPage faq = { faq }
-                  />} /
-                  >
+                  />} / >
                   <
                   Route
                   exact
@@ -767,18 +761,18 @@ function App() {
                   path = "/ProfilePage"
                   component = { ProfilePage }
                   /> {
-                    /* <Route
-                                  render={() => (
-                                    <h1 style={{ textAlign: "center", marginTop: 300 }}>
-                                      404: page not found
-                                    </h1>
-                                  )}
-                                /> */
-                  } <
-                  /Switch> <
-                  /div> <
-                  /BrowserRouter>
-                );
-              }
+                  /* <Route
+                                render={() => (
+                                  <h1 style={{ textAlign: "center", marginTop: 300 }}>
+                                    404: page not found
+                                  </h1>
+                                )}
+                              /> */
+                } <
+                /Switch> < /
+                div > <
+                /BrowserRouter>
+              );
+            }
 
-              export default App;
+            export default App;

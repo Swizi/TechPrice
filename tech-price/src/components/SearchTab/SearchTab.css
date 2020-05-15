@@ -1,4 +1,4 @@
-.search_block{
+.search_block {
   position: absolute;
   z-index: 1;
   width: 100%;
@@ -10,25 +10,26 @@
   align-items: center;
   animation-name: search-tab;
   animation-duration: 500ms;
+  top: 0%;
 }
 
-.exit_icon{
+.exit_icon {
   align-self: flex-end;
   margin: 20px 20px 50px 0;
   font-size: 32px !important;
 }
 
-.exit_icon:hover{
+.exit_icon:hover {
   cursor: pointer;
   color: blue;
 }
 
-@keyframes search-tab{
-  0%{
+@keyframes search-tab {
+  0% {
     top: 100%;
     opacity: 0.3;
   }
-  100%{
+  100% {
     top: 0%;
     opacity: 1;
   }

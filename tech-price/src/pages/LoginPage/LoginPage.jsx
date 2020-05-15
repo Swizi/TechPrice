@@ -41,13 +41,18 @@ const useStyles = makeStyles(theme => ({
   },
   extendedIcon: {
     marginRight: theme.spacing(1)
+  },
+  error_text: {
+    '& label, p': {
+      color: 'red',
+    },
   }
 }));
 
 const validate = values => {
   const errors = {};
-  if ((values.firstName.length > 15) || (values.firstName.length < 5)) {
-    errors.firstName = 'Логин меньше 16 и больше 5 символов';
+  if ((values.login.length > 15) || (values.login.length < 5)) {
+    errors.login = 'Логин меньше 16 и больше 5 символов';
   }
 
   if (values.password.length <= 3){
@@ -66,7 +71,7 @@ export function LoginPage(props) {
 
   const formik = useFormik({
     initialValues: {
-      firstName: '',
+      login: '',
       password: ''
     },
     validate,
@@ -74,7 +79,7 @@ export function LoginPage(props) {
       alert(JSON.stringify(values, null, 2));
       alert("По пизде бы тебе настучать");
       setLoadingAlert(true);
-      $.post("http://localhost/ajax/login.php", { target: 'logination', login: values.firstName, password: values.password }, function (data) {
+      $.post("http://localhost/ajax/login.php", { target: 'logination', login: values.login, password: values.password }, function (data) {
         var response = $.parseJSON(data);
         if (response.error == "true") {
           console.log("error");
@@ -181,9 +186,9 @@ export function LoginPage(props) {
       <Alert severity="info" className="alert" style={{ display: loadingAlert ? "flex" : "none" }}>Загрузка...  <CircularProgress className="info_circular_progress" /></Alert>
       <div className="login_block">
         <form className={classes.root} autoComplete="off" onSubmit={formik.handleSubmit}>
-          <TextField id={formik.errors.firstName ? "standard-error-helper-text" : "standard-basic"} label="Логин" onChange={formik.handleChange} value={formik.values.firstName} name="firstName" id="firstName" helperText={formik.errors.firstName ? formik.errors.firstName : null}/>
+          <TextField className={formik.errors.login ? classes.error_text : null} id={formik.errors.login ? "standard-helperText" : "standard-basic"} label="Логин" onChange={formik.handleChange} value={formik.values.login} name="login" id="login" helperText={formik.errors.login ? formik.errors.login : null}/>
           {/* <TextField id="standard-password-input" label="Пароль" type="password"  autoComplete="current-password"/> */}
-          <FormControl className={clsx(classes.textField)}>
+          <FormControl className={clsx(classes.textField)} className={formik.errors.password ? classes.error_text : null}>
             <InputLabel htmlFor="password">Пароль</InputLabel>
             <Input
               id="password standard-adornment-password"
