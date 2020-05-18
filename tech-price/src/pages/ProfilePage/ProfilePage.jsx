@@ -56,7 +56,7 @@ export function ProfilePage(props) {
     console.log("Ajax request");
     $.post("http://localhost/ajax/check_auth.php", { target: "checking" }, function (data) {
       var response = $.parseJSON(data);
-      if (response.error == "false") {
+      if (response.status == 0) {
         setRedirect(false);
       } else {
         setRedirect(true);

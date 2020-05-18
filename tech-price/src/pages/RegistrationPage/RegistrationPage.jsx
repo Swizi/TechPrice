@@ -20,6 +20,7 @@ import Cookies from 'universal-cookie';
 import { Redirect } from "react-router-dom";
 import $ from 'jquery';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Alert from "@material-ui/lab/Alert";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -45,8 +46,20 @@ const useStyles = makeStyles(theme => ({
 
 const validate = values => {
   const errors = {};
-  if ((values.login.length > 15) || (values.login.length < 5)) {
-    errors.login = 'Логин меньше 16 и больше 5 символов';
+  // if ((values.login.length > 15) || (values.login.length < 5)) {
+  //   errors.login = 'Логин меньше 16 и больше 5 символов';
+  // }
+
+  if (!/^[a-zA-Z0-9-_]{5,15}$/g.test(values.login)){
+    errors.login = 'Логин меньше 16 и больше 4 символов';
+  }
+
+  if (!/^[а-яА-Яa-zA-Z]{2,}$/g.test(values.firstName)){
+    errors.firstName = "Имя больше 2 символов";
+  }
+
+  if (!/^[а-яА-Яa-zA-Z]{2,}$/g.test(values.lastName)){
+    errors.lastName = "Фамилия больше 2 символов";
   }
 
   if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
@@ -81,7 +94,17 @@ export function RegistrationPage(props) {
     onSubmit: values => {
       alert(JSON.stringify(values, null, 2));
       alert("По пизде бы тебе настучать");
-      // Здесь запрос на сервак
+      setLoadingAlert(true);
+      $.post("http://localhost/ajax/register.php", { target: "registration", login: values.login, fname: values.firstName, lname: values.lastName, email: values.email, password: values.password1, aname: values.additionalName}, function (data) {
+        var response = $.parseJSON(data);
+        if (response.status == 0) {
+          setRedirect(true);
+        } else {
+          setError(true);
+          setRedirect(false);
+        } 
+        setLoadingAlert(false);
+      });
     },
   })
 
@@ -90,14 +113,16 @@ export function RegistrationPage(props) {
     showPassword2: false
   });
 
+  const [loadingAlert, setLoadingAlert] = React.useState(false);
   const [redirect, setRedirect] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
+  const [errorPopUp, setError] = React.useState(false);
 
   useEffect(() => {
     console.log("Ajax request");
     $.post("http://localhost/ajax/check_auth.php", { target: "checking" }, function (data) {
       var response = $.parseJSON(data);
-      if (response.error == "false") {
+      if (response.status == 0) {
         setRedirect(true);
       } else {
         setRedirect(false);
@@ -176,12 +201,14 @@ export function RegistrationPage(props) {
           <span className="menu_header_text">Заведение аккаунта</span>
         </div>
       </div>
+      <Alert severity="error" className="alert" style={{ display: errorPopUp ? "flex" : "none" }}>Ошибка при вводе данных в форму</Alert>
+      <Alert severity="info" className="alert" style={{ display: loadingAlert ? "flex" : "none" }}>Загрузка...  <CircularProgress className="info_circular_progress" /></Alert>
       <div className="login_block">
         <form className={classes.root} onSubmit={formik.handleSubmit} autoComplete="on">
           <TextField className={formik.errors.login? classes.error_text : null} id="standard-helperText" label="Логин" type="text" onChange={formik.handleChange} value={formik.values.login} name="login" id="login" helperText={formik.errors.login ? formik.errors.login : null}  />
           <TextField className={formik.errors.email ? classes.error_text : null} id="standard-helperText" id="email" name="email" type="email" onChange={formik.handleChange} value={formik.values.email} label="Введите e-mail" helperText={formik.errors.email ? formik.errors.email : null} />
-          <TextField id="standard-helperText" id="firstName" name="firstName" type="text" onChange={formik.handleChange} value={formik.values.firstName} label="Введите имя" helperText="Необязательно"/>
-          <TextField id="standard-helperText" id="lastName" name="lastName" type="text" onChange={formik.handleChange} value={formik.values.lastName} label="Введите фамилию" helperText="Необязательно"/>
+          <TextField className={formik.errors.firstName ? classes.error_text : null} id="standard-helperText" id="firstName" name="firstName" type="text" onChange={formik.handleChange} value={formik.values.firstName} label="Введите имя" helperText={formik.errors.firstName ? formik.errors.firstName : null}/>
+          <TextField className={formik.errors.lastName ? classes.error_text : null} id="standard-helperText" id="lastName" name="lastName" type="text" onChange={formik.handleChange} value={formik.values.lastName} label="Введите фамилию" helperText={formik.errors.lastName ? formik.errors.lastName : null}/>
           <TextField id="standard-helperText" id="additionalName" name="additionalName" type="text" onChange={formik.handleChange} value={formik.values.additionalName} label="Введите отчество" helperText="Необязательно"/>
           <FormControl className={clsx(classes.textField)} className={formik.errors.password1 ? classes.error_text : null}>
             <InputLabel htmlFor="password1">Пароль</InputLabel>

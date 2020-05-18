@@ -51,8 +51,8 @@ const useStyles = makeStyles(theme => ({
 
 const validate = values => {
   const errors = {};
-  if ((values.login.length > 15) || (values.login.length < 5)) {
-    errors.login = 'Логин меньше 16 и больше 5 символов';
+  if (!/^[a-zA-Z0-9-_]{5,15}$/g.test(values.login)){
+    errors.login = 'Логин меньше 16 и больше 4 символов';
   }
 
   if (values.password.length <= 3){
@@ -81,7 +81,7 @@ export function LoginPage(props) {
       setLoadingAlert(true);
       $.post("http://localhost/ajax/login.php", { target: 'logination', login: values.login, password: values.password }, function (data) {
         var response = $.parseJSON(data);
-        if (response.error == "true") {
+        if (response.status != 0) {
           console.log("error");
           setError(true);
         } else {
@@ -117,7 +117,7 @@ export function LoginPage(props) {
   useEffect(() => {
     $.post("http://localhost/ajax/check_auth.php", { target: "checking" }, function (data) {
       var response = $.parseJSON(data);
-      if (response.error == "false") {
+      if (response.status == 0) {
         setRedirect(true);
       } else {
         setRedirect(false);

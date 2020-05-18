@@ -99,7 +99,7 @@ export function MainPage(props) {
     console.log("Ajax request");
     $.post("http://localhost/ajax/check_auth.php", { target: "checking" }, function (data) {
       var response = $.parseJSON(data);
-      if (response.error == "false") {
+      if (response.status == 0) {
         setAuth(true);
       } else {
         setAuth(false);
@@ -121,7 +121,7 @@ export function MainPage(props) {
       console.log("Loading 1 - ", loading);
       console.log(auth);
       var response = await $.parseJSON(data);
-      if (response.error == "false") {
+      if (response.status == 0) {
         setAuth(false);
       } else {
         setAuth(true);
@@ -149,7 +149,7 @@ export function MainPage(props) {
       console.log("MENU ACTION IS TRUE");
       $.post("http://localhost/ajax/logout.php", { target: "logout" }, function (data) {
         var response = $.parseJSON(data);
-        if (response.error == "false") {
+        if (response.status == 0) {
           setAuth(false);
         } else {
           setAuth(true);

@@ -16,7 +16,7 @@ export default function ProductPageInfo(props) {
     useEffect(() => {
         $.post("http://localhost/ajax/check_auth.php", { target: "checking" }, function (data) {
             var response = $.parseJSON(data);
-            if (response.error == "false") {
+            if (response.status == 0) {
                 setAuth(true);
             } else {
                 setAuth(false);
