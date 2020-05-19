@@ -11,11 +11,13 @@ export default function LongCard(props) {
   // } else if (block_id == 0){
   //   path = "`/HelpPage/${props.data.id}`"
   // }
-  if (block_id == 1){
-    path = "/ShopPage/" + props.href_index + "/" + props.data.id;
-  } else if (block_id == 0){
-    path = "/HelpPage/" + props.data.id;
-  }
+  // if (block_id == 1){
+  //   path = "/ShopPage/" + props.href_index + "/" + props.data.id;
+  // } else if (block_id == 0){
+  //   path = "/HelpPage/" + props.data.id;
+  // }
+  path = "/ShopPage/" + props.href_index + "/" + props.data.id;
+  
   return (
     <Link className="help_link" to={path}>
       <div className="help_block">

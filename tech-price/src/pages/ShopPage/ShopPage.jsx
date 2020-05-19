@@ -50,7 +50,9 @@ export function ShopPage(props) {
   href = href.split("/");
   var items_index = href[href.length - 1];
   var href_index = href[href.length - 2];
+  console.log(href_index);
   let history = useHistory();
+  console.log(props.catalog[href_index]);
   var products = props.catalog[href_index].items[items_index].items;
   console.log(props.catalog[href_index].items[items_index]);
 

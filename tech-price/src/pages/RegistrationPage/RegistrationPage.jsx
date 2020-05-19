@@ -99,9 +99,14 @@ export function RegistrationPage(props) {
         var response = $.parseJSON(data);
         if (response.status == 0) {
           setRedirect(true);
+        } else if (response.status == 3){
+          setError(true);
+          setRedirect(false);
+          setErrorText('Логин уже занят!');
         } else {
           setError(true);
           setRedirect(false);
+          setErrorText('');
         } 
         setLoadingAlert(false);
       });
@@ -117,6 +122,7 @@ export function RegistrationPage(props) {
   const [redirect, setRedirect] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [errorPopUp, setError] = React.useState(false);
+  const [errorText, setErrorText] = React.useState('');
 
   useEffect(() => {
     console.log("Ajax request");
@@ -201,7 +207,7 @@ export function RegistrationPage(props) {
           <span className="menu_header_text">Заведение аккаунта</span>
         </div>
       </div>
-      <Alert severity="error" className="alert" style={{ display: errorPopUp ? "flex" : "none" }}>Ошибка при вводе данных в форму</Alert>
+      <Alert severity="error" className="alert" style={{ display: errorPopUp ? "flex" : "none" }}>Ошибка при вводе данных в форму<br/>{errorText}</Alert>
       <Alert severity="info" className="alert" style={{ display: loadingAlert ? "flex" : "none" }}>Загрузка...  <CircularProgress className="info_circular_progress" /></Alert>
       <div className="login_block">
         <form className={classes.root} onSubmit={formik.handleSubmit} autoComplete="on">

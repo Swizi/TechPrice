@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./App.css";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { MainPage } from "./pages/MainPage/MainPage";
@@ -22,7 +22,7 @@ import ListItem from "@material-ui/core/ListItem";
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import ListItemText from "@material-ui/core/ListItemText";
 import Divider from "@material-ui/core/Divider";
-import AccountBoxIcon from '@material-ui/icons/AccountBox';
+import AccountBoxIcon from "@material-ui/icons/AccountBox";
 import ExitToAppIcon from "@material-ui/icons/ExitToApp";
 import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
@@ -30,11 +30,14 @@ import LocationCityIcon from "@material-ui/icons/LocationCity";
 import HomeIcon from "@material-ui/icons/Home";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { isVariableDeclarator } from "@babel/types";
-import UserContext from './UserContext';
-import SearchContext from './SearchContext';
+import UserContext from "./UserContext";
+import SearchContext from "./SearchContext";
 
-import Cookies from 'universal-cookie';
+import Cookies from "universal-cookie";
 
+import $ from "jquery";
+
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 var response;
 // import { UserProvider } from './UserContext'
@@ -42,7 +45,7 @@ var response;
 // import { createDrawerNavigator } from "@react-navigation/drawer";
 // import { NavigationContainer } from "@react-navigation/native";
 
-const LoadingPage = () => < div > Loading... < /div>;
+const LoadingPage = () => <div> Loading... </div>;
 
 // const MainPage = React.lazy(() => import("./pages/MainPage/MainPage"));
 // const LoginPage = React.lazy(() => import("./pages/LoginPage/LoginPage"));
@@ -56,99 +59,108 @@ const LoadingPage = () => < div > Loading... < /div>;
 
 const pageHeader = "2";
 
-const faq = [{
+const faq = [
+  {
     question: "Часто ли вы занимаетесь распитием спиртосодержащих напитков?",
-    answer: "Мы не любим пить пиво. Предпочитаем соли, спайсы. Очень обрадовались, что подросткам стали продавать снюс. Правда мы не знали как его использовать и просто жевали как жевачку."
+    answer:
+      "Мы не любим пить пиво. Предпочитаем соли, спайсы. Очень обрадовались, что подросткам стали продавать снюс. Правда мы не знали как его использовать и просто жевали как жевачку.",
   },
   {
     question: "К какой ОПГ вы относитесь?",
-    answer: "К самой отмороженной"
-  }
+    answer: "К самой отмороженной",
+  },
 ];
 
-const help_data = [{
+const help_data = [
+  {
     block_id: 0,
     name: "Обратная связь",
     url: "https://is.gd/Xg7LQf",
-    id: "feedback"
+    id: "feedback",
   },
 
   {
     block_id: 0,
     name: "Частые вопросы",
     url: "https://is.gd/pzm3TA",
-    id: "faq"
-  }
+    id: "faq",
+  },
 ];
 
 const sorting_text = [
   "По популярности",
   "По цене по возрастанию",
-  "По цене по убыванию"
+  "По цене по убыванию",
 ];
 
-const city_list = [{
+const city_list = [
+  {
     city: "Москва",
     latitude: 55.7522,
-    longitude: 37.6156
+    longitude: 37.6156,
   },
   {
     city: "Ханты-Мансийск",
     latitude: 61.0042,
-    longitude: 69.0019
+    longitude: 69.0019,
   },
   {
     city: "Санкт-Петербург",
     latitude: 59.9386,
-    longitude: 30.3141
+    longitude: 30.3141,
   },
   {
     city: "Йошкар-Ола",
     latitude: 56.6388,
-    longitude: 47.8908
+    longitude: 47.8908,
   },
   {
     city: "Кировоград",
     latitude: 48.5132,
-    longitude: 32.2597
+    longitude: 32.2597,
   },
   {
     city: "Днепр",
     latitude: 48.4593,
-    longitude: 35.0387
+    longitude: 35.0387,
   },
   {
     city: "Евпатория",
     latitude: 45.2009,
-    longitude: 33.3666
+    longitude: 33.3666,
   },
   {
     city: "Севастополь",
     latitude: 44.5888,
-    longitude: 33.5224
-  }
+    longitude: 33.5224,
+  },
 ];
 
-const data = [{
+const items_data = [
+  {
     id: 0,
     urls: ["https://is.gd/zwDw5r", "https://is.gd/lfHeuN"],
     popularity: 4,
     name: "Ноутбук ASUS",
-    description: "Производитель ; Xiaomi ; Страна ; Китай ; Диапазон частот ; 2.4 ГГц ",
-    reviews: [{
-      id: 0,
-      url: "https://is.gd/8AzG0h",
-      name: "Egor Komaroff",
-      review: "Всё понравилось, рекомендую.",
-      isLiked: true
-    }],
-    shops: [{
+    description:
+      "Производитель ; Xiaomi ; Страна ; Китай ; Диапазон частот ; 2.4 ГГц ",
+    reviews: [
+      {
+        id: 0,
+        url: "https://is.gd/8AzG0h",
+        name: "Egor Komaroff",
+        review: "Всё понравилось, рекомендую.",
+        isLiked: true,
+      },
+    ],
+    shops: [
+      {
         id: 0,
         name: "TehVolt",
         price: 14599,
         rating: 4.7,
         reviews: 150,
-        link: "https://www.dns-shop.ru/"
+        link: "https://www.dns-shop.ru/",
       },
       {
         id: 1,
@@ -156,7 +168,7 @@ const data = [{
         price: 14799,
         rating: 4.5,
         reviews: 79,
-        link: "https://www.dns-shop.ru/"
+        link: "https://www.dns-shop.ru/",
       },
       {
         id: 2,
@@ -164,30 +176,34 @@ const data = [{
         price: 14999,
         rating: 4.1,
         reviews: 45,
-        link: "https://www.dns-shop.ru/"
-      }
-    ]
+        link: "https://www.dns-shop.ru/",
+      },
+    ],
   },
   {
     id: 1,
     urls: ["https://is.gd/7ty7or", "https://is.gd/lfHeuN"],
     popularity: 5,
     name: "Мышь компьютерная AlohaGaming",
-    description: "Производитель ; Xiaomi ; Страна ; Китай ; Диапазон частот ; 2.4 ГГц ",
-    reviews: [{
-      id: 0,
-      url: "https://is.gd/8AzG0h",
-      name: "Egor Komaroff",
-      review: "Всё понравилось, рекомендую",
-      isLiked: true
-    }],
-    shops: [{
+    description:
+      "Производитель ; Xiaomi ; Страна ; Китай ; Диапазон частот ; 2.4 ГГц ",
+    reviews: [
+      {
+        id: 0,
+        url: "https://is.gd/8AzG0h",
+        name: "Egor Komaroff",
+        review: "Всё понравилось, рекомендую",
+        isLiked: true,
+      },
+    ],
+    shops: [
+      {
         id: 0,
         name: "TehVolt",
         price: 4599,
         rating: 4.7,
         reviews: 150,
-        link: "https://www.dns-shop.ru/"
+        link: "https://www.dns-shop.ru/",
       },
       {
         id: 1,
@@ -195,7 +211,7 @@ const data = [{
         price: 4799,
         rating: 4.5,
         reviews: 79,
-        link: "https://www.dns-shop.ru/"
+        link: "https://www.dns-shop.ru/",
       },
       {
         id: 2,
@@ -203,52 +219,55 @@ const data = [{
         price: 4999,
         rating: 4.1,
         reviews: 45,
-        link: "https://www.dns-shop.ru/"
-      }
-    ]
+        link: "https://www.dns-shop.ru/",
+      },
+    ],
   },
   {
     id: 2,
     urls: ["https://is.gd/j0kecm", "https://is.gd/lfHeuN"],
     popularity: 3,
     name: "Наушники Xiaomi redmi airdots",
-    description: "Производитель ; Xiaomi ; Страна ; Китай ; Диапазон частот ; 2.4 ГГц ",
-    reviews: [{
+    description:
+      "Производитель ; Xiaomi ; Страна ; Китай ; Диапазон частот ; 2.4 ГГц ",
+    reviews: [
+      {
         id: 0,
         url: "https://is.gd/8AzG0h",
         name: "Egor Komaroff",
         review: "Всё понравилось, рекомендую",
-        isLiked: true
+        isLiked: true,
       },
       {
         id: 1,
         url: "https://is.gd/BQe4UR",
         name: "Denis Bosyi",
         review: "Выглядят стильно, но в ушах держатся довольно скверно.",
-        isLiked: false
+        isLiked: false,
       },
       {
         id: 2,
         url: "https://is.gd/8AzG0h",
         name: "Egor Komaroff",
         review: "Всё понравилось, рекомендую",
-        isLiked: true
+        isLiked: true,
       },
       {
         id: 3,
         url: "https://is.gd/BQe4UR",
         name: "Denis Bosyi",
         review: "Выглядят стильно, но в ушах держатся довольно скверно.",
-        isLiked: false
-      }
+        isLiked: false,
+      },
     ],
-    shops: [{
+    shops: [
+      {
         id: 0,
         name: "TehVolt",
         price: 300,
         rating: 4.7,
         reviews: 150,
-        link: "https://www.dns-shop.ru/"
+        link: "https://www.dns-shop.ru/",
       },
       {
         id: 1,
@@ -256,7 +275,7 @@ const data = [{
         price: 400,
         rating: 4.5,
         reviews: 79,
-        link: "https://www.dns-shop.ru/"
+        link: "https://www.dns-shop.ru/",
       },
       {
         id: 2,
@@ -264,30 +283,34 @@ const data = [{
         price: 500,
         rating: 4.1,
         reviews: 45,
-        link: "https://www.dns-shop.ru/"
-      }
-    ]
+        link: "https://www.dns-shop.ru/",
+      },
+    ],
   },
   {
     id: 3,
     urls: ["https://is.gd/mkEyDx", "https://is.gd/lfHeuN"],
     popularity: 1,
     name: "Видеокарта MSI nVidia GeForce GTX 1650",
-    description: "Производитель ; Xiaomi ; Страна ; Китай ; Диапазон частот ; 2.4 ГГц ",
-    reviews: [{
-      id: 0,
-      url: "https://is.gd/8AzG0h",
-      name: "Egor Komaroff",
-      review: "Всё понравилось, рекомендую",
-      isLiked: true
-    }],
-    shops: [{
+    description:
+      "Производитель ; Xiaomi ; Страна ; Китай ; Диапазон частот ; 2.4 ГГц ",
+    reviews: [
+      {
+        id: 0,
+        url: "https://is.gd/8AzG0h",
+        name: "Egor Komaroff",
+        review: "Всё понравилось, рекомендую",
+        isLiked: true,
+      },
+    ],
+    shops: [
+      {
         id: 0,
         name: "TehVolt",
         price: 104599,
         rating: 4.7,
         reviews: 150,
-        link: "https://www.dns-shop.ru/"
+        link: "https://www.dns-shop.ru/",
       },
       {
         id: 1,
@@ -295,7 +318,7 @@ const data = [{
         price: 104799,
         rating: 4.5,
         reviews: 79,
-        link: "https://www.dns-shop.ru/"
+        link: "https://www.dns-shop.ru/",
       },
       {
         id: 2,
@@ -303,204 +326,209 @@ const data = [{
         price: 104999,
         rating: 4.1,
         reviews: 45,
-        link: "https://www.dns-shop.ru/"
-      }
-    ]
-  }
+        link: "https://www.dns-shop.ru/",
+      },
+    ],
+  },
 ];
 
-const catalog = [{
-    id: 0,
-    name: "Бытовая техника",
-    url: "https://is.gd/3ZM9lY",
-    items: [{
-        block_id: 1,
-        id: 0,
-        name: "Крупная бытовая техника",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 1,
-        name: "Техника для дома",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 2,
-        name: "Техника для кухни",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 3,
-        name: "Техника для красоты и здоровья",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 4,
-        name: "Встраиваемая техника",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 5,
-        name: "Климатическая техника",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      }
-    ]
-  },
-  {
-    id: 1,
-    name: "Ноутбуки и аксессуары",
-    url: "https://is.gd/7KJAEw",
-    items: [{
-        block_id: 1,
-        id: 0,
-        name: "Крупная бытовая техника",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 1,
-        name: "Техника для дома",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 2,
-        name: "Техника для кухни",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 3,
-        name: "Техника для красоты и здоровья",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 4,
-        name: "Встраиваемая техника",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 5,
-        name: "Климатическая техника",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: "Телефоны",
-    url: "https://is.gd/Tdmnc1",
-    items: [{
-        block_id: 1,
-        id: 0,
-        name: "Крупная бытовая техника",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 1,
-        name: "Техника для дома",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 2,
-        name: "Техника для кухни",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 3,
-        name: "Техника для красоты и здоровья",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 4,
-        name: "Встраиваемая техника",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 5,
-        name: "Климатическая техника",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: "Периферийные устройства",
-    url: "https://is.gd/OEquVx",
-    items: [{
-        block_id: 1,
-        id: 0,
-        name: "Крупная бытовая техника",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 1,
-        name: "Техника для дома",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 2,
-        name: "Техника для кухни",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 3,
-        name: "Техника для красоты и здоровья",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 4,
-        name: "Встраиваемая техника",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      },
-      {
-        block_id: 1,
-        id: 5,
-        name: "Климатическая техника",
-        items: data,
-        url: "https://is.gd/6EvpgB"
-      }
-    ]
-  }
+var catalog = [
+  // {
+  //   id: 0,
+  //   name: "Бытовая техника",
+  //   url: "https://is.gd/3ZM9lY",
+  //   items: [
+  //     {
+  //       block_id: 1,
+  //       id: 0,
+  //       name: "Крупная бытовая техника",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 1,
+  //       name: "Техника для дома",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 2,
+  //       name: "Техника для кухни",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 3,
+  //       name: "Техника для красоты и здоровья",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 4,
+  //       name: "Встраиваемая техника",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 5,
+  //       name: "Климатическая техника",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: 1,
+  //   name: "Ноутбуки и аксессуары",
+  //   url: "https://is.gd/7KJAEw",
+  //   items: [
+  //     {
+  //       block_id: 1,
+  //       id: 0,
+  //       name: "Крупная бытовая техника",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 1,
+  //       name: "Техника для дома",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 2,
+  //       name: "Техника для кухни",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 3,
+  //       name: "Техника для красоты и здоровья",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 4,
+  //       name: "Встраиваемая техника",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 5,
+  //       name: "Климатическая техника",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: 2,
+  //   name: "Телефоны",
+  //   url: "https://is.gd/Tdmnc1",
+  //   items: [
+  //     {
+  //       block_id: 1,
+  //       id: 0,
+  //       name: "Крупная бытовая техника",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 1,
+  //       name: "Техника для дома",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 2,
+  //       name: "Техника для кухни",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 3,
+  //       name: "Техника для красоты и здоровья",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 4,
+  //       name: "Встраиваемая техника",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 5,
+  //       name: "Климатическая техника",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //   ],
+  // },
+  // {
+  //   id: 3,
+  //   name: "Периферийные устройства",
+  //   url: "https://is.gd/OEquVx",
+  //   items: [
+  //     {
+  //       block_id: 1,
+  //       id: 0,
+  //       name: "Крупная бытовая техника",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 1,
+  //       name: "Техника для дома",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 2,
+  //       name: "Техника для кухни",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 3,
+  //       name: "Техника для красоты и здоровья",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 4,
+  //       name: "Встраиваемая техника",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //     {
+  //       block_id: 1,
+  //       id: 5,
+  //       name: "Климатическая техника",
+  //       items: data,
+  //       url: "https://is.gd/6EvpgB",
+  //     },
+  //   ],
+  // },
 ];
 
 // const Drawer = createDrawerNavigator();
@@ -508,6 +536,7 @@ var isSet = false;
 
 function App() {
   const cookies = new Cookies();
+  const [loading, setLoading] = React.useState(true);
 
   // $.post(ajax_request, ajaxSuccess);
 
@@ -515,11 +544,46 @@ function App() {
   //   console.log(response);
   // }
 
+  useEffect(() => {
+    console.log("Ajax request");
+    $.post(
+      "http://localhost/ajax/get_content.php",
+      { target: "get-categ" },
+      function (data) {
+        var response = $.parseJSON(data);
+        if (response.status == 0) {
+          console.log(response);
+          catalog = [];
+          for (var i = 0; i < response.categories.length; i++){
+            var item = {
+              id: i,
+              name: response.categories[i],
+              url: "https://is.gd/3ZM9lY",
+              items: []
+            }
+            for (var j = 6*i; j < 6*i+6; j++){
+              var subitem = {
+                block_id: i,
+                id: j-6*i,
+                name: response.subcategories[j],
+                items: items_data,
+                url: "https://is.gd/6EvpgB"
+              }
+              item.items.push(subitem);
+            }
+            catalog.push(item);
+          }
+        } else {
+          console.log(response);
+        }
+        setLoading(false);
+      }
+    );
+  }, []);
+
   navigator.geolocation.getCurrentPosition(
-
     // Функция обратного вызова при успешном извлечении локации
-    function(position) {
-
+    function (position) {
       var min_city = "";
 
       console.log("Широта ", position.coords.latitude);
@@ -539,7 +603,7 @@ function App() {
         }
       }
 
-      cookies.set("Location_city", min_city, { path: '/' });
+      cookies.set("Location_city", min_city, { path: "/" });
 
       if (!isSet) {
         console.log(cookies.get("Location_city"));
@@ -564,12 +628,10 @@ function App() {
           timestamp - Время извлечения информации.
       }
       */
-
     },
 
     // Функция обратного вызова при неуспешном извлечении локации
-    function(error) {
-
+    function (error) {
       /*
       При неудаче, будет доступен объект error:
  
@@ -584,7 +646,6 @@ function App() {
       */
       console.log(error.code);
       console.log(error.message);
-
     }
   );
   const [userCity, setCity] = useState("Москва");
@@ -592,7 +653,6 @@ function App() {
 
   const [isClicked, editSearchTab] = useState(false);
   const search_value = { isClicked, editSearchTab };
-
 
   // const classes = useStyles();
   // const [state, setState] = React.useState({
@@ -661,118 +721,96 @@ function App() {
   //   </div>
   // );
 
-  return ( <
-      BrowserRouter >
-      <
-      div className = "App" >
-      <
-      Switch >
-      <
-      Route path = "/LoginPage"
-      header = "Вход"
-      component = { LoginPage }
-      /> <
-      Route exact path = "/"
-      render = {
-        () => ( <
-          SearchContext.Provider value = { search_value } >
-          <
-          UserContext.Provider value = { user_value } >
-          <
-          MainPage catalog = { catalog }
-          // toggleDrawer={toggleDrawer}
-          // data={data}
-          // classes={classes}
-          /> < /
-          UserContext.Provider > <
-          /SearchContext.Provider>
-        )
-      }
-      /> <
-      Route exact path = "/RegistrationPage"
-      header = "Регистрация"
-      component = { RegistrationPage }
-      /> <
-      Route exact header = "Товар"
-      path = "/ProductPage/:id"
-      render = {
-        () => < ProductPage data = { data }
-        />} / >
-        <
-        Route
-        exact
-        header = "Выбор города"
-        path = "/UserCityPage"
-        render = {
-          () => ( <
-            UserContext.Provider value = { user_value } >
-            <
-            UserCityPage data = { data }
-            cities = { city_list }
-            /> < /
-            UserContext.Provider >
-          )
-        }
-        /> <
-        Route
-        exact
-        header = "Акции"
-        path = "/SalesPage"
-        render = {
-          () => < SalesPage data = { data }
-          />} / >
-          <
-          Route
-          exact
-          path = "/RedirectPage/:id"
-          render = {
-            () => < RedirectPage catalog = { catalog }
-            />} / >
-            <
-            Route
+  if (loading) {
+    return (
+      <CircularProgress className="circular_progress" />
+    );
+  }
+
+  return (
+    <BrowserRouter>
+      <div className="App">
+        <Switch>
+          <Route path="/LoginPage" header="Вход" component={LoginPage} />{" "}
+          <Route
             exact
-            path = "/ShopPage/:id/:id"
-            render = {
-              () => < ShopPage catalog = { catalog }
-              sorting_text = { sorting_text }
-              />} / >
-              <
-              Route
-              exact
-              path = "/HelpPage"
-              render = {
-                () => < HelpPage help_data = { help_data }
-                />} / >
-                <
-                Route
-                exact
-                path = "/HelpPage/faq"
-                render = {
-                  () => < FAQPage faq = { faq }
-                  />} / >
-                  <
-                  Route
-                  exact
-                  path = "/HelpPage/feedback"
-                  component = { FeedbackPage }
-                  /> <
-                  Route
-                  exact
-                  path = "/ProfilePage"
-                  component = { ProfilePage }
-                  /> {
-                  /* <Route
+            path="/"
+            render={() => (
+              <SearchContext.Provider value={search_value}>
+                <UserContext.Provider value={user_value}>
+                  <MainPage
+                    catalog={catalog}
+                    // toggleDrawer={toggleDrawer}
+                    // data={data}
+                    // classes={classes}
+                  />{" "}
+                </UserContext.Provider>{" "}
+              </SearchContext.Provider>
+            )}
+          />{" "}
+          <Route
+            exact
+            path="/RegistrationPage"
+            header="Регистрация"
+            component={RegistrationPage}
+          />{" "}
+          <Route
+            exact
+            header="Товар"
+            path="/ProductPage/:id"
+            render={() => <ProductPage data={items_data} />}
+          />
+          <Route
+            exact
+            header="Выбор города"
+            path="/UserCityPage"
+            render={() => (
+              <UserContext.Provider value={user_value}>
+                <UserCityPage data={items_data} cities={city_list} />{" "}
+              </UserContext.Provider>
+            )}
+          />{" "}
+          <Route
+            exact
+            header="Акции"
+            path="/SalesPage"
+            render={() => <SalesPage data={items_data} />}
+          />
+          <Route
+            exact
+            path="/RedirectPage/:id"
+            render={() => <RedirectPage catalog={catalog} />}
+          />
+          <Route
+            exact
+            path="/ShopPage/:id/:id"
+            render={() => (
+              <ShopPage catalog={catalog} sorting_text={sorting_text} />
+            )}
+          />
+          <Route
+            exact
+            path="/HelpPage"
+            render={() => <HelpPage help_data={help_data} />}
+          />
+          <Route
+            exact
+            path="/HelpPage/faq"
+            render={() => <FAQPage faq={faq} />}
+          />
+          <Route exact path="/HelpPage/feedback" component={FeedbackPage} />{" "}
+          <Route exact path="/ProfilePage" component={ProfilePage} />{" "}
+          {/* <Route
                                 render={() => (
                                   <h1 style={{ textAlign: "center", marginTop: 300 }}>
                                     404: page not found
                                   </h1>
                                 )}
-                              /> */
-                } <
-                /Switch> < /
-                div > <
-                /BrowserRouter>
-              );
-            }
+                              /> */}{" "}
+        </Switch>{" "}
+      </div>{" "}
+    </BrowserRouter>
+  );
+}
 
-            export default App;
+export default App;

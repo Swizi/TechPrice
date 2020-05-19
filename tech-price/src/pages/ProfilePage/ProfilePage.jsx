@@ -50,14 +50,37 @@ export function ProfilePage(props) {
 
   const [redirect, setRedirect] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
+  const [user, setUser] = React.useState(
+    {
+      aname: '',
+      email: '',
+      fname: '',
+      lname: '',
+      login: '',
+      mailing: false
+    }
+  )
   const cookies = new Cookies();
 
   useEffect(() => {
     console.log("Ajax request");
-    $.post("http://localhost/ajax/check_auth.php", { target: "checking" }, function (data) {
+    $.post("http://localhost/ajax/user.php", { target: "user-info" }, function (data) {
       var response = $.parseJSON(data);
       if (response.status == 0) {
         setRedirect(false);
+        console.log(response);
+        setUser({
+          aname: response.aname,
+          email: response.email,
+          fname: response.fname,
+          lname: response.lname,
+          login: response.login,
+        });
+        if (response.mailing == 'f') {
+          setState({checkedA: false});
+        } else {
+          setState({checkedA: true});
+        }
       } else {
         setRedirect(true);
       }
@@ -72,6 +95,7 @@ export function ProfilePage(props) {
 
   const handleChange = (event) => {
     setState({ ...state, [event.target.name]: event.target.checked });
+    // Здесь запрос на сервак на изменение mailing
   };
 
   let history = useHistory();
@@ -98,12 +122,12 @@ export function ProfilePage(props) {
       </div>
       <div className="profile_block">
         <span className="default_gray_text">Электроная почта</span>
-        <span className="default_black_text">denis.bosiiy@gmail.com</span>
-        <span className="default_gray_text">Текущий пароль</span>
-        <span className="default_black_text password_text">шолупонь</span>
+        <span className="default_black_text">{user.email}</span>
+        <span className="default_gray_text">Логин</span>
+        <span className="default_black_text password_text">{user.login}</span>
 
         <span className="default_gray_text">ФИО</span>
-        <span className="default_black_text">Босый Денис Владиславович</span>
+        <span className="default_black_text">{user.lname} {user.fname} {user.aname}</span>
         <FormControlLabel className="checkbox_label"
           control={<Checkbox checked={state.checkedA} onChange={handleChange} name="checkedA" />}
           label="Отправлять выгодные предложения из желаемых"
