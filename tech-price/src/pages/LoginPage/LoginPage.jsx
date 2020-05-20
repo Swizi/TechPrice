@@ -167,7 +167,10 @@ export function LoginPage(props) {
 
   if (loading) {
     return (
-      <CircularProgress className="circular_progress" />
+      <div className="loading_block">
+        <h3 className="loading_header">TechPrice</h3>
+        <CircularProgress className="circular_progress" />
+      </div>
     );
   }
   return (

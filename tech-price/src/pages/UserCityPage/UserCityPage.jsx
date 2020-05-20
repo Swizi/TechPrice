@@ -25,7 +25,6 @@ const useStyles = makeStyles(theme => ({
   root: {
     "& > *": {
       margin: theme.spacing(1),
-      width: 300
     }
   },
   margin: {
@@ -75,7 +74,7 @@ export function UserCityPage(props) {
         </div>
       </div>
       <div className="cities_block">
-        <form className={classes.root} autoComplete="on">
+        <form autoComplete="on" className="city_form">
           <TextField
             className="text_field"
             id="standard-search"

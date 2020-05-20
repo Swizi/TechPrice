@@ -24,6 +24,10 @@
   color: blue;
 }
 
+.search_query_form {
+  width: 90%;
+}
+
 @keyframes search-tab {
   0% {
     top: 100%;

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext } from "react";
 import LoginButton from "../../components/LoginButton/LoginButton";
 import ProductCard from "../../components/ProductCard/ProductCard";
 import SearchIcon from "@material-ui/icons/Search";
@@ -35,15 +35,23 @@ import ExpandLess from "@material-ui/icons/ExpandLess";
 import ExpandMore from "@material-ui/icons/ExpandMore";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 
-const useStyles = makeStyles(theme => ({
+import CatalogContext from "../.././CatalogContext";
+
+import { Redirect } from "react-router-dom";
+
+const useStyles = makeStyles((theme) => ({
   nested: {
-    paddingLeft: theme.spacing(4)
-  }
+    paddingLeft: theme.spacing(4),
+  },
 }));
 
 export function ShopPage(props) {
   const classes = useStyles();
 
+  const { searchCatalog, editSearchCatalog } = useContext(CatalogContext);
+
+  const [open, setOpen] = React.useState(false);
+  const [goBack, setGoBack] = React.useState(false);
 
   console.log(props);
   var href = window.location.href;
@@ -53,10 +61,13 @@ export function ShopPage(props) {
   console.log(href_index);
   let history = useHistory();
   console.log(props.catalog[href_index]);
-  var products = props.catalog[href_index].items[items_index].items;
-  console.log(props.catalog[href_index].items[items_index]);
+  var products = [];
+  if (/\d/.test(href_index)) {
+    products = props.catalog[href_index].items[items_index].items;
+  } else {
+    products = searchCatalog;
+  }
 
-  const [open, setOpen] = React.useState(false);
   const [products_array, setProducts] = React.useState(products);
 
   const handleClick = () => {
@@ -65,7 +76,7 @@ export function ShopPage(props) {
 
   const toDescendingPrice = () => {
     var prices = [];
-    for (var i = 0; i < products.length; i++){
+    for (var i = 0; i < products.length; i++) {
       prices.push(products[i].shops[0].price);
     }
     console.log(prices.sort((a, b) => a - b));
@@ -73,9 +84,9 @@ export function ShopPage(props) {
     // products sort by prices array
 
     var sorted_array = [];
-    for(var i = 0; i < products.length; i++){
-      for(var j = 0; j < products.length; j++){
-        if ( prices[i] === products[j].shops[0].price){
+    for (var i = 0; i < products.length; i++) {
+      for (var j = 0; j < products.length; j++) {
+        if (prices[i] === products[j].shops[0].price) {
           sorted_array.push(products[j]);
         }
       }
@@ -86,12 +97,11 @@ export function ShopPage(props) {
     console.log(products);
 
     setProducts(products);
-
   };
 
   const toAscendingPrice = () => {
     var prices = [];
-    for (var i = 0; i < products.length; i++){
+    for (var i = 0; i < products.length; i++) {
       prices.push(products[i].shops[0].price);
     }
     console.log(prices.sort((a, b) => b - a));
@@ -99,9 +109,9 @@ export function ShopPage(props) {
     // products sort by prices array
 
     var sorted_array = [];
-    for(var i = 0; i < products.length; i++){
-      for(var j = 0; j < products.length; j++){
-        if ( prices[i] === products[j].shops[0].price){
+    for (var i = 0; i < products.length; i++) {
+      for (var j = 0; j < products.length; j++) {
+        if (prices[i] === products[j].shops[0].price) {
           sorted_array.push(products[j]);
         }
       }
@@ -112,12 +122,11 @@ export function ShopPage(props) {
     console.log(products);
 
     setProducts(products);
-
   };
 
   const toPopularity = () => {
     var popularity_array = [];
-    for (var i = 0; i < products.length; i++){
+    for (var i = 0; i < products.length; i++) {
       popularity_array.push(products[i].popularity);
     }
     console.log(popularity_array.sort((a, b) => b - a));
@@ -125,9 +134,9 @@ export function ShopPage(props) {
     // products sort by prices array
 
     var sorted_array = [];
-    for(var i = 0; i < products.length; i++){
-      for(var j = 0; j < products.length; j++){
-        if ( popularity_array[i] === products[j].popularity){
+    for (var i = 0; i < products.length; i++) {
+      for (var j = 0; j < products.length; j++) {
+        if (popularity_array[i] === products[j].popularity) {
           sorted_array.push(products[j]);
         }
       }
@@ -138,19 +147,23 @@ export function ShopPage(props) {
     console.log(products);
 
     setProducts(products);
-
   };
 
+  if (goBack) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <div className="page_flexbox">
       <div className="navigation_menu">
         <div className="default_menu_wrapper">
-          <IconButton onClick={() => history.goBack()}>
+          <IconButton onClick={/\d/.test(href_index) ? () => history.goBack() : () => setGoBack(true)} > 
             <ArrowBackIcon />
           </IconButton>
           <span className="menu_header_text">
-            {props.catalog[href_index].items[items_index].name}
+            {href_index.match(/^\d+$/)
+              ? props.catalog[href_index].items[items_index].name
+              : "Результат поиска"}
           </span>
         </div>
       </div>
@@ -165,19 +178,24 @@ export function ShopPage(props) {
             <ListItem onClick={toPopularity} button className={classes.nested}>
               <ListItemText primary={props.sorting_text[0]} />
             </ListItem>
-            <ListItem onClick={toDescendingPrice} button className={classes.nested}>
+            <ListItem
+              onClick={toDescendingPrice}
+              button
+              className={classes.nested}
+            >
               <ListItemText primary={props.sorting_text[1]} />
             </ListItem>
-            <ListItem onClick={toAscendingPrice} button className={classes.nested}>
+            <ListItem
+              onClick={toAscendingPrice}
+              button
+              className={classes.nested}
+            >
               <ListItemText primary={props.sorting_text[2]} />
             </ListItem>
           </List>
         </Collapse>
         <div className="product_cards">
-          {products_array.map(function (
-            item,
-            index
-          ) {
+          {products_array.map(function (item, index) {
             return <SaleProductCard key={index} data={item} />;
           })}
         </div>

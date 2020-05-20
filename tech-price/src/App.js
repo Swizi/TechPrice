@@ -32,6 +32,7 @@ import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { isVariableDeclarator } from "@babel/types";
 import UserContext from "./UserContext";
 import SearchContext from "./SearchContext";
+import CatalogContext from "./CatalogContext";
 
 import Cookies from "universal-cookie";
 
@@ -548,39 +549,45 @@ function App() {
 
   useEffect(() => {
     console.log("Ajax request");
-    $.post(
-      "http://localhost/ajax/get_content.php",
-      { target: "get-categ" },
-      function (data) {
-        var response = $.parseJSON(data);
-        if (response.status == 0) {
-          console.log(response);
-          catalog = [];
-          for (var i = 0; i < response.categories.length; i++) {
-            var item = {
-              id: i,
-              name: response.categories[i],
-              url: "https://is.gd/3ZM9lY",
-              items: [],
-            };
-            for (var j = 6 * i; j < 6 * i + 6; j++) {
-              var subitem = {
-                block_id: i,
-                id: j - 6 * i,
-                name: response.subcategories[j],
-                items: items_data,
-                url: "https://is.gd/6EvpgB",
-              };
-              item.items.push(subitem);
-            }
-            catalog.push(item);
+    $.post(`${host}/ajax/get_content.php`, { target: "get-categ" }, function (
+      data
+    ) {
+      var response = $.parseJSON(data);
+      if (response.status == 0) {
+        console.log(response);
+        catalog = [];
+        for (var i = 0; i < response.categories.length; i++) {
+          var item = {
+            id: i,
+            name: response.categories[i],
+            url: "https://is.gd/3ZM9lY",
+            items: [],
+          };
+          if (item.name[0] == 'm'){  // Делаем проверку на m_mobile
+            var str = item.name;
+            str = str.slice(10);
+            var start_symbol = str[0].toUpperCase();
+            str = str.slice(1);
+            str = start_symbol + str;
+            item.name = str;
           }
-        } else {
-          console.log(response);
+          for (var j = 6 * i; j < 6 * i + 6; j++) {
+            var subitem = {
+              block_id: i,
+              id: j - 6 * i,
+              name: response.subcategories[j],
+              items: items_data,
+              url: "https://is.gd/6EvpgB",
+            };
+            item.items.push(subitem);
+          }
+          catalog.push(item);
         }
-        setLoading(false);
+      } else {
+        console.log(response);
       }
-    );
+      setLoading(false);
+    });
   }, []);
 
   navigator.geolocation.getCurrentPosition(
@@ -656,75 +663,16 @@ function App() {
   const [isClicked, editSearchTab] = useState(false);
   const search_value = { isClicked, editSearchTab };
 
-  // const classes = useStyles();
-  // const [state, setState] = React.useState({
-  //   left: false
-  // });
-
-  // const toggleDrawer = (side, open) => event => {
-  //   if (
-  //     event &&
-  //     event.type === "keydown" &&
-  //     (event.key === "Tab" || event.key === "Shift")
-  //   ) {
-  //     return;
-  //   }
-
-  //   setState({ ...state, [side]: open });
-  // };
-
-  // const sideList = side => (
-  //   <div
-  //     className={classes.fullList}
-  //     role="presentation"
-  //     onClick={toggleDrawer(side, false)}
-  //     onKeyDown={toggleDrawer(side, false)}
-  //   >
-  //     <List>
-  //       {[
-  //         "Домашняя страница",
-  //         "Войти [Профиль]",
-  //         "Акции",
-  //         "Служба поддержки"
-  //       ].map((text, index) => (
-  //         <Link
-  //           key={index}
-  //           to={`${(index === 0 && "/") ||
-  //             (index === 1 && "/LoginPage") ||
-  //             (index === 2 && "/SalesPage") ||
-  //             (index === 3 && "/HelpPage")}`}
-  //         >
-  //           <ListItem button key={text}>
-  //             <ListItemIcon>
-  //               {index === 0 && <HomeIcon />}
-  //               {index === 1 && <AccountBoxIcon />}
-  //               {index === 2 && <MonetizationOnIcon />}
-  //               {index === 3 && <ContactSupportIcon />}
-  //             </ListItemIcon>
-  //             <ListItemText primary={text} className="list_text" />
-  //           </ListItem>
-  //         </Link>
-  //       ))}
-  //     </List>
-  //     <Divider />
-  //     <List>
-  //       {["Выйти", `Город: ${userCity}`].map((text, index) => (
-  //         <Link key={index} to={`${index === 1 && "/UserCityPage"}`}>
-  //           <ListItem button key={text}>
-  //             <ListItemIcon>
-  //               {index === 0 && <ExitToAppIcon />}
-  //               {index === 1 && <LocationCityIcon />}
-  //             </ListItemIcon>
-  //             <ListItemText primary={text} className="list_text" />
-  //           </ListItem>
-  //         </Link>
-  //       ))}
-  //     </List>
-  //   </div>
-  // );
+  const [searchCatalog, editSearchCatalog] = useState([]);
+  const catalog_search_value = { searchCatalog, editSearchCatalog };
 
   if (loading) {
-    return <CircularProgress className="circular_progress" />;
+    return (
+      <div className="loading_block">
+        <h3 className="loading_header">TechPrice</h3>
+        <CircularProgress className="circular_progress" />
+      </div>
+    );
   }
 
   return (
@@ -741,17 +689,19 @@ function App() {
             exact
             path="/"
             render={() => (
-              <SearchContext.Provider value={search_value}>
-                <UserContext.Provider value={user_value}>
-                  <MainPage
-                    catalog={catalog}
-                    host={host}
-                    // toggleDrawer={toggleDrawer}
-                    // data={data}
-                    // classes={classes}
-                  />{" "}
-                </UserContext.Provider>{" "}
-              </SearchContext.Provider>
+              <CatalogContext.Provider value={catalog_search_value}>
+                <SearchContext.Provider value={search_value}>
+                  <UserContext.Provider value={user_value}>
+                    <MainPage
+                      catalog={catalog}
+                      host={host}
+                      // toggleDrawer={toggleDrawer}
+                      // data={data}
+                      // classes={classes}
+                    />{" "}
+                  </UserContext.Provider>{" "}
+                </SearchContext.Provider>
+              </CatalogContext.Provider>
             )}
           />{" "}
           <Route
@@ -796,6 +746,19 @@ function App() {
                 sorting_text={sorting_text}
                 host={host}
               />
+            )}
+          />
+          <Route
+            exact
+            path="/ShopPage"
+            render={() => (
+              <CatalogContext.Provider value={catalog_search_value}>
+                <ShopPage
+                  catalog={catalog}
+                  sorting_text={sorting_text}
+                  host={host}
+                />
+              </CatalogContext.Provider>
             )}
           />
           <Route

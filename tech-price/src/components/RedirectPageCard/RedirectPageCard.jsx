@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import "./RedirectPageCard.css"
+import "./RedirectPageCard.css";
 
 export default function RedirectPageCard(props) {
   console.log(props.data);

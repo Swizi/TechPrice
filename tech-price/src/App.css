@@ -137,15 +137,28 @@ link {
   position: relative;
 }
 
-.loading_screen {
-  margin: 50% 0 0 0;
+.loading_block {
+  background-color: #FFFFFF;
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 100%;
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  z-index: 10;
 }
 
 .circular_progress {
   color: #FFD600 !important;
+}
+
+.loading_header {
+  letter-spacing: 1px;
+  font-weight: 900;
+  font-size: 20px;
+  margin: 0 0 25px 0;
 }
 
 .page_flexbox {

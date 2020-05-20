@@ -229,7 +229,12 @@ export function MainPage(props) {
   // setLoading(true);
 
   if (loading) {
-    return <CircularProgress className="circular_progress" />
+    return (
+      <div className="loading_block">
+        <h3 className="loading_header">TechPrice</h3>
+        <CircularProgress className="circular_progress" />
+      </div>
+    );
   }
   
   return (
@@ -245,7 +250,7 @@ export function MainPage(props) {
         {sideList("left")}
       </SwipeableDrawer>
       {/* <Collapse in={!isClicked} timeout={1}> */}
-      <SearchTab />
+      <SearchTab host={props.host}/>
       {/* </Collapse> */}
       <div className="navigation_menu">
         <div id="main-menu" className="menu_wrapper">

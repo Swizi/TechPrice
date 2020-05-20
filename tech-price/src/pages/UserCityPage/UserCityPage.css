@@ -7,6 +7,7 @@
   justify-content: center;
   align-items: center;
   flex-direction: column;
+  width: 80%;
 }
 
 .city_cards_block {
@@ -16,4 +17,9 @@
   flex-direction: column;
   width: 100%;
   margin: 16px 0 0 0;
+}
+
+.city_form {
+  width: 100%;
+  margin: 40px;
 }
