@@ -97,7 +97,7 @@ export function MainPage(props) {
 
   useEffect(() => {
     console.log("Ajax request");
-    $.post("http://localhost/ajax/check_auth.php", { target: "checking" }, function (data) {
+    $.post(`${props.host}/ajax/check_auth.php`, { target: "checking" }, function (data) {
       var response = $.parseJSON(data);
       if (response.status == 0) {
         setAuth(true);
@@ -117,7 +117,7 @@ export function MainPage(props) {
 
   const logoutRequest = async () => {
     setLoading(true);
-    $.post("http://localhost/ajax/logout.php", { target: "logout" }, async function (data) {
+    $.post(`${props.host}/ajax/logout.php`, { target: "logout" }, async function (data) {
       console.log("Loading 1 - ", loading);
       console.log(auth);
       var response = await $.parseJSON(data);
@@ -147,7 +147,7 @@ export function MainPage(props) {
   useEffect(() => {
     if (menuAction) {
       console.log("MENU ACTION IS TRUE");
-      $.post("http://localhost/ajax/logout.php", { target: "logout" }, function (data) {
+      $.post(`${props.host}/ajax/logout.php`, { target: "logout" }, function (data) {
         var response = $.parseJSON(data);
         if (response.status == 0) {
           setAuth(false);

@@ -79,7 +79,7 @@ export function LoginPage(props) {
       alert(JSON.stringify(values, null, 2));
       alert("По пизде бы тебе настучать");
       setLoadingAlert(true);
-      $.post("http://localhost/ajax/login.php", { target: 'logination', login: values.login, password: values.password }, function (data) {
+      $.post(`${props.host}/ajax/login.php`, { target: 'logination', login: values.login, password: values.password }, function (data) {
         var response = $.parseJSON(data);
         if (response.status != 0) {
           console.log("error");
@@ -115,7 +115,7 @@ export function LoginPage(props) {
   };
 
   useEffect(() => {
-    $.post("http://localhost/ajax/check_auth.php", { target: "checking" }, function (data) {
+    $.post(`${props.host}/ajax/check_auth.php`, { target: "checking" }, function (data) {
       var response = $.parseJSON(data);
       if (response.status == 0) {
         setRedirect(true);

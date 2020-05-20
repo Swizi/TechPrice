@@ -37,7 +37,7 @@ import Cookies from "universal-cookie";
 
 import $ from "jquery";
 
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
 
 var response;
 // import { UserProvider } from './UserContext'
@@ -58,6 +58,8 @@ const LoadingPage = () => <div> Loading... </div>;
 // var userCity = "Москва";
 
 const pageHeader = "2";
+
+const host = "http://localhost";
 
 const faq = [
   {
@@ -554,21 +556,21 @@ function App() {
         if (response.status == 0) {
           console.log(response);
           catalog = [];
-          for (var i = 0; i < response.categories.length; i++){
+          for (var i = 0; i < response.categories.length; i++) {
             var item = {
               id: i,
               name: response.categories[i],
               url: "https://is.gd/3ZM9lY",
-              items: []
-            }
-            for (var j = 6*i; j < 6*i+6; j++){
+              items: [],
+            };
+            for (var j = 6 * i; j < 6 * i + 6; j++) {
               var subitem = {
                 block_id: i,
-                id: j-6*i,
+                id: j - 6 * i,
                 name: response.subcategories[j],
                 items: items_data,
-                url: "https://is.gd/6EvpgB"
-              }
+                url: "https://is.gd/6EvpgB",
+              };
               item.items.push(subitem);
             }
             catalog.push(item);
@@ -722,16 +724,19 @@ function App() {
   // );
 
   if (loading) {
-    return (
-      <CircularProgress className="circular_progress" />
-    );
+    return <CircularProgress className="circular_progress" />;
   }
 
   return (
     <BrowserRouter>
       <div className="App">
         <Switch>
-          <Route path="/LoginPage" header="Вход" component={LoginPage} />{" "}
+          <Route
+            host={host}
+            path="/LoginPage"
+            header="Вход"
+            render={() => <LoginPage host={host} />}
+          />{" "}
           <Route
             exact
             path="/"
@@ -740,6 +745,7 @@ function App() {
                 <UserContext.Provider value={user_value}>
                   <MainPage
                     catalog={catalog}
+                    host={host}
                     // toggleDrawer={toggleDrawer}
                     // data={data}
                     // classes={classes}
@@ -752,13 +758,13 @@ function App() {
             exact
             path="/RegistrationPage"
             header="Регистрация"
-            component={RegistrationPage}
+            render={() => <RegistrationPage host={host} />}
           />{" "}
           <Route
             exact
             header="Товар"
             path="/ProductPage/:id"
-            render={() => <ProductPage data={items_data} />}
+            render={() => <ProductPage data={items_data} host={host} />}
           />
           <Route
             exact
@@ -785,7 +791,11 @@ function App() {
             exact
             path="/ShopPage/:id/:id"
             render={() => (
-              <ShopPage catalog={catalog} sorting_text={sorting_text} />
+              <ShopPage
+                catalog={catalog}
+                sorting_text={sorting_text}
+                host={host}
+              />
             )}
           />
           <Route
@@ -798,8 +808,16 @@ function App() {
             path="/HelpPage/faq"
             render={() => <FAQPage faq={faq} />}
           />
-          <Route exact path="/HelpPage/feedback" component={FeedbackPage} />{" "}
-          <Route exact path="/ProfilePage" component={ProfilePage} />{" "}
+          <Route
+            exact
+            path="/HelpPage/feedback"
+            render={() => <FeedbackPage host={host} />}
+          />{" "}
+          <Route
+            exact
+            path="/ProfilePage"
+            render={() => <ProfilePage host={host} />}
+          />{" "}
           {/* <Route
                                 render={() => (
                                   <h1 style={{ textAlign: "center", marginTop: 300 }}>

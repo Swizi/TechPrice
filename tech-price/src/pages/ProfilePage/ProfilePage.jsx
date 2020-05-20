@@ -64,7 +64,7 @@ export function ProfilePage(props) {
 
   useEffect(() => {
     console.log("Ajax request");
-    $.post("http://localhost/ajax/user.php", { target: "user-info" }, function (data) {
+    $.post(`${props.host}/ajax/user.php`, { target: "user-info" }, function (data) {
       var response = $.parseJSON(data);
       if (response.status == 0) {
         setRedirect(false);

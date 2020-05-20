@@ -95,7 +95,7 @@ export function RegistrationPage(props) {
       alert(JSON.stringify(values, null, 2));
       alert("По пизде бы тебе настучать");
       setLoadingAlert(true);
-      $.post("http://localhost/ajax/register.php", { target: "registration", login: values.login, fname: values.firstName, lname: values.lastName, email: values.email, password: values.password1, aname: values.additionalName}, function (data) {
+      $.post(`${props.host}/ajax/register.php`, { target: "registration", login: values.login, fname: values.firstName, lname: values.lastName, email: values.email, password: values.password1, aname: values.additionalName}, function (data) {
         var response = $.parseJSON(data);
         if (response.status == 0) {
           setRedirect(true);
@@ -126,7 +126,7 @@ export function RegistrationPage(props) {
 
   useEffect(() => {
     console.log("Ajax request");
-    $.post("http://localhost/ajax/check_auth.php", { target: "checking" }, function (data) {
+    $.post(`${props.host}/ajax/check_auth.php`, { target: "checking" }, function (data) {
       var response = $.parseJSON(data);
       if (response.status == 0) {
         setRedirect(true);
