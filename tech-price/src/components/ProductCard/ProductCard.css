@@ -32,8 +32,10 @@
 }
 
 .image_style {
-  height: 100px;
-  width: 100px;
+  height: 60%;
+  width: 60%;
+  object-fit: cover;
+  object-position: center;
 }
 
 .product_page_image {

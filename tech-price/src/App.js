@@ -33,6 +33,7 @@ import { isVariableDeclarator } from "@babel/types";
 import UserContext from "./UserContext";
 import SearchContext from "./SearchContext";
 import CatalogContext from "./CatalogContext";
+import ItemContext from "./ItemContext";
 
 import Cookies from "universal-cookie";
 
@@ -386,152 +387,6 @@ var catalog = [
   //   ],
   // },
   // {
-  //   id: 1,
-  //   name: "Ноутбуки и аксессуары",
-  //   url: "https://is.gd/7KJAEw",
-  //   items: [
-  //     {
-  //       block_id: 1,
-  //       id: 0,
-  //       name: "Крупная бытовая техника",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //     {
-  //       block_id: 1,
-  //       id: 1,
-  //       name: "Техника для дома",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //     {
-  //       block_id: 1,
-  //       id: 2,
-  //       name: "Техника для кухни",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //     {
-  //       block_id: 1,
-  //       id: 3,
-  //       name: "Техника для красоты и здоровья",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //     {
-  //       block_id: 1,
-  //       id: 4,
-  //       name: "Встраиваемая техника",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //     {
-  //       block_id: 1,
-  //       id: 5,
-  //       name: "Климатическая техника",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //   ],
-  // },
-  // {
-  //   id: 2,
-  //   name: "Телефоны",
-  //   url: "https://is.gd/Tdmnc1",
-  //   items: [
-  //     {
-  //       block_id: 1,
-  //       id: 0,
-  //       name: "Крупная бытовая техника",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //     {
-  //       block_id: 1,
-  //       id: 1,
-  //       name: "Техника для дома",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //     {
-  //       block_id: 1,
-  //       id: 2,
-  //       name: "Техника для кухни",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //     {
-  //       block_id: 1,
-  //       id: 3,
-  //       name: "Техника для красоты и здоровья",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //     {
-  //       block_id: 1,
-  //       id: 4,
-  //       name: "Встраиваемая техника",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //     {
-  //       block_id: 1,
-  //       id: 5,
-  //       name: "Климатическая техника",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //   ],
-  // },
-  // {
-  //   id: 3,
-  //   name: "Периферийные устройства",
-  //   url: "https://is.gd/OEquVx",
-  //   items: [
-  //     {
-  //       block_id: 1,
-  //       id: 0,
-  //       name: "Крупная бытовая техника",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //     {
-  //       block_id: 1,
-  //       id: 1,
-  //       name: "Техника для дома",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //     {
-  //       block_id: 1,
-  //       id: 2,
-  //       name: "Техника для кухни",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //     {
-  //       block_id: 1,
-  //       id: 3,
-  //       name: "Техника для красоты и здоровья",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //     {
-  //       block_id: 1,
-  //       id: 4,
-  //       name: "Встраиваемая техника",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //     {
-  //       block_id: 1,
-  //       id: 5,
-  //       name: "Климатическая техника",
-  //       items: data,
-  //       url: "https://is.gd/6EvpgB",
-  //     },
-  //   ],
-  // },
 ];
 
 // const Drawer = createDrawerNavigator();
@@ -563,7 +418,8 @@ function App() {
             url: "https://is.gd/3ZM9lY",
             items: [],
           };
-          if (item.name[0] == 'm'){  // Делаем проверку на m_mobile
+          if (item.name[0] == "m") {
+            // Делаем проверку на m_mobile
             var str = item.name;
             str = str.slice(10);
             var start_symbol = str[0].toUpperCase();
@@ -666,6 +522,9 @@ function App() {
   const [searchCatalog, editSearchCatalog] = useState([]);
   const catalog_search_value = { searchCatalog, editSearchCatalog };
 
+  const [item, setItem] = useState({});
+  const item_value = { item, setItem };
+
   if (loading) {
     return (
       <div className="loading_block">
@@ -718,6 +577,16 @@ function App() {
           />
           <Route
             exact
+            header="Товар"
+            path="/ProductPage"
+            render={() => (
+              <ItemContext.Provider value={item_value}>
+                <ProductPage data={items_data} host={host} />
+              </ItemContext.Provider>
+            )}
+          />
+          <Route
+            exact
             header="Выбор города"
             path="/UserCityPage"
             render={() => (
@@ -752,13 +621,15 @@ function App() {
             exact
             path="/ShopPage"
             render={() => (
-              <CatalogContext.Provider value={catalog_search_value}>
-                <ShopPage
-                  catalog={catalog}
-                  sorting_text={sorting_text}
-                  host={host}
-                />
-              </CatalogContext.Provider>
+              <ItemContext.Provider value={item_value}>
+                <CatalogContext.Provider value={catalog_search_value}>
+                  <ShopPage
+                    catalog={catalog}
+                    sorting_text={sorting_text}
+                    host={host}
+                  />
+                </CatalogContext.Provider>
+              </ItemContext.Provider>
             )}
           />
           <Route

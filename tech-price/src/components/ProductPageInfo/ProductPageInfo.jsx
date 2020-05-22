@@ -18,7 +18,7 @@ export default function ProductPageInfo(props) {
     const [loading, setLoading] = React.useState(true);
 
     useEffect(() => {
-        $.post("http://localhost/ajax/check_auth.php", { target: "checking" }, function (data) {
+        $.post(`${props.host}/ajax/check_auth.php`, { target: "checking" }, function (data) {
             var response = $.parseJSON(data);
             if (response.status == 0) {
                 setAuth(true);

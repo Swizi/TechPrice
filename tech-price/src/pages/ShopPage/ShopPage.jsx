@@ -36,8 +36,13 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 
 import CatalogContext from "../.././CatalogContext";
+import ItemContext from '../.././ItemContext';
 
 import { Redirect } from "react-router-dom";
+
+import $ from 'jquery';
+
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const useStyles = makeStyles((theme) => ({
   nested: {
@@ -47,11 +52,16 @@ const useStyles = makeStyles((theme) => ({
 
 export function ShopPage(props) {
   const classes = useStyles();
+  let history = useHistory();
 
   const { searchCatalog, editSearchCatalog } = useContext(CatalogContext);
+  const { item, setItem } = useContext(ItemContext);
 
   const [open, setOpen] = React.useState(false);
+  const [loading, setLoading] = React.useState(false);
   const [goBack, setGoBack] = React.useState(false);
+  const [isClicked, editClicked] = React.useState(false);
+  const [product, setProduct] = React.useState({});
 
   console.log(props);
   var href = window.location.href;
@@ -59,9 +69,9 @@ export function ShopPage(props) {
   var items_index = href[href.length - 1];
   var href_index = href[href.length - 2];
   console.log(href_index);
-  let history = useHistory();
   console.log(props.catalog[href_index]);
   var products = [];
+  var isSearchQuery = /\d/.test(href_index);
   if (/\d/.test(href_index)) {
     products = props.catalog[href_index].items[items_index].items;
   } else {
@@ -153,6 +163,94 @@ export function ShopPage(props) {
     return <Redirect to="/" />;
   }
 
+  if (isClicked){
+    if (!/\d/.test(href_index)) {
+      setLoading(true);
+      $.post(`${props.host}/ajax/get_content.php`, { target: 'get-item', link: product.link }, function (data) {
+        var response = $.parseJSON(data);
+        console.log(response);
+        if ((response.status == 0) || (response.status == 8)) {
+          // Ответ пришёл 
+          console.log('Картинки - ', response.pics);
+          var item_link = product.link;
+          item_link = item_link.slice(2);
+
+          var description_text = '';
+          
+          for (var i = 0; i < response.description.length; i++){
+            description_text = description_text + response.description[i];
+            description_text = description_text + " ; ";
+          }
+
+          var item_product = {
+            urls: response.pics,
+            popularity: 4, //random popularity
+            name: response.title,
+            description: description_text,
+            reviews: [
+              {
+                id: 0,
+                url: "https://is.gd/8AzG0h",
+                name: "Egor Komaroff",
+                review: "Всё понравилось, рекомендую.",
+                isLiked: true,
+              },
+            ],
+            shops: [
+              {
+                name: "Eldorado",
+                price: response.el_price.replace(/[^0-9]/gim, ''),
+                rating: 0,
+                reviews: 0,
+                link: "https://" + item_link
+              }
+            ]
+          };
+
+          if (response.status == 0){
+            if (response.mv_price != null) {
+              item_product.shops.push({
+                name: "Mvideo",
+                price: response.mv_price.replace(/[^0-9]/gim, ''),
+                rating: 0,
+                reviews: 0,
+                link: response.mv_link
+              });
+            }
+          }
+
+          alert("Entered");
+
+          setItem(item_product);
+
+          alert("Closed");
+
+          // Формировка переменной для отправки на ProductPage
+          // return <ProductPage data={formatted_data} />
+          history.push("/");
+          history.push("/ProductPage");
+        } else {
+          // Ошибочка вышла
+        }
+        setLoading(false);
+      });
+    } else {
+      history.push("/");
+      history.push(`/ProductPage/${product.id}`);
+      // return <Redirect to={`/ProductPage/${product.id}`} />
+    }  
+    editClicked(false);
+  }
+
+  if (loading) {
+    return (
+      <div className="loading_block">
+        <h3 className="loading_header">TechPrice</h3>
+        <CircularProgress className="circular_progress" />
+      </div>
+    );
+  }
+
   return (
     <div className="page_flexbox">
       <div className="navigation_menu">
@@ -195,8 +293,8 @@ export function ShopPage(props) {
           </List>
         </Collapse>
         <div className="product_cards">
-          {products_array.map(function (item, index) {
-            return <SaleProductCard key={index} data={item} />;
+          {products_array.map(function (product_item, index) {
+            return <SaleProductCard onClick={() => { setProduct(product_item); editClicked(true)}} key={index} data={product_item} />;
           })}
         </div>
       </div>

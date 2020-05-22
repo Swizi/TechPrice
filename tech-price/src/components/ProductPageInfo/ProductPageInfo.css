@@ -13,12 +13,15 @@
 }
 
 .product_images_carousel {
-  height: 250px !important;
+  height: 450px !important;
   margin: 0 0 20px 0;
 }
 
 .product_page_image {
-  height: 200px;
+  height: 400px;
+  width: 400px;
+  object-fit: cover;
+  object-position: center;
   margin-top: 15px;
 }
 
