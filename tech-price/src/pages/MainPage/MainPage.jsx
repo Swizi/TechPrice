@@ -32,6 +32,7 @@ import HomeIcon from "@material-ui/icons/Home";
 
 import UserContext from '../.././UserContext';
 import SearchContext from '../.././SearchContext';
+import SubcategoriesContext from '../.././SubcategoriesContext';
 import Collapse from '@material-ui/core/Collapse';
 
 import TransitionGroup from 'react-transition-group/TransitionGroup';
@@ -45,7 +46,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 
 // const history = createBrowserHistory()
 
-// import { useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
 // function routeChange() {
 //     let path = `../LoginPage/LoginPage.jsx`;
@@ -64,14 +65,20 @@ const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 
 export function MainPage(props) {
+  let history = useHistory();
+
   const { isClicked, editSearchTab } = useContext(SearchContext);
   const { userCity, setCity } = useContext(UserContext);
+  const { subcategories, editSubcategories } = useContext(SubcategoriesContext);
 
   const cookies = new Cookies();
 
   const [auth, setAuth] = React.useState(false);
   const [loading, setLoading] = React.useState(true);
   const [menuAction, setAction] = React.useState(false);
+  const [category, setCategory] = React.useState({});
+
+  const [toSubCategory, editClicked] = React.useState(false);
 
   // const [loading, setLoading] = React.useState(true);
 
@@ -225,6 +232,36 @@ export function MainPage(props) {
     </div>
   );
 
+  if (toSubCategory){
+    setLoading(true);
+    $.post(`${props.host}/ajax/get_content.php`, { target: 'get-subcateg', link: category.link }, function (data) {
+      var response = $.parseJSON(data);
+      console.log(response);
+      if ((response.status == 0) || (response.status == 8)) {
+        // Ответ пришёл 
+        var subcategory_array = [];
+        for (var i = 0; i < response.subcategories.length; i++){
+          var subcategory = {
+            name: response.subcategories[i],
+            url: response.pics[i],
+            link: response.links[i]
+          }
+          subcategory_array.push(subcategory);
+        }
+        editSubcategories({
+          header: category.name,
+          array: subcategory_array
+        });
+        history.push("/RedirectPage");
+        // history.push("/ProductPage");
+      } else {
+        // Ошибочка вышла
+      }
+      setLoading(false);
+    });   
+    editClicked(false);
+  }
+
   console.log(props);
   // setLoading(true);
 
@@ -284,7 +321,7 @@ export function MainPage(props) {
         </div>
         <div className="product_cards">
           {props.catalog.map(function (item, index) {
-            return <ItemsCard key={index} data={item} />;
+            return <ItemsCard onClick={() => {setCategory(item);editClicked(true)}} key={index} data={item} />;
           })}
         </div>
       </div>

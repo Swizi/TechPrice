@@ -48,10 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 const validate = values => {
   const errors = {};
-  if (/[1-9]$/g.test(values.search_string)){
-    errors.search_string = 'Запрос не может состоять из цифр';
-  }
-
+  
   if (values.search_string == ''){
     errors.search_string = 'Пустой запрос!';
   }
@@ -64,7 +61,6 @@ export default function SearchTab(props) {
   const { isClicked, editSearchTab } = useContext(SearchContext);
   const [loading, setLoading] = React.useState(false);
   const [redirect, setRedirect] = React.useState(false);
-  console.log("isClicked = ", isClicked);
 
   const formik = useFormik({
     initialValues: {
@@ -72,7 +68,6 @@ export default function SearchTab(props) {
     },
     validate,
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
       setLoading(true);
       $.post(
         `${props.host}/ajax/get_content.php`,
@@ -100,7 +95,10 @@ export default function SearchTab(props) {
               item.urls.push(response.pics[i]);
               catalog.push(item);
             }
-            editSearchCatalog(catalog);
+            editSearchCatalog({
+              header: 'Результаты поиска',
+              array: catalog
+            });
             editSearchTab(!isClicked);
             setRedirect(true);
           }
@@ -116,7 +114,6 @@ export default function SearchTab(props) {
     $("#standard-search").keypress(function (e) {
       if (e.which == 13) {
         //Enter key pressed
-        alert("МДА, ПИЗДА!");
         return <Redirect to="/UserCityPage" />;
       }
     });
@@ -150,14 +147,15 @@ export default function SearchTab(props) {
           value={formik.values.search_string}
           name="search_string"
           id="search_string"
+          label=""
           className={formik.errors.search_string ? classes.error_text : classes.root}
           style={
             {
-              color: formik.errors.search_string ? "red" : null
+              color: formik.errors.search_string ? "red" : null,
             }
           }
           type="search"
-          label="Поиск"
+          label=""
           helperText={formik.errors.search_string ? formik.errors.search_string : null}
           InputProps={{
             startAdornment: (

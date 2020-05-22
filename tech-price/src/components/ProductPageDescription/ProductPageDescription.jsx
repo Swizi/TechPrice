@@ -8,11 +8,9 @@ export default function ProductPageDescription(props) {
     console.log(i);
     if (i % 2 === 0) {
       external_array = [];
-      console.log("zashlo-1")
     }
     external_array.push(array_string_description[i]);
     if (external_array.length === 2) {
-      console.log('zashlo');
       array_array_description.push(external_array);
     }
   }

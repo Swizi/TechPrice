@@ -32,7 +32,7 @@ export default function ProductPageInfo(props) {
         <div className="product_description">
             <div className="product_description_header_block">
                 <h1 className="product_page_header">{props.data.name}</h1>
-                {loading ? <CircularProgress class="circular_progress" /> :
+                {loading ? <CircularProgress className="circular_progress" /> :
                 <div className="favourite_button" onClick={() => changeStyle(!isClicked)}>
                     {isClicked ? <FavoriteIcon className="favorite_icon" style={{ display: auth ? "flex" : "none" }} /> : <FavoriteBorderIcon className="favorite_icon" style={{ display: auth ? "flex" : "none" }} />}
                 </div>}

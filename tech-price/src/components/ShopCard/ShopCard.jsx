@@ -24,6 +24,7 @@ export default function ShopCard(props) {
         color="primary"
         className="shop_button"
         href={props.data.link}
+        target="_blank"
       >
         Перейти
       </Button>

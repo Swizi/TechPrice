@@ -92,8 +92,6 @@ export function RegistrationPage(props) {
     },
     validate,
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
-      alert("По пизде бы тебе настучать");
       setLoadingAlert(true);
       $.post(`${props.host}/ajax/register.php`, { target: "registration", login: values.login, fname: values.firstName, lname: values.lastName, email: values.email, password: values.password1, aname: values.additionalName}, function (data) {
         var response = $.parseJSON(data);

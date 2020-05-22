@@ -16,12 +16,12 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  margin-top: 21px;
   background: #ffffff;
   border: 1px solid #f0f0f0;
   box-sizing: border-box;
   box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.05);
   border-radius: 10px;
+  margin: 5px 5px 21px 5px;
 }
 
 .card_link {
@@ -32,8 +32,8 @@
 }
 
 .image_style {
-  height: 60%;
-  width: 60%;
+  height: 50%;
+  width: 50%;
   object-fit: cover;
   object-position: center;
 }

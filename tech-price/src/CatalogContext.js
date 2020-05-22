@@ -1,7 +1,10 @@
 import React from 'react'
 
 const CatalogContext = React.createContext({
-  searchCatalog: [],
+  searchCatalog: {
+    header: '',
+    array: []
+  },
   editSearchCatalog: () => {}
 });
 

@@ -76,8 +76,6 @@ export function LoginPage(props) {
     },
     validate,
     onSubmit: values => {
-      alert(JSON.stringify(values, null, 2));
-      alert("По пизде бы тебе настучать");
       setLoadingAlert(true);
       $.post(`${props.host}/ajax/login.php`, { target: 'logination', login: values.login, password: values.password }, function (data) {
         var response = $.parseJSON(data);

@@ -173,3 +173,7 @@ link {
   width: 1rem !important;
   height: 1rem !important;
 }
+
+.sub_list {
+  width: 100% !important;
+}

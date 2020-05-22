@@ -43,7 +43,7 @@ export function SalesPage(props) {
       <div className="products">
         <div className="product_cards">
           {props.data.map(function(item, index) {
-            return <SaleProductCard key={index} data={item} />;
+            return <SaleProductCard key={index} data={item} onClick={() => {history.push("/")}} />;
           })}
         </div>
       </div>

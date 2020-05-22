@@ -6,27 +6,22 @@ export default function LongCard(props) {
   console.log(props.data);
   var path = "";
   var block_id = props.data.block_id;
-  // if (block_id == 1){
-  //   path = "`/ShopPage/${props.href_index}/${props.data.id}`"
-  // } else if (block_id == 0){
-  //   path = "`/HelpPage/${props.data.id}`"
-  // }
-  // if (block_id == 1){
-  //   path = "/ShopPage/" + props.href_index + "/" + props.data.id;
-  // } else if (block_id == 0){
-  //   path = "/HelpPage/" + props.data.id;
-  // }
-  path = "/ShopPage/" + props.href_index + "/" + props.data.id;
+
+  if(props.href_index){
+    path = "/ShopPage/" + props.href_index + "/" + props.data.id;  
+  } else {
+    path = "/HelpPage/" + props.data.id;
+  }
   
   return (
-    <Link className="help_link" to={path}>
-      <div className="help_block">
+    <Link className="long_card_link" to={path}>
+      <div className="long_card_block">
         <img
           className="image_style"
           src={props.data.url}
           alt={props.data.name}
         />
-        <span className="help_text">{props.data.name}</span>
+        <span className="long_card_text">{props.data.name}</span>
       </div>
     </Link>
   );

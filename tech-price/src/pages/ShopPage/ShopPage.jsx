@@ -36,13 +36,15 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 
 import CatalogContext from "../.././CatalogContext";
-import ItemContext from '../.././ItemContext';
+import ItemContext from "../.././ItemContext";
 
 import { Redirect } from "react-router-dom";
 
-import $ from 'jquery';
+import $ from "jquery";
 
-import CircularProgress from '@material-ui/core/CircularProgress';
+import CircularProgress from "@material-ui/core/CircularProgress";
+
+import "./ShopPage.css";
 
 const useStyles = makeStyles((theme) => ({
   nested: {
@@ -72,11 +74,11 @@ export function ShopPage(props) {
   console.log(props.catalog[href_index]);
   var products = [];
   var isSearchQuery = /\d/.test(href_index);
-  if (/\d/.test(href_index)) {
-    products = props.catalog[href_index].items[items_index].items;
-  } else {
-    products = searchCatalog;
-  }
+  // if (/\d/.test(href_index)) {
+  //   products = props.catalog[href_index].items[items_index].items;
+  // } else {
+  products = searchCatalog.array;
+  // }
 
   const [products_array, setProducts] = React.useState(products);
 
@@ -163,21 +165,23 @@ export function ShopPage(props) {
     return <Redirect to="/" />;
   }
 
-  if (isClicked){
-    if (!/\d/.test(href_index)) {
-      setLoading(true);
-      $.post(`${props.host}/ajax/get_content.php`, { target: 'get-item', link: product.link }, function (data) {
+  if (isClicked) {
+    setLoading(true);
+    $.post(
+      `${props.host}/ajax/get_content.php`,
+      { target: "get-item", link: product.link },
+      function (data) {
         var response = $.parseJSON(data);
         console.log(response);
-        if ((response.status == 0) || (response.status == 8)) {
-          // Ответ пришёл 
-          console.log('Картинки - ', response.pics);
+        if (response.status == 0 || response.status == 8) {
+          // Ответ пришёл
+          console.log("Картинки - ", response.pics);
           var item_link = product.link;
           item_link = item_link.slice(2);
 
-          var description_text = '';
-          
-          for (var i = 0; i < response.description.length; i++){
+          var description_text = "";
+
+          for (var i = 0; i < response.description.length; i++) {
             description_text = description_text + response.description[i];
             description_text = description_text + " ; ";
           }
@@ -199,46 +203,37 @@ export function ShopPage(props) {
             shops: [
               {
                 name: "Eldorado",
-                price: response.el_price.replace(/[^0-9]/gim, ''),
+                price: response.el_price.replace(/[^0-9]/gim, ""),
                 rating: 0,
                 reviews: 0,
-                link: "https://" + item_link
-              }
-            ]
+                link: "https://www.eldorado.ru/c" + item_link,
+              },
+            ],
           };
 
-          if (response.status == 0){
-            if (response.mv_price != null) {
+          if (response.status == 0) {
+            if (response.mv_price != "NULL") {
               item_product.shops.push({
                 name: "Mvideo",
-                price: response.mv_price.replace(/[^0-9]/gim, ''),
+                price: response.mv_price.replace(/[^0-9]/gim, ""),
                 rating: 0,
                 reviews: 0,
-                link: response.mv_link
+                link: response.mv_link,
               });
             }
           }
 
-          alert("Entered");
-
           setItem(item_product);
-
-          alert("Closed");
 
           // Формировка переменной для отправки на ProductPage
           // return <ProductPage data={formatted_data} />
-          history.push("/");
           history.push("/ProductPage");
         } else {
           // Ошибочка вышла
         }
         setLoading(false);
-      });
-    } else {
-      history.push("/");
-      history.push(`/ProductPage/${product.id}`);
-      // return <Redirect to={`/ProductPage/${product.id}`} />
-    }  
+      }
+    );
     editClicked(false);
   }
 
@@ -255,46 +250,46 @@ export function ShopPage(props) {
     <div className="page_flexbox">
       <div className="navigation_menu">
         <div className="default_menu_wrapper">
-          <IconButton onClick={/\d/.test(href_index) ? () => history.goBack() : () => setGoBack(true)} > 
+          <IconButton
+            onClick={
+              /\d/.test(href_index)
+                ? () => history.goBack()
+                : () => setGoBack(true)
+            }
+          >
             <ArrowBackIcon />
           </IconButton>
           <span className="menu_header_text">
-            {href_index.match(/^\d+$/)
-              ? props.catalog[href_index].items[items_index].name
-              : "Результат поиска"}
+            {searchCatalog.header}
           </span>
         </div>
       </div>
       <div className="products">
         {/* <SortingBlock products={products} sorting_text={props.sorting_text}/> */}
-        <ListItem button onClick={handleClick}>
-          <ListItemText primary={props.sorting_text[0]} />
-          {open ? <ExpandLess /> : <ExpandMore />}
-        </ListItem>
-        <Collapse in={open} timeout="auto" unmountOnExit>
-          <List component="div" disablePadding>
-            <ListItem onClick={toPopularity} button className={classes.nested}>
-              <ListItemText primary={props.sorting_text[0]} />
-            </ListItem>
-            <ListItem
-              onClick={toDescendingPrice}
-              button
-              className={classes.nested}
-            >
-              <ListItemText primary={props.sorting_text[1]} />
-            </ListItem>
-            <ListItem
-              onClick={toAscendingPrice}
-              button
-              className={classes.nested}
-            >
-              <ListItemText primary={props.sorting_text[2]} />
-            </ListItem>
-          </List>
-        </Collapse>
         <div className="product_cards">
+          <h2
+            className="text_not_found"
+            style={{
+              display:
+                searchCatalog.array.length == 0 && !/\d/.test(href_index)
+                  ? "block"
+                  : "none",
+            }}
+          >
+            {" "}
+            По вашему запросу ничего не найдено
+          </h2>
           {products_array.map(function (product_item, index) {
-            return <SaleProductCard onClick={() => { setProduct(product_item); editClicked(true)}} key={index} data={product_item} />;
+            return (
+              <SaleProductCard
+                onClick={() => {
+                  setProduct(product_item);
+                  editClicked(true);
+                }}
+                key={index}
+                data={product_item}
+              />
+            );
           })}
         </div>
       </div>

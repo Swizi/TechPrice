@@ -1,4 +1,4 @@
-.help_block {
+.long_card_block {
   width: 100%;
   height: auto;
   display: flex;
@@ -12,12 +12,12 @@
   border-radius: 10px;
 }
 
-.help_text{ 
+.long_card_text {
   font-size: 20px;
   margin: 0 10px 0 20px;
   flex-wrap: wrap;
 }
 
-.help_link {
+.long_card_link {
   width: 100%;
 }

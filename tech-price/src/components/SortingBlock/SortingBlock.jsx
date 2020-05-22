@@ -28,7 +28,6 @@ export default function SortingBlock(props) {
   };
 
   const toDescendingPrice = () => {
-    alert("Alert");
   };
 
   return (
@@ -37,7 +36,7 @@ export default function SortingBlock(props) {
         <ListItemText primary={props.sorting_text[0]} />
         {open ? <ExpandLess /> : <ExpandMore />}
       </ListItem>
-      <Collapse in={open} timeout="auto" unmountOnExit>
+      <Collapse className="sub_list" in={open} timeout="auto" unmountOnExit>
         <List component="div" disablePadding>
           <ListItem button className={classes.nested}>
             <ListItemText primary={props.sorting_text[0]} />

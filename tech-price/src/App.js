@@ -34,6 +34,7 @@ import UserContext from "./UserContext";
 import SearchContext from "./SearchContext";
 import CatalogContext from "./CatalogContext";
 import ItemContext from "./ItemContext";
+import SubcategoriesContext from "./SubcategoriesContext";
 
 import Cookies from "universal-cookie";
 
@@ -63,11 +64,25 @@ const pageHeader = "2";
 
 const host = "http://localhost";
 
+const main_categories_images_array = [
+  "https://is.gd/QqcSR7",
+  "https://is.gd/uNN9AF",
+  "https://is.gd/6VftOT",
+  "https://is.gd/ivE3Ux",
+  "https://is.gd/PkYUiH",
+  "https://is.gd/D5ZSN2",
+  "https://is.gd/FAZMCq",
+  "https://is.gd/a7ehlK",
+  "https://is.gd/KXPJxt",
+  "https://is.gd/pQblxC",
+  "https://is.gd/6kELMN",
+];
+
 const faq = [
   {
     question: "Часто ли вы занимаетесь распитием спиртосодержащих напитков?",
     answer:
-      "Мы не любим пить пиво. Предпочитаем соли, спайсы. Очень обрадовались, что подросткам стали продавать снюс. Правда мы не знали как его использовать и просто жевали как жевачку.",
+      "Мы не любим пить пиво. Предпочитаем соли, спайсы. Очень обрадовались, что подросткам стали продавать снюс. Правда мы не знали, как его использовать, и просто жевали как жевачку.",
   },
   {
     question: "К какой ОПГ вы относитесь?",
@@ -415,28 +430,19 @@ function App() {
           var item = {
             id: i,
             name: response.categories[i],
-            url: "https://is.gd/3ZM9lY",
-            items: [],
+            url: response.pics[i],
+            link: response.links[i],
           };
-          if (item.name[0] == "m") {
-            // Делаем проверку на m_mobile
-            var str = item.name;
-            str = str.slice(10);
-            var start_symbol = str[0].toUpperCase();
-            str = str.slice(1);
-            str = start_symbol + str;
-            item.name = str;
-          }
-          for (var j = 6 * i; j < 6 * i + 6; j++) {
-            var subitem = {
-              block_id: i,
-              id: j - 6 * i,
-              name: response.subcategories[j],
-              items: items_data,
-              url: "https://is.gd/6EvpgB",
-            };
-            item.items.push(subitem);
-          }
+          // for (var j = 6 * i; j < 6 * i + 6; j++) {
+          //   var subitem = {
+          //     block_id: i,
+          //     id: j - 6 * i,
+          //     name: response.subcategories[j],
+          //     items: items_data,
+          //     url: main_categories_images_array[i],
+          //   };
+          //   item.items.push(subitem);
+          // }
           catalog.push(item);
         }
       } else {
@@ -525,6 +531,9 @@ function App() {
   const [item, setItem] = useState({});
   const item_value = { item, setItem };
 
+  const [subcategories, editSubcategories] = useState({});
+  const subcategories_value = { subcategories, editSubcategories };
+
   if (loading) {
     return (
       <div className="loading_block">
@@ -548,19 +557,21 @@ function App() {
             exact
             path="/"
             render={() => (
-              <CatalogContext.Provider value={catalog_search_value}>
-                <SearchContext.Provider value={search_value}>
-                  <UserContext.Provider value={user_value}>
-                    <MainPage
-                      catalog={catalog}
-                      host={host}
-                      // toggleDrawer={toggleDrawer}
-                      // data={data}
-                      // classes={classes}
-                    />{" "}
-                  </UserContext.Provider>{" "}
-                </SearchContext.Provider>
-              </CatalogContext.Provider>
+              <SubcategoriesContext.Provider value={subcategories_value}>
+                <CatalogContext.Provider value={catalog_search_value}>
+                  <SearchContext.Provider value={search_value}>
+                    <UserContext.Provider value={user_value}>
+                      <MainPage
+                        catalog={catalog}
+                        host={host}
+                        // toggleDrawer={toggleDrawer}
+                        // data={data}
+                        // classes={classes}
+                      />{" "}
+                    </UserContext.Provider>{" "}
+                  </SearchContext.Provider>
+                </CatalogContext.Provider>
+              </SubcategoriesContext.Provider>
             )}
           />{" "}
           <Route
@@ -603,8 +614,14 @@ function App() {
           />
           <Route
             exact
-            path="/RedirectPage/:id"
-            render={() => <RedirectPage catalog={catalog} />}
+            path="/RedirectPage"
+            render={() => (
+              <SubcategoriesContext.Provider value={subcategories_value}>
+                <CatalogContext.Provider value={catalog_search_value}>
+                  <RedirectPage catalog={catalog} host={host}/>
+                </CatalogContext.Provider>
+              </SubcategoriesContext.Provider>
+            )}
           />
           <Route
             exact
