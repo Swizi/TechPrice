@@ -5,7 +5,6 @@ export default function ProductPageDescription(props) {
   var array_string_description = props.data.description.split(";");
   var array_array_description = [], external_array = [];
   for (var i = 0; i < array_string_description.length; i++) {
-    console.log(i);
     if (i % 2 === 0) {
       external_array = [];
     }
@@ -14,7 +13,6 @@ export default function ProductPageDescription(props) {
       array_array_description.push(external_array);
     }
   }
-  console.log(array_array_description);
   return (
     <div className="product_page_info">
       <h3 className="info_header">Информация о товаре</h3>

@@ -1,14 +1,12 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import "./RedirectPageCard.css";
+import "./../ProductCard/ProductCard.css";
 
 export default function RedirectPageCard(props) {
-  console.log(props.data);
   return (
     <div
       className="card_link"
       onClick={props.onClick}
-      // to={`/ShopPage/${props.href_index}/${props.data.id}`}
     >
       <div className="card_block">
         <img

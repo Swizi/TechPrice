@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./ProductPageInfo.css";
-import Divider from "@material-ui/core/Divider";
-import { makeStyles } from "@material-ui/core/styles";
 import Carousel from "nuka-carousel";
 import FavoriteBorderIcon from '@material-ui/icons/FavoriteBorder';
 import FavoriteIcon from '@material-ui/icons/Favorite';
@@ -13,21 +11,21 @@ import $ from 'jquery';
 export default function ProductPageInfo(props) {
     const [isClicked, changeStyle] = useState(false);
 
-    const [auth, setAuth] = React.useState(false);
+    const [auth, setAuth] = useState(false);
 
-    const [loading, setLoading] = React.useState(true);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         $.post(`${props.host}/ajax/check_auth.php`, { target: "checking" }, function (data) {
             var response = $.parseJSON(data);
-            if (response.status == 0) {
+            if (response.status === 0) {
                 setAuth(true);
             } else {
                 setAuth(false);
             }
             setLoading(false);
         })
-    }, []);
+    }, [props.host]);
     return (
         <div className="product_description">
             <div className="product_description_header_block">

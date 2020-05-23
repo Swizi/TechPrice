@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useState, useContext } from "react";
 import RedirectPageCard from "../../components/RedirectPageCard/RedirectPageCard";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { useHistory } from "react-router-dom";
@@ -13,14 +13,14 @@ import $ from "jquery";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 export function RedirectPage(props) {
+
   const { searchCatalog, editSearchCatalog } = useContext(CatalogContext);
   const { subcategories, editSubcategories } = useContext(SubcategoriesContext);
 
+  const [loading, setLoading] = useState(false);
+  const [isClicked, editClicked] = useState(false);
+  const [subcategory, setSubcategory] = useState({});
 
-
-  const [loading, setLoading] = React.useState(false);
-  const [isClicked, editClicked] = React.useState(false);
-  const [subcategory, setSubcategory] = React.useState({});
   let history = useHistory();
 
   if (isClicked) {
@@ -30,9 +30,7 @@ export function RedirectPage(props) {
       { target: "get-item-list", link: subcategory.link },
       function (data) {
         var response = $.parseJSON(data);
-        console.log(response);
-        if (response.status == 0 || response.status == 8) {
-          console.log("OK");
+        if (response.status === 0 || response.status === 8) {
           var catalog = [];
           for (var i = 0; i < response.titles.length; i++){
             var item = {
@@ -84,20 +82,6 @@ export function RedirectPage(props) {
         </div>
       </div>
       <div className="products">
-        {/* <div className="redirect_page_cards">
-          {props.catalog[href_index].items.map(function(item, index) {
-            return (
-              <React.Fragment>
-                <RedirectPageCard
-                  key={index}
-                  data={item}
-                  href_index={href_index}
-                />
-                <hr className="hr" />
-              </React.Fragment>
-            );
-          })}
-        </div> */}
         <div className="redirect_page_cards">
           {subcategories.array.map(function (item, index) {
             return (

@@ -3,9 +3,7 @@ import "./LongCard.css";
 import {Link} from "react-router-dom";
 
 export default function LongCard(props) {
-  console.log(props.data);
   var path = "";
-  var block_id = props.data.block_id;
 
   if(props.href_index){
     path = "/ShopPage/" + props.href_index + "/" + props.data.id;  

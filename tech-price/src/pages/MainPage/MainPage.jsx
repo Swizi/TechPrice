@@ -1,17 +1,9 @@
 import React, { useState, useContext, useEffect } from "react";
-import useStateWithCallback from "use-state-with-callback";
 import { Link } from "react-router-dom";
-import LoginButton from "../../components/LoginButton/LoginButton";
-import ProductCard from "../../components/ProductCard/ProductCard";
 import SearchIcon from "@material-ui/icons/Search";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import TextField from "@material-ui/core/TextField";
 import "./MainPage.css";
 import ItemsCard from "../../components/ItemsCard/ItemsCard";
 import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
 import LocationOnIcon from "@material-ui/icons/LocationOn";
 import SearchTab from "../../components/SearchTab/SearchTab";
 
@@ -33,27 +25,11 @@ import HomeIcon from "@material-ui/icons/Home";
 import UserContext from '../.././UserContext';
 import SearchContext from '../.././SearchContext';
 import SubcategoriesContext from '../.././SubcategoriesContext';
-import Collapse from '@material-ui/core/Collapse';
 
-import TransitionGroup from 'react-transition-group/TransitionGroup';
-
-import Cookies from 'universal-cookie';
 import $ from 'jquery';
-import { Redirect } from "react-router-dom";
 import CircularProgress from '@material-ui/core/CircularProgress';
-// import { Router } from "react-router-dom"
-// import {createBrowserHistory} from 'history'
-
-// const history = createBrowserHistory()
 
 import { useHistory } from 'react-router-dom';
-
-// function routeChange() {
-//     let path = `../LoginPage/LoginPage.jsx`;
-//     let history = useHistory();
-//     history.push(path);
-//   }
-
 
 const useStyles = makeStyles({
   list: {
@@ -71,19 +47,17 @@ export function MainPage(props) {
   const { userCity, setCity } = useContext(UserContext);
   const { subcategories, editSubcategories } = useContext(SubcategoriesContext);
 
-  const cookies = new Cookies();
 
-  const [auth, setAuth] = React.useState(false);
-  const [loading, setLoading] = React.useState(true);
-  const [menuAction, setAction] = React.useState(false);
-  const [category, setCategory] = React.useState({});
+  const [auth, setAuth] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const [menuAction, setAction] = useState(false);
+  const [category, setCategory] = useState({});
 
-  const [toSubCategory, editClicked] = React.useState(false);
+  const [toSubCategory, editClicked] = useState(false);
 
-  // const [loading, setLoading] = React.useState(true);
 
   const classes = useStyles();
-  const [state, setState] = React.useState({
+  const [state, setState] = useState({
     left: false
   });
 
@@ -103,72 +77,31 @@ export function MainPage(props) {
   var first_menu_list = ["Домашняя страница"];
 
   useEffect(() => {
-    console.log("Ajax request");
     $.post(`${props.host}/ajax/check_auth.php`, { target: "checking" }, function (data) {
       var response = $.parseJSON(data);
-      if (response.status == 0) {
+      if (response.status === 0) {
         setAuth(true);
       } else {
         setAuth(false);
       }
       setLoading(false);
     });
-  }, []);
-
-  // useEffect(()=> {
-  //   if (loading){
-  //     return  <CircularProgress className="circular_progress" />
-  //     setLoading(false);
-  //   }
-  // });
-
-  const logoutRequest = async () => {
-    setLoading(true);
-    $.post(`${props.host}/ajax/logout.php`, { target: "logout" }, async function (data) {
-      console.log("Loading 1 - ", loading);
-      console.log(auth);
-      var response = await $.parseJSON(data);
-      if (response.status == 0) {
-        setAuth(false);
-      } else {
-        setAuth(true);
-      }
-      console.log("Loading 2 - ", loading);
-      console.log(auth);
-    });
-    setLoading(false);
-  }
-
-  useEffect(() => {
-    if (loading) {
-      console.log("LOADING IS TRUE");
-    } else {
-      console.log("LOADING IS FALSE");
-    }
-    // if (loading) {
-    //   return <CircularProgress className="circular_progress" />
-
-    // }
-  }, [loading]);
+  }, [props.host]);
 
   useEffect(() => {
     if (menuAction) {
-      console.log("MENU ACTION IS TRUE");
       $.post(`${props.host}/ajax/logout.php`, { target: "logout" }, function (data) {
         var response = $.parseJSON(data);
-        if (response.status == 0) {
+        if (response.status === 0) {
           setAuth(false);
         } else {
           setAuth(true);
         }
         setAction(false);
       });
-    } else {
-      console.log("MENU ACTION IS FALSE");
     }
   }, [menuAction]);
 
-  console.log("Auth - ", auth);
 
   if (auth) {
     second_menu_list.push("Выйти");
@@ -180,7 +113,6 @@ export function MainPage(props) {
   first_menu_list.push("Акции");
   first_menu_list.push("Служба поддержки");
 
-  console.log("Loading = ", loading);
 
   const sideList = side => (
     <div
@@ -218,7 +150,7 @@ export function MainPage(props) {
         {second_menu_list.map((text, index) => (
           <Link key={index} to={`${(index === 0 && "/UserCityPage") ||
             (index === 1 && "/")}`}
-            onClick={index ? () => setAction(!menuAction) : console.log("VSEM PRIVETIK")}>
+            onClick={index ? () => setAction(!menuAction) : null}>
             <ListItem button key={text}>
               <ListItemIcon>
                 {index === 1 && <ExitToAppIcon onClick={(e) => setAction(true)} />}
@@ -236,8 +168,7 @@ export function MainPage(props) {
     setLoading(true);
     $.post(`${props.host}/ajax/get_content.php`, { target: 'get-subcateg', link: category.link }, function (data) {
       var response = $.parseJSON(data);
-      console.log(response);
-      if ((response.status == 0) || (response.status == 8)) {
+      if ((response.status === 0) || (response.status === 8)) {
         // Ответ пришёл 
         var subcategory_array = [];
         for (var i = 0; i < response.subcategories.length; i++){
@@ -253,7 +184,6 @@ export function MainPage(props) {
           array: subcategory_array
         });
         history.push("/RedirectPage");
-        // history.push("/ProductPage");
       } else {
         // Ошибочка вышла
       }
@@ -262,8 +192,6 @@ export function MainPage(props) {
     editClicked(false);
   }
 
-  console.log(props);
-  // setLoading(true);
 
   if (loading) {
     return (
@@ -286,9 +214,7 @@ export function MainPage(props) {
       >
         {sideList("left")}
       </SwipeableDrawer>
-      {/* <Collapse in={!isClicked} timeout={1}> */}
       <SearchTab host={props.host}/>
-      {/* </Collapse> */}
       <div className="navigation_menu">
         <div id="main-menu" className="menu_wrapper">
           <IconButton

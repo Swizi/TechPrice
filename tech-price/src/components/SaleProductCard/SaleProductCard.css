@@ -3,7 +3,6 @@
   align-items: center;
   flex-direction: column;
   justify-content: center;
-  margin-top: 21px;
   background: #ffffff;
   border: 1px solid #f0f0f0;
   box-sizing: border-box;
@@ -11,4 +10,5 @@
   border-radius: 10px;
   height: 220px;
   width: 220px;
+  margin: 21px 5px 0 0;
 }

@@ -1,9 +1,7 @@
 import React from "react";
 import "./ItemsCard.css";
-import {Link} from "react-router-dom";
 
 export default function ItemsCard(props) {
-  console.log(props.data);
   return (
     <div className="long_card_link" onClick={props.onClick}>
       <div className="long_card_block">

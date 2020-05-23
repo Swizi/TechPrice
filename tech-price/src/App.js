@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
-import { Link, useHistory, useLocation } from "react-router-dom";
 import { MainPage } from "./pages/MainPage/MainPage";
 import { LoginPage } from "./pages/LoginPage/LoginPage";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
@@ -15,21 +14,6 @@ import { FAQPage } from "./pages/FAQPage/FAQPage";
 import { FeedbackPage } from "./pages/FeedbackPage/FeedbackPage";
 import { ProfilePage } from "./pages/ProfilePage/ProfilePage";
 
-import { makeStyles } from "@material-ui/core/styles";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
-import ContactSupportIcon from "@material-ui/icons/ContactSupport";
-import LocationCityIcon from "@material-ui/icons/LocationCity";
-import HomeIcon from "@material-ui/icons/Home";
-import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-import { isVariableDeclarator } from "@babel/types";
 import UserContext from "./UserContext";
 import SearchContext from "./SearchContext";
 import CatalogContext from "./CatalogContext";
@@ -42,41 +26,7 @@ import $ from "jquery";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
-var response;
-// import { UserProvider } from './UserContext'
-// import { Button, View } from 'react-native';
-// import { createDrawerNavigator } from "@react-navigation/drawer";
-// import { NavigationContainer } from "@react-navigation/native";
-
-const LoadingPage = () => <div> Loading... </div>;
-
-// const MainPage = React.lazy(() => import("./pages/MainPage/MainPage"));
-// const LoginPage = React.lazy(() => import("./pages/LoginPage/LoginPage"));
-// const RegistrationPage = React.lazy(() => import("./pages/RegistrationPage/RegistrationPage"));
-// const ProductPage = React.lazy(() => import("./pages/ProductPage/ProductPage"));
-// const UserCityPage = React.lazy(() => import("./pages/UserCityPage/UserCityPage"));
-// const SalesPage = React.lazy(() => import("./pages/SalesPage/SalesPage"));
-// const RedirectPage = React.lazy(() => import("./pages/RedirectPage/RedirectPage"));
-
-// var userCity = "Москва";
-
-const pageHeader = "2";
-
 const host = "http://localhost";
-
-const main_categories_images_array = [
-  "https://is.gd/QqcSR7",
-  "https://is.gd/uNN9AF",
-  "https://is.gd/6VftOT",
-  "https://is.gd/ivE3Ux",
-  "https://is.gd/PkYUiH",
-  "https://is.gd/D5ZSN2",
-  "https://is.gd/FAZMCq",
-  "https://is.gd/a7ehlK",
-  "https://is.gd/KXPJxt",
-  "https://is.gd/pQblxC",
-  "https://is.gd/6kELMN",
-];
 
 const faq = [
   {
@@ -403,28 +353,18 @@ var catalog = [
   // },
   // {
 ];
-
-// const Drawer = createDrawerNavigator();
 var isSet = false;
 
 function App() {
   const cookies = new Cookies();
-  const [loading, setLoading] = React.useState(true);
-
-  // $.post(ajax_request, ajaxSuccess);
-
-  // function ajaxSuccess(response) {
-  //   console.log(response);
-  // }
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    console.log("Ajax request");
     $.post(`${host}/ajax/get_content.php`, { target: "get-categ" }, function (
       data
     ) {
       var response = $.parseJSON(data);
-      if (response.status == 0) {
-        console.log(response);
+      if (response.status === 0) {
         catalog = [];
         for (var i = 0; i < response.categories.length; i++) {
           var item = {
@@ -433,16 +373,6 @@ function App() {
             url: response.pics[i],
             link: response.links[i],
           };
-          // for (var j = 6 * i; j < 6 * i + 6; j++) {
-          //   var subitem = {
-          //     block_id: i,
-          //     id: j - 6 * i,
-          //     name: response.subcategories[j],
-          //     items: items_data,
-          //     url: main_categories_images_array[i],
-          //   };
-          //   item.items.push(subitem);
-          // }
           catalog.push(item);
         }
       } else {
@@ -456,9 +386,6 @@ function App() {
     // Функция обратного вызова при успешном извлечении локации
     function (position) {
       var min_city = "";
-
-      console.log("Широта ", position.coords.latitude);
-      console.log("Долгота ", position.coords.longitude);
 
       var min_difference = 400;
 
@@ -477,7 +404,6 @@ function App() {
       cookies.set("Location_city", min_city, { path: "/" });
 
       if (!isSet) {
-        console.log(cookies.get("Location_city"));
         setCity(cookies.get("Location_city"));
         isSet = true;
       }
@@ -669,13 +595,6 @@ function App() {
             path="/ProfilePage"
             render={() => <ProfilePage host={host} />}
           />{" "}
-          {/* <Route
-                                render={() => (
-                                  <h1 style={{ textAlign: "center", marginTop: 300 }}>
-                                    404: page not found
-                                  </h1>
-                                )}
-                              /> */}{" "}
         </Switch>{" "}
       </div>{" "}
     </BrowserRouter>

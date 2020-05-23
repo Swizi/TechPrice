@@ -1,7 +1,6 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./LoginPage.css";
 import clsx from 'clsx';
-import HomeIcon from "@material-ui/icons/Home";
 import TextField from "@material-ui/core/TextField";
 import { makeStyles } from "@material-ui/core/styles";
 import Button from "@material-ui/core/Button";
@@ -66,8 +65,8 @@ const validate = values => {
 export function LoginPage(props) {
   let history = useHistory();
 
-  const [loading, setLoading] = React.useState(true);
-  const [loadingAlert, setLoadingAlert] = React.useState(false);
+  const [loading, setLoading] = useState(true);
+  const [loadingAlert, setLoadingAlert] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -88,21 +87,18 @@ export function LoginPage(props) {
         }
         setLoadingAlert(false);
       });
-      // Здесь запрос на сервак
     },
   })
 
   const cookies = new Cookies();
-  // const headerTextStyle = {
-  //   color: "red"
-  // }
+
   const classes = useStyles();
-  const [values, setValues] = React.useState({
+  const [values, setValues] = useState({
     showPassword: false,
   });
 
-  const [errorPopUp, setError] = React.useState(false);
-  const [redirect, setRedirect] = React.useState(false);
+  const [errorPopUp, setError] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
   const handleClickShowPassword = () => {
     setValues({showPassword: !values.showPassword });
@@ -124,41 +120,6 @@ export function LoginPage(props) {
     })
   }, []);
 
-  // const loginRequest = () => {
-  //   console.log("Entered");
-  //   var login_form = document.getElementById("standard-basic");
-  //   var password_form = document.getElementById("standard-adornment-password");
-  //   var login_val = login_form.value;
-  //   var password_val = password_form.value;
-  //   if (login_val != "") {
-  //     console.log(login_val);
-  //   } else {
-  //     login_val = "";
-  //   }
-  //   if (password_val != "") {
-  //     console.log(password_val);
-  //   } else {
-  //     password_val = "";
-  //   }
-  //   if ((password_val != "") && (login_val != "")) {
-  //     $.post("http://localhost/ajax/login.php", { target: 'logination', login: login_val, password: password_val }, function (data) {
-  //       setLoading(true);
-  //       var response = $.parseJSON(data);
-  //       if (response.error == "true") {
-  //         console.log("error");
-  //         setError(true);
-  //       } else {
-  //         console.log("OK");
-  //         setRedirect(true);
-  //       }
-  //       setLoading(false);
-  //     });
-  //   }
-  // };
-
-  // console.log(redirect);
-
-
   if (redirect) {
     return <Redirect to="/" />
   }
@@ -171,6 +132,7 @@ export function LoginPage(props) {
       </div>
     );
   }
+  
   return (
     <div className="page_flexbox">
       <div className="navigation_menu">
@@ -188,7 +150,6 @@ export function LoginPage(props) {
       <div className="login_block">
         <form className={classes.root} autoComplete="off" onSubmit={formik.handleSubmit}>
           <TextField className={formik.errors.login ? classes.error_text : null} id={formik.errors.login ? "standard-helperText" : "standard-basic"} label="Логин" onChange={formik.handleChange} value={formik.values.login} name="login" id="login" helperText={formik.errors.login ? formik.errors.login : null}/>
-          {/* <TextField id="standard-password-input" label="Пароль" type="password"  autoComplete="current-password"/> */}
           <FormControl className={clsx(classes.textField)} className={formik.errors.password ? classes.error_text : null}>
             <InputLabel htmlFor="password">Пароль</InputLabel>
             <Input
@@ -217,7 +178,6 @@ export function LoginPage(props) {
             size="medium"
             color="primary"
             className={classes.margin}
-            // onClick={loginRequest}
           >
             Зайти
           </Button>

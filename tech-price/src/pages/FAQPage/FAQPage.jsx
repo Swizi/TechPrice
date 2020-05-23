@@ -2,10 +2,7 @@ import React from "react";
 import IconButton from "@material-ui/core/IconButton";
 import { useHistory } from "react-router-dom";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
-//C:\Users\denis\Desktop\TechPrice\tech-price\src\pages\SalesPage\SalesPage.jsx
-//C:\Users\denis\Desktop\TechPrice\tech-price\src\components\SaleProductCard\SaleProductCard.jsx
 import { makeStyles } from "@material-ui/core/styles";
-import ListSubheader from "@material-ui/core/ListSubheader";
 import List from "@material-ui/core/List";
 import FAQCard from "../../components/FAQCard/FAQCard";
 import "./FAQPage.css"
@@ -19,8 +16,6 @@ const useStyles = makeStyles(theme => ({
 
 export function FAQPage(props) {
   const classes = useStyles();
-  console.log(props);
-  var href = window.location.href;
   let history = useHistory();
   return (
     <div className="page_flexbox">

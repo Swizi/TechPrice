@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import "./SearchTab.css";
 import SearchContext from "../.././SearchContext";
 import CatalogContext from '../.././CatalogContext';
@@ -8,6 +8,7 @@ import SearchIcon from "@material-ui/icons/Search";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import { makeStyles } from "@material-ui/core/styles";
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { useHistory } from "react-router-dom";
 
 import { Redirect } from "react-router-dom";
 
@@ -16,8 +17,6 @@ import { useFormik } from "formik";
 import $ from "jquery";
 
 const text_field_width = '90%';
-
-const text_field_100 = '100%';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,10 +56,11 @@ const validate = values => {
 };
 
 export default function SearchTab(props) {
+  let history = useHistory();
   const { searchCatalog, editSearchCatalog } = useContext(CatalogContext);
   const { isClicked, editSearchTab } = useContext(SearchContext);
-  const [loading, setLoading] = React.useState(false);
-  const [redirect, setRedirect] = React.useState(false);
+  const [loading, setLoading] = useState(false);
+  const [redirect, setRedirect] = useState(false);
 
   const formik = useFormik({
     initialValues: {
@@ -74,7 +74,6 @@ export default function SearchTab(props) {
         { target: "get-search", sobj: values.search_string },
         function (data) {
           var response = $.parseJSON(data);
-          console.log(response);
           if (response.status != 0) {
             console.log("error");
             setRedirect(false);
@@ -129,7 +128,7 @@ export default function SearchTab(props) {
   }
 
   if (redirect) {
-    return <Redirect to="/ShopPage" />
+    history.push("/ShopPage");
   }
 
   return (

@@ -1,44 +1,12 @@
-import React, { useContext } from "react";
-import LoginButton from "../../components/LoginButton/LoginButton";
-import ProductCard from "../../components/ProductCard/ProductCard";
-import SearchIcon from "@material-ui/icons/Search";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import TextField from "@material-ui/core/TextField";
+import React, { useState, useContext } from "react";
 import IconButton from "@material-ui/core/IconButton";
-import Menu from "@material-ui/core/Menu";
-import MenuItem from "@material-ui/core/MenuItem";
-import MoreVertIcon from "@material-ui/icons/MoreVert";
-import LocationOnIcon from "@material-ui/icons/LocationOn";
 import { useHistory } from "react-router-dom";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { makeStyles } from "@material-ui/core/styles";
-import SwipeableDrawer from "@material-ui/core/SwipeableDrawer";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import ListItemIcon from "@material-ui/core/ListItemIcon";
-import ListItemText from "@material-ui/core/ListItemText";
-import Divider from "@material-ui/core/Divider";
-import MenuIcon from "@material-ui/icons/Menu";
-import AccountBoxIcon from "@material-ui/icons/AccountBox";
-import ExitToAppIcon from "@material-ui/icons/ExitToApp";
-import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
-import ContactSupportIcon from "@material-ui/icons/ContactSupport";
-import LocationCityIcon from "@material-ui/icons/LocationCity";
-//C:\Users\denis\Desktop\TechPrice\tech-price\src\pages\SalesPage\SalesPage.jsx
-//C:\Users\denis\Desktop\TechPrice\tech-price\src\components\SaleProductCard\SaleProductCard.jsx
 import SaleProductCard from "../../components/SaleProductCard/SaleProductCard";
-import SortingBlock from "../../components/SortingBlock/SortingBlock";
-
-import Collapse from "@material-ui/core/Collapse";
-import HelpIcon from "@material-ui/icons/Help";
-import ExpandLess from "@material-ui/icons/ExpandLess";
-import ExpandMore from "@material-ui/icons/ExpandMore";
-import QuestionAnswerIcon from "@material-ui/icons/QuestionAnswer";
 
 import CatalogContext from "../.././CatalogContext";
 import ItemContext from "../.././ItemContext";
-
-import { Redirect } from "react-router-dom";
 
 import $ from "jquery";
 
@@ -59,111 +27,86 @@ export function ShopPage(props) {
   const { searchCatalog, editSearchCatalog } = useContext(CatalogContext);
   const { item, setItem } = useContext(ItemContext);
 
-  const [open, setOpen] = React.useState(false);
-  const [loading, setLoading] = React.useState(false);
-  const [goBack, setGoBack] = React.useState(false);
-  const [isClicked, editClicked] = React.useState(false);
-  const [product, setProduct] = React.useState({});
+  // const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [isClicked, editClicked] = useState(false);
+  const [product, setProduct] = useState({});
 
-  console.log(props);
   var href = window.location.href;
   href = href.split("/");
-  var items_index = href[href.length - 1];
   var href_index = href[href.length - 2];
-  console.log(href_index);
-  console.log(props.catalog[href_index]);
   var products = [];
-  var isSearchQuery = /\d/.test(href_index);
-  // if (/\d/.test(href_index)) {
-  //   products = props.catalog[href_index].items[items_index].items;
-  // } else {
+
   products = searchCatalog.array;
-  // }
 
-  const [products_array, setProducts] = React.useState(products);
+  const [products_array, setProducts] = useState(products);
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
+  // const handleClick = () => {
+  //   setOpen(!open);
+  // };
 
-  const toDescendingPrice = () => {
-    var prices = [];
-    for (var i = 0; i < products.length; i++) {
-      prices.push(products[i].shops[0].price);
-    }
-    console.log(prices.sort((a, b) => a - b));
+  // const toDescendingPrice = () => {
+  //   var prices = [];
+  //   for (var i = 0; i < products.length; i++) {
+  //     prices.push(products[i].shops[0].price);
+  //   }
 
-    // products sort by prices array
+  //   var sorted_array = [];
+  //   for (var i = 0; i < products.length; i++) {
+  //     for (var j = 0; j < products.length; j++) {
+  //       if (prices[i] === products[j].shops[0].price) {
+  //         sorted_array.push(products[j]);
+  //       }
+  //     }
+  //   }
 
-    var sorted_array = [];
-    for (var i = 0; i < products.length; i++) {
-      for (var j = 0; j < products.length; j++) {
-        if (prices[i] === products[j].shops[0].price) {
-          sorted_array.push(products[j]);
-        }
-      }
-    }
+  //   products = sorted_array;
 
-    products = sorted_array;
 
-    console.log(products);
+  //   setProducts(products);
+  // };
 
-    setProducts(products);
-  };
+  // const toAscendingPrice = () => {
+  //   var prices = [];
+  //   for (var i = 0; i < products.length; i++) {
+  //     prices.push(products[i].shops[0].price);
+  //   }
 
-  const toAscendingPrice = () => {
-    var prices = [];
-    for (var i = 0; i < products.length; i++) {
-      prices.push(products[i].shops[0].price);
-    }
-    console.log(prices.sort((a, b) => b - a));
+  //   var sorted_array = [];
+  //   for (var i = 0; i < products.length; i++) {
+  //     for (var j = 0; j < products.length; j++) {
+  //       if (prices[i] === products[j].shops[0].price) {
+  //         sorted_array.push(products[j]);
+  //       }
+  //     }
+  //   }
 
-    // products sort by prices array
+  //   products = sorted_array;
 
-    var sorted_array = [];
-    for (var i = 0; i < products.length; i++) {
-      for (var j = 0; j < products.length; j++) {
-        if (prices[i] === products[j].shops[0].price) {
-          sorted_array.push(products[j]);
-        }
-      }
-    }
 
-    products = sorted_array;
+  //   setProducts(products);
+  // };
 
-    console.log(products);
+  // const toPopularity = () => {
+  //   var popularity_array = [];
+  //   for (var i = 0; i < products.length; i++) {
+  //     popularity_array.push(products[i].popularity);
+  //   }
 
-    setProducts(products);
-  };
+  //   var sorted_array = [];
+  //   for (var i = 0; i < products.length; i++) {
+  //     for (var j = 0; j < products.length; j++) {
+  //       if (popularity_array[i] === products[j].popularity) {
+  //         sorted_array.push(products[j]);
+  //       }
+  //     }
+  //   }
 
-  const toPopularity = () => {
-    var popularity_array = [];
-    for (var i = 0; i < products.length; i++) {
-      popularity_array.push(products[i].popularity);
-    }
-    console.log(popularity_array.sort((a, b) => b - a));
+  //   products = sorted_array;
 
-    // products sort by prices array
 
-    var sorted_array = [];
-    for (var i = 0; i < products.length; i++) {
-      for (var j = 0; j < products.length; j++) {
-        if (popularity_array[i] === products[j].popularity) {
-          sorted_array.push(products[j]);
-        }
-      }
-    }
-
-    products = sorted_array;
-
-    console.log(products);
-
-    setProducts(products);
-  };
-
-  if (goBack) {
-    return <Redirect to="/" />;
-  }
+  //   setProducts(products);
+  // };
 
   if (isClicked) {
     setLoading(true);
@@ -172,10 +115,14 @@ export function ShopPage(props) {
       { target: "get-item", link: product.link },
       function (data) {
         var response = $.parseJSON(data);
-        console.log(response);
-        if (response.status == 0 || response.status == 8) {
+        if (response.status === 0 || response.status === 8) {
           // Ответ пришёл
-          console.log("Картинки - ", response.pics);
+          var pics_urls = [];
+          if (response.pics.length === 2){
+            pics_urls.push(response.pics[0]);
+          } else {
+            pics_urls = response.pics;
+          }
           var item_link = product.link;
           item_link = item_link.slice(2);
 
@@ -186,8 +133,14 @@ export function ShopPage(props) {
             description_text = description_text + " ; ";
           }
 
+          if (item_link[0] === 'a'){
+            item_link = "https://www.eldorado.ru/c" + item_link;
+          } else {
+            item_link = "https://" + item_link;
+          }
+
           var item_product = {
-            urls: response.pics,
+            urls: pics_urls,
             popularity: 4, //random popularity
             name: response.title,
             description: description_text,
@@ -206,13 +159,13 @@ export function ShopPage(props) {
                 price: response.el_price.replace(/[^0-9]/gim, ""),
                 rating: 0,
                 reviews: 0,
-                link: "https://www.eldorado.ru/c" + item_link,
+                link: item_link,
               },
             ],
           };
 
-          if (response.status == 0) {
-            if (response.mv_price != "NULL") {
+          if (response.status === 0) {
+            if (response.mv_price !== "NULL") {
               item_product.shops.push({
                 name: "Mvideo",
                 price: response.mv_price.replace(/[^0-9]/gim, ""),
@@ -225,8 +178,6 @@ export function ShopPage(props) {
 
           setItem(item_product);
 
-          // Формировка переменной для отправки на ProductPage
-          // return <ProductPage data={formatted_data} />
           history.push("/ProductPage");
         } else {
           // Ошибочка вышла
@@ -251,11 +202,7 @@ export function ShopPage(props) {
       <div className="navigation_menu">
         <div className="default_menu_wrapper">
           <IconButton
-            onClick={
-              /\d/.test(href_index)
-                ? () => history.goBack()
-                : () => setGoBack(true)
-            }
+            onClick={() => history.goBack()}
           >
             <ArrowBackIcon />
           </IconButton>
@@ -265,13 +212,12 @@ export function ShopPage(props) {
         </div>
       </div>
       <div className="products">
-        {/* <SortingBlock products={products} sorting_text={props.sorting_text}/> */}
         <div className="product_cards">
           <h2
             className="text_not_found"
             style={{
               display:
-                searchCatalog.array.length == 0 && !/\d/.test(href_index)
+                searchCatalog.array.length === 0 && !/\d/.test(href_index)
                   ? "block"
                   : "none",
             }}

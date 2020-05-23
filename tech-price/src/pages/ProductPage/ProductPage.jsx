@@ -1,7 +1,6 @@
 import React, { useContext } from "react";
 import "./ProductPage.css";
 import { useHistory } from "react-router-dom";
-import HomeIcon from "@material-ui/icons/Home";
 import { makeStyles } from "@material-ui/core/styles";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import ProductPageDescription from "../../components/ProductPageDescription/ProductPageDescription";
@@ -12,29 +11,12 @@ import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import ItemContext from '../.././ItemContext';
 
-const useStyles = makeStyles(theme => ({
-  root: {
-    "& > *": {
-      margin: theme.spacing(1),
-      width: 300,
-    }
-  },
-  margin: {
-    margin: theme.spacing(1),
-    width: 200
-  },
-  extendedIcon: {
-    marginRight: theme.spacing(1)
-  }
-}));
-
 export function ProductPage(props) {
   const { item, setItem } = useContext(ItemContext);
 
   var href = window.location.href;
   href = href.split("/");
   var index = href[href.length - 1];
-  console.log(index);
   var props_data = {};
   if (/\d/.test(index)){
     props_data = props.data[index];
@@ -42,7 +24,6 @@ export function ProductPage(props) {
     props_data = item;
   }
   let history = useHistory();
-  console.log(props_data);
   return (
     <div className="page_flexbox">
       <div className="navigation_menu">

@@ -18,8 +18,10 @@
 }
 
 .product_page_image {
-  height: 400px;
-  width: 400px;
+  max-height: 400px;
+  position: absolute;
+  top: 50%;
+  transform: translate(0, -50%);
   object-fit: cover;
   object-position: center;
   margin-top: 15px;
