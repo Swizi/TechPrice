@@ -165,12 +165,12 @@ export function RegistrationPage(props) {
       <Alert severity="info" className="alert" style={{ display: loadingAlert ? "flex" : "none" }}>Загрузка...  <CircularProgress className="info_circular_progress" /></Alert>
       <div className="login_block">
         <form className={classes.root} onSubmit={formik.handleSubmit} autoComplete="on">
-          <TextField className={formik.errors.login? classes.error_text : null} id="standard-helperText" label="Логин" type="text" onChange={formik.handleChange} value={formik.values.login} name="login" id="login" helperText={formik.errors.login ? formik.errors.login : null}  />
-          <TextField className={formik.errors.email ? classes.error_text : null} id="standard-helperText" id="email" name="email" type="email" onChange={formik.handleChange} value={formik.values.email} label="Введите e-mail" helperText={formik.errors.email ? formik.errors.email : null} />
-          <TextField className={formik.errors.firstName ? classes.error_text : null} id="standard-helperText" id="firstName" name="firstName" type="text" onChange={formik.handleChange} value={formik.values.firstName} label="Введите имя" helperText={formik.errors.firstName ? formik.errors.firstName : null}/>
-          <TextField className={formik.errors.lastName ? classes.error_text : null} id="standard-helperText" id="lastName" name="lastName" type="text" onChange={formik.handleChange} value={formik.values.lastName} label="Введите фамилию" helperText={formik.errors.lastName ? formik.errors.lastName : null}/>
-          <TextField id="standard-helperText" id="additionalName" name="additionalName" type="text" onChange={formik.handleChange} value={formik.values.additionalName} label="Введите отчество" helperText="Необязательно"/>
-          <FormControl className={clsx(classes.textField)} className={formik.errors.password1 ? classes.error_text : null}>
+          <TextField required className={formik.errors.login? classes.error_text : null} id="standard-helperText" label="Логин" type="text" onChange={formik.handleChange} value={formik.values.login} name="login" id="login" helperText={formik.errors.login ? formik.errors.login : null}  />
+          <TextField required className={formik.errors.email ? classes.error_text : null} id="standard-helperText" id="email" name="email" type="email" onChange={formik.handleChange} value={formik.values.email} label="Введите e-mail" helperText={formik.errors.email ? formik.errors.email : null} />
+          <TextField required className={formik.errors.firstName ? classes.error_text : null} id="standard-helperText" id="firstName" name="firstName" type="text" onChange={formik.handleChange} value={formik.values.firstName} label="Введите имя" helperText={formik.errors.firstName ? formik.errors.firstName : null}/>
+          <TextField required className={formik.errors.lastName ? classes.error_text : null} id="standard-helperText" id="lastName" name="lastName" type="text" onChange={formik.handleChange} value={formik.values.lastName} label="Введите фамилию" helperText={formik.errors.lastName ? formik.errors.lastName : null}/>
+          <TextField id="standard-helperText" id="additionalName" name="additionalName" type="text" onChange={formik.handleChange} value={formik.values.additionalName} label="Введите отчество" />
+          <FormControl required className={clsx(classes.textField)} className={formik.errors.password1 ? classes.error_text : null}>
             <InputLabel htmlFor="password1">Пароль</InputLabel>
             <Input
               id="password1 standard-adornment-password"
@@ -191,7 +191,7 @@ export function RegistrationPage(props) {
             />
             <FormHelperText style={{display: formik.errors.password1 ? "block" : "none"}}>{formik.errors.password1}</FormHelperText>
           </FormControl>
-          <FormControl className={clsx(classes.textField)} className={formik.errors.password2 || formik.errors.password1 ? classes.error_text : null}>
+          <FormControl required className={clsx(classes.textField)} className={formik.errors.password2 || formik.errors.password1 ? classes.error_text : null}>
             <InputLabel htmlFor="password2">Пароль ещё раз</InputLabel>
             <Input
               id="password2 standard-adornment-password"

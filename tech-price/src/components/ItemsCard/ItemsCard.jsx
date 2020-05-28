@@ -6,7 +6,7 @@ export default function ItemsCard(props) {
     <div className="long_card_link" onClick={props.onClick}>
       <div className="long_card_block">
         <img
-          className="image_style"
+          className="big_image_style"
           src={props.data.url}
           alt={props.data.name}
         />

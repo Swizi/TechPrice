@@ -12,5 +12,13 @@
 }
 
 .checkbox_label {
-  margin: 40px 0 10px 0;
+  margin: 30px 0 10px 0;
+  display: block !important;
+}
+
+.form_field_block {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
 }

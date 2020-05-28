@@ -13,6 +13,7 @@ import { HelpPage } from "./pages/HelpPage/HelpPage";
 import { FAQPage } from "./pages/FAQPage/FAQPage";
 import { FeedbackPage } from "./pages/FeedbackPage/FeedbackPage";
 import { ProfilePage } from "./pages/ProfilePage/ProfilePage";
+import { FavoritesPage } from "./pages/FavoritesPage/FavoritesPage";
 
 import UserContext from "./UserContext";
 import SearchContext from "./SearchContext";
@@ -537,6 +538,12 @@ function App() {
             header="Акции"
             path="/SalesPage"
             render={() => <SalesPage data={items_data} />}
+          />
+          <Route
+            exact
+            header="Список желаемого"
+            path="/FavoritesPage"
+            render={() => <FavoritesPage data={items_data} />}
           />
           <Route
             exact

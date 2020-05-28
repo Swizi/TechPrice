@@ -21,6 +21,7 @@ import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import LocationCityIcon from "@material-ui/icons/LocationCity";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 import HomeIcon from "@material-ui/icons/Home";
+import StarsIcon from '@material-ui/icons/Stars';
 
 import UserContext from '../.././UserContext';
 import SearchContext from '../.././SearchContext';
@@ -110,6 +111,8 @@ export function MainPage(props) {
     first_menu_list.push("Войти");
   }
 
+  first_menu_list.push("Избранное");
+  // Передвинуть Избранное в auth, когда перекину на локалхост обычный
   first_menu_list.push("Акции");
   first_menu_list.push("Служба поддержки");
 
@@ -129,15 +132,17 @@ export function MainPage(props) {
             to={`${(index === 0 && "/") ||
               (index === 1 && !auth && "/LoginPage") ||
               (index === 1 && auth && "/ProfilePage") ||
-              (index === 2 && "/SalesPage") ||
-              (index === 3 && "/HelpPage")}`}
+              (index === 2 && "/FavoritesPage") ||
+              (index === 3 && "/SalesPage") ||
+              (index === 4 && "/HelpPage")}`}
           >
             <ListItem button key={text}>
               <ListItemIcon>
                 {index === 0 && <HomeIcon />}
                 {index === 1 && <AccountBoxIcon />}
-                {index === 2 && <MonetizationOnIcon />}
-                {index === 3 && <ContactSupportIcon />}
+                {index === 2 && <StarsIcon />}
+                {index === 3 && <MonetizationOnIcon />}
+                {index === 4 && <ContactSupportIcon />}
               </ListItemIcon>
               <ListItemText primary={text} className="list_text" />
             </ListItem>

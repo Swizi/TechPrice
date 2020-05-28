@@ -15,7 +15,7 @@ export default function LongCard(props) {
     <Link className="long_card_link" to={path}>
       <div className="long_card_block">
         <img
-          className="image_style"
+          className={props.href_index ? "image_style" : "big_image_style"}
           src={props.data.url}
           alt={props.data.name}
         />
