@@ -325,8 +325,8 @@ export function ProfilePage(props) {
       <div className="profile_block">
         <form onSubmit={formik.handleSubmit} autoComplete="on">
           <p className="default_gray_text">Код подтверждения</p>
-          <div className="form_field_block">
-            <span className="default_black_text">{user.code}</span>
+          <div className="form_field_block" style={{wordWrap: "break-word"}}>
+            <span className="default_black_text" style={{width: "80%"}}>{user.code}</span>
             <CopyToClipboard text={user.code}>
               <IconButton className="clipboard_icon">
                 <FileCopyIcon />
