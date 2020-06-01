@@ -19,7 +19,6 @@ import UserContext from "./UserContext";
 import SearchContext from "./SearchContext";
 import CatalogContext from "./CatalogContext";
 import ItemContext from "./ItemContext";
-import SubcategoriesContext from "./SubcategoriesContext";
 
 import Cookies from "universal-cookie";
 
@@ -63,7 +62,7 @@ const sorting_text = [
   "По цене по убыванию",
 ];
 
-const city_list = [
+var city_list = [
   {
     city: "Москва",
     latitude: 55.7522,
@@ -365,17 +364,21 @@ function App() {
       data
     ) {
       var response = $.parseJSON(data);
+      console.log(response[0]);
+      // response = JSON.parse(response);
       if (response.status === 0) {
         catalog = [];
-        for (var i = 0; i < response.categories.length; i++) {
+        console.log(response);
+        for (var key in response){
+          console.log(key);
           var item = {
-            id: i,
-            name: response.categories[i],
-            url: response.pics[i],
-            link: response.links[i],
-          };
+            id: response[key].id,
+            name: response[key].title,
+            url: response[key].picture
+          }
           catalog.push(item);
         }
+        console.log(catalog);
       } else {
         console.log(response);
       }
@@ -452,14 +455,14 @@ function App() {
   const [isClicked, editSearchTab] = useState(false);
   const search_value = { isClicked, editSearchTab };
 
-  const [searchCatalog, editSearchCatalog] = useState([]);
+  const [searchCatalog, editSearchCatalog] = useState({
+    header: '',
+    array: []
+  });
   const catalog_search_value = { searchCatalog, editSearchCatalog };
 
   const [item, setItem] = useState({});
   const item_value = { item, setItem };
-
-  const [subcategories, editSubcategories] = useState({});
-  const subcategories_value = { subcategories, editSubcategories };
 
   if (loading) {
     return (
@@ -484,7 +487,6 @@ function App() {
             exact
             path="/"
             render={() => (
-              <SubcategoriesContext.Provider value={subcategories_value}>
                 <CatalogContext.Provider value={catalog_search_value}>
                   <SearchContext.Provider value={search_value}>
                     <UserContext.Provider value={user_value}>
@@ -498,7 +500,6 @@ function App() {
                     </UserContext.Provider>{" "}
                   </SearchContext.Provider>
                 </CatalogContext.Provider>
-              </SubcategoriesContext.Provider>
             )}
           />{" "}
           <Route
@@ -543,22 +544,20 @@ function App() {
             exact
             header="Список желаемого"
             path="/FavoritesPage"
-            render={() => <FavoritesPage data={items_data} />}
+            render={() => <FavoritesPage data={items_data} host={host} />}
           />
           <Route
             exact
-            path="/RedirectPage"
+            path="/RedirectPage/:id"
             render={() => (
-              <SubcategoriesContext.Provider value={subcategories_value}>
                 <CatalogContext.Provider value={catalog_search_value}>
-                  <RedirectPage catalog={catalog} host={host}/>
+                  <RedirectPage catalog={catalog} host={host} />
                 </CatalogContext.Provider>
-              </SubcategoriesContext.Provider>
             )}
           />
           <Route
             exact
-            path="/ShopPage/:id/:id"
+            path="/ShopPage/:id"
             render={() => (
               <ShopPage
                 catalog={catalog}

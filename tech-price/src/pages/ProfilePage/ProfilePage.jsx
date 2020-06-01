@@ -46,33 +46,35 @@ const useStyles = makeStyles((theme) => ({
       width: 180,
     },
   },
-  edit_icon_margin:{
+  edit_icon_margin: {
     "&": {
-      margin: "0 0 0 5px"
-    }
-  }
+      margin: "0 0 0 5px",
+    },
+  },
 }));
 
 var editValues = {
   email: false,
   lName: false,
   fName: false,
-  aName: false
-}
-
+  aName: false,
+};
 
 const validate = (values) => {
   const errors = {};
 
-  if ((!/^[а-яА-Яa-zA-Z]{2,}$/g.test(values.firstName)) && (editValues.fName)){
+  if (!/^[а-яА-Яa-zA-Z]{2,}$/g.test(values.firstName) && editValues.fName) {
     errors.firstName = "Имя больше 2 символов";
   }
 
-  if ((!/^[а-яА-Яa-zA-Z]{2,}$/g.test(values.lastName)) && (editValues.lName)){
+  if (!/^[а-яА-Яa-zA-Z]{2,}$/g.test(values.lastName) && editValues.lName) {
     errors.lastName = "Фамилия больше 2 символов";
   }
 
-  if ((!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) && (editValues.email)){
+  if (
+    !/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email) &&
+    editValues.email
+  ) {
     errors.email = "Неверный формат эл. почты";
   }
 
@@ -100,11 +102,11 @@ export function ProfilePage(props) {
     lname: "",
     login: "",
     mailing: false,
-    code: 0
+    code: 0,
   });
 
   useEffect(() => {
-    $.post(`${props.host}/ajax/user.php`, { target: "user-info" }, function (
+    $.post(`${props.host}/ajax/user.php`, { target: "get-user" }, function (
       data
     ) {
       var response = $.parseJSON(data);
@@ -116,8 +118,8 @@ export function ProfilePage(props) {
           fname: response.fname,
           lname: response.lname,
           login: response.login,
-          mailing: response.mailing,
-          code: response.code
+          mailing: response.reporting,
+          code: response.report_code,
         });
         // if (response.mailing === "f") {
         //   setState({ checkedA: false });
@@ -126,10 +128,21 @@ export function ProfilePage(props) {
         // }
       } else {
         setRedirect(true);
+        // setUser({
+        //   aname: "Denisovich",
+        //   email: "denis.bosiy@gmail.com",
+        //   fname: "Denis",
+        //   lname: "Bosiy",
+        //   login: "swizi",
+        //   mailing: false,
+        //   code: 4138,
+        // });
       }
       setLoading(false);
     });
   }, [props.host]);
+
+  // setUser({ ...user, "email": "denis.bosiy@gmail.com"});
 
   const formik = useFormik({
     initialValues: {
@@ -140,9 +153,31 @@ export function ProfilePage(props) {
       additionalName: user.aname,
     },
     validate,
-    onSubmit: values =>{
-      alert(values.email);
+    onSubmit: (values) => {
+      console.log(values);
       // Запрос на сервер на изменение чего-либо(ифом проверить что именно(из editState))
+      var changeStatesArray = [];
+      if (editState.email) {
+        changeStatesArray.push(["email", formik.values.email]);
+        setUser({ ...user, email: formik.values.email });
+      }
+      if (editState.fname) {
+        changeStatesArray.push(["firstname", formik.values.firstName]);
+        setUser({ ...user, fname: formik.values.firstName });
+      }
+      if (editState.lname) {
+        changeStatesArray.push(["lastname", formik.values.lastName]);
+        setUser({ ...user, lname: formik.values.lastName });
+      }
+      if (editState.aname) {
+        changeStatesArray.push(["additionalname", formik.values.additionalName]);
+        setUser({ ...user, aname: formik.values.additionalName });
+      }
+      if (editState.mailing) {
+        changeStatesArray.push(["reporting", user.mailing]);
+      }
+
+      // Обнуление всех значений
       setEditState({
         email: false,
         fname: false,
@@ -150,8 +185,26 @@ export function ProfilePage(props) {
         aname: false,
         mailing: false,
       });
-
-    }
+      editValues = {
+        email: false,
+        lName: false,
+        fName: false,
+        aName: false,
+      };
+      console.log(JSON.stringify(changeStatesArray));
+      $.post(
+        `${props.host}/ajax/user.php`,
+        { target: "change-user", changes: JSON.stringify(changeStatesArray) },
+        function (data) {
+          var response = $.parseJSON(data);
+          if (response.status == 0) {
+            console.log("Everyyhing is ok");
+          } else {
+            console.log("Error!");
+          }
+        }
+      );
+    },
   });
 
   const [state, setState] = useState({
@@ -160,21 +213,26 @@ export function ProfilePage(props) {
 
   const handleChange = (event) => {
     setUser({ ...user, [event.target.name]: event.target.checked });
-    setEditState({ ...editState, [event.target.name]: event.target.checked });
+    setEditState({ ...editState, [event.target.name]: !editState.email });
   };
 
   let history = useHistory();
 
-  // if (redirect) {
-  //   return <Redirect to="/" />
-  // }
+  if (redirect) {
+    return <Redirect to="/" />;
+  }
+
+  // email: false,
+  // fname: false,
+  // lname: false,
+  // aname: false,
+  // mailing: false,
 
   if (
     (editState.email ||
-      editState.login ||
-      editState.lastName ||
-      editState.firstName ||
-      editState.additionalName ||
+      editState.lname ||
+      editState.fname ||
+      editState.aname ||
       editState.mailing) &&
     !toggleButton
   ) {
@@ -183,37 +241,40 @@ export function ProfilePage(props) {
 
   if (
     !editState.email &&
-    !editState.login &&
-    !editState.lastName &&
-    !editState.firstName &&
-    !editState.additionalName &&
+    !editState.lname &&
+    !editState.fname &&
+    !editState.aname &&
     !editState.mailing &&
     toggleButton
   ) {
     setButton(false);
   }
 
-  function changeEmailButtonState(){
+  function changeEmailButtonState() {
     setEditState({ ...editState, ["email"]: !editState.email });
     editValues.email = !editValues.email;
+    formik.values.email = user.email;
   }
 
-  function changeLastNameButtonState(){
-    setEditState({ ...editState, ["lastName"]: !editState.lastName });
+  function changeLastNameButtonState() {
+    setEditState({ ...editState, ["lname"]: !editState.lname });
     editValues.lName = !editValues.lName;
+    formik.values.lastName = user.lname;
   }
 
-  function changeFirstNameButtonState(){
-    setEditState({ ...editState, ["firstName"]: !editState.firstName });
+  function changeFirstNameButtonState() {
+    setEditState({ ...editState, ["fname"]: !editState.fname });
     editValues.fName = !editValues.fName;
+    formik.values.firstName = user.fname;
   }
 
-  function changeAdditionalNameButtonState(){
+  function changeAdditionalNameButtonState() {
     setEditState({
       ...editState,
-      ["additionalName"]: !editState.additionalName,
-    });    
+      ["aname"]: !editState.aname,
+    });
     editValues.aName = !editValues.aName;
+    formik.values.additionalName = user.aname;
   }
 
   if (loading) {
@@ -236,17 +297,14 @@ export function ProfilePage(props) {
         </div>
       </div>
       <div className="profile_block">
-        <form
-          onSubmit={formik.handleSubmit}
-          autoComplete="on"
-        >
+        <form onSubmit={formik.handleSubmit} autoComplete="on">
           <p className="default_gray_text">Код подтверждения</p>
           <div className="form_field_block">
-            <span className="default_black_text">4138{user.code}</span>
+            <span className="default_black_text">{user.code}</span>
           </div>
           <p className="default_gray_text">Логин</p>
           <div className="form_field_block">
-            <span className="default_black_text">swizi{user.login}</span>
+            <span className="default_black_text">{user.login}</span>
           </div>
           <p className="default_gray_text">Электроная почта</p>
           <div className="form_field_block">
@@ -265,7 +323,7 @@ export function ProfilePage(props) {
                 helperText={formik.errors.email ? formik.errors.email : null}
               />
             ) : (
-              <span className="default_black_text">denis.bosiy@gmail.com{user.email}</span>
+              <span className="default_black_text">{user.email}</span>
             )}
             <IconButton
               className={classes.edit_icon_margin}
@@ -277,7 +335,7 @@ export function ProfilePage(props) {
           </div>
           <p className="default_gray_text">Фамилия</p>
           <div className="form_field_block">
-            {editState.lastName ? (
+            {editState.lname ? (
               <TextField
                 style={{ width: "90%" }}
                 className={formik.errors.lastName ? classes.error_text : null}
@@ -294,11 +352,11 @@ export function ProfilePage(props) {
                 }
               />
             ) : (
-              <span className="default_black_text">Босый{user.lname}</span>
+              <span className="default_black_text">{user.lname}</span>
             )}
             <IconButton
               onClick={changeLastNameButtonState}
-              name="lastName"
+              name="lname"
               className={classes.edit_icon_margin}
             >
               <CreateIcon name="lastName" />
@@ -306,7 +364,7 @@ export function ProfilePage(props) {
           </div>
           <p className="default_gray_text">Имя</p>
           <div className="form_field_block">
-            {editState.firstName ? (
+            {editState.fname ? (
               <TextField
                 style={{ width: "90%" }}
                 className={formik.errors.firstName ? classes.error_text : null}
@@ -323,11 +381,11 @@ export function ProfilePage(props) {
                 }
               />
             ) : (
-              <span className="default_black_text">Денис{user.fname}</span>
+              <span className="default_black_text">{user.fname}</span>
             )}
             <IconButton
               onClick={changeFirstNameButtonState}
-              name="firstName"
+              name="fname"
               className={classes.edit_icon_margin}
             >
               <CreateIcon name="firstName" />
@@ -335,7 +393,7 @@ export function ProfilePage(props) {
           </div>
           <p className="default_gray_text">Отчество</p>
           <div className="form_field_block">
-            {editState.additionalName ? (
+            {editState.aname ? (
               <TextField
                 style={{ width: "90%" }}
                 className={
@@ -351,11 +409,11 @@ export function ProfilePage(props) {
                 label=""
               />
             ) : (
-              <span className="default_black_text">Владиславович{user.aname}</span>
+              <span className="default_black_text">{user.aname}</span>
             )}
             <IconButton
               onClick={changeAdditionalNameButtonState}
-              name="additionalName"
+              name="aname"
               className={classes.edit_icon_margin}
             >
               <CreateIcon name="additionalName" />

@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import RedirectPageCard from "../../components/RedirectPageCard/RedirectPageCard";
 import ArrowBackIcon from "@material-ui/icons/ArrowBack";
 import { useHistory } from "react-router-dom";
@@ -14,51 +14,60 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 export function RedirectPage(props) {
 
-  const { searchCatalog, editSearchCatalog } = useContext(CatalogContext);
-  const { subcategories, editSubcategories } = useContext(SubcategoriesContext);
+  var address = window.location.href;
+  var address_array = address.split('/');
+  var href_id = address_array[address_array.length-1];
+  console.log(address_array);
+  console.log(props.catalog);
 
-  const [loading, setLoading] = useState(false);
+  const { searchCatalog, editSearchCatalog } = useContext(CatalogContext);
+  const [ subcategory_list, setSubcategoryList] = useState({
+    header: '',
+    array: []
+  });
+  const [subcategories, editSubcategories] = useState({
+    header: "",
+    array: []
+  });
+
+  const [loading, setLoading] = useState(true);
   const [isClicked, editClicked] = useState(false);
   const [subcategory, setSubcategory] = useState({});
 
   let history = useHistory();
 
-  if (isClicked) {
-    setLoading(true);
-    $.post(
-      `${props.host}/ajax/get_content.php`,
-      { target: "get-item-list", link: subcategory.link },
-      function (data) {
-        var response = $.parseJSON(data);
-        if (response.status === 0 || response.status === 8) {
-          var catalog = [];
-          for (var i = 0; i < response.titles.length; i++){
-            var item = {
-              id: i,
-              link: response.links[i],
-              urls: [],
-              popularity: i, // Это не работает, если что(так не должно быть)
-              name: response.titles[i],
-              description: '',
-              reviews: [],
-              shops: []
-            }
-            item.urls.push(response.pics[i]);
-            catalog.push(item);
+  useEffect(() => {
+    $.post(`${props.host}/ajax/get_content.php`, { target: 'get-subcateg', categ_id: href_id }, function (data) {
+      var response = $.parseJSON(data);
+      if ((response.status === 0) || (response.status === 8)) {
+        // Ответ пришёл 
+        var subcategory_array = [];
+        console.log(response);
+        for (var key in response){
+          console.log(key);
+          var item = {
+            id: response[key].id,
+            name: response[key].title,
+            url: response[key].picture
+          };
+          if (item.id !== undefined){
+            subcategory_array.push(item);
           }
-          editSearchCatalog({
-            header: subcategory.name,
-            array: catalog
-          });
-          history.push("/ShopPage")
-        } else {
-          // Ошибочка вышла
         }
-        setLoading(false);
+        console.log(subcategory_array);
+        editSubcategories({ header: props.catalog[href_id].name, array:subcategory_array});
+      } else {
+        console.log("Ошибка при отправке запроса на сервер(запрос на получение подкатегорий)");
       }
-    );
-    editClicked(false);
-  }
+      setLoading(false);
+    });   
+  }, []);
+
+  useEffect(() => {
+    if (isClicked) {
+      history.push(`/ShopPage/${subcategory.id}`);
+    }
+  }, [isClicked]);
 
   if (loading) {
     return (

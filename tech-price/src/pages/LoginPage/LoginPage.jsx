@@ -76,8 +76,10 @@ export function LoginPage(props) {
     validate,
     onSubmit: values => {
       setLoadingAlert(true);
+      console.log(values);
       $.post(`${props.host}/ajax/login.php`, { target: 'logination', login: values.login, password: values.password }, function (data) {
         var response = $.parseJSON(data);
+        console.log(response);
         if (response.status != 0) {
           console.log("error");
           setError(true);
@@ -145,7 +147,7 @@ export function LoginPage(props) {
           </span>
         </div>
       </div>
-      <Alert severity="error" className="alert" style={{ display: errorPopUp ? "flex" : "none" }}>Ошибка при вводе данных в форму</Alert>
+      <Alert severity="error" className="alert" style={{ display: (errorPopUp && !loadingAlert) ? "flex" : "none" }}>Ошибка при вводе данных в форму</Alert>
       <Alert severity="info" className="alert" style={{ display: loadingAlert ? "flex" : "none" }}>Загрузка...  <CircularProgress className="info_circular_progress" /></Alert>
       <div className="login_block">
         <form className={classes.root} autoComplete="off" onSubmit={formik.handleSubmit}>

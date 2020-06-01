@@ -8,7 +8,7 @@ export default function SaleProductCard(props) {
       <div className="card_block_search">
         <img
           className="image_style"
-          src={props.data.urls[0]}
+          src={props.data.url}
           alt={props.data.name}
         />
         <span className="product_name">{props.data.name}</span>

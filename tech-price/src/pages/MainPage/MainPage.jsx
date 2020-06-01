@@ -25,7 +25,6 @@ import StarsIcon from '@material-ui/icons/Stars';
 
 import UserContext from '../.././UserContext';
 import SearchContext from '../.././SearchContext';
-import SubcategoriesContext from '../.././SubcategoriesContext';
 
 import $ from 'jquery';
 import CircularProgress from '@material-ui/core/CircularProgress';
@@ -46,7 +45,6 @@ export function MainPage(props) {
 
   const { isClicked, editSearchTab } = useContext(SearchContext);
   const { userCity, setCity } = useContext(UserContext);
-  const { subcategories, editSubcategories } = useContext(SubcategoriesContext);
 
 
   const [auth, setAuth] = useState(false);
@@ -129,10 +127,11 @@ export function MainPage(props) {
         {first_menu_list.map((text, index) => (
           <Link
             key={index}
+            style={{display: (index === 2 && !auth) ? "none" : "block"}}
             to={`${(index === 0 && "/") ||
               (index === 1 && !auth && "/LoginPage") ||
               (index === 1 && auth && "/ProfilePage") ||
-              (index === 2 && "/FavoritesPage") ||
+              (index === 2 && auth && "/FavoritesPage") ||
               (index === 3 && "/SalesPage") ||
               (index === 4 && "/HelpPage")}`}
           >
@@ -170,31 +169,7 @@ export function MainPage(props) {
   );
 
   if (toSubCategory){
-    setLoading(true);
-    $.post(`${props.host}/ajax/get_content.php`, { target: 'get-subcateg', link: category.link }, function (data) {
-      var response = $.parseJSON(data);
-      if ((response.status === 0) || (response.status === 8)) {
-        // Ответ пришёл 
-        var subcategory_array = [];
-        for (var i = 0; i < response.subcategories.length; i++){
-          var subcategory = {
-            name: response.subcategories[i],
-            url: response.pics[i],
-            link: response.links[i]
-          }
-          subcategory_array.push(subcategory);
-        }
-        editSubcategories({
-          header: category.name,
-          array: subcategory_array
-        });
-        history.push("/RedirectPage");
-      } else {
-        // Ошибочка вышла
-      }
-      setLoading(false);
-    });   
-    editClicked(false);
+    history.push(`/RedirectPage/${category.id}`);
   }
 
 
