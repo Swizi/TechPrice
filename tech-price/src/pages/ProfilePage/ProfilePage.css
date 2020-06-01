@@ -22,3 +22,11 @@
   width: 100%;
   align-items: center;
 }
+
+.info_icon {
+  margin: 20px 0 0 0 !important;
+}
+
+.clipboard_icon {
+  margin: 0 0 0 10px !important;
+}

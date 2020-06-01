@@ -8,7 +8,7 @@ import CircularProgress from "@material-ui/core/CircularProgress";
 
 import $ from "jquery";
 
-import Alert from '@material-ui/lab/Alert';
+import Alert from "@material-ui/lab/Alert";
 
 export function FavoritesPage(props) {
   let history = useHistory();
@@ -70,9 +70,12 @@ export function FavoritesPage(props) {
         </div>
       </div>
       <div className="products">
-      {isBotConnected ? null : (
-            <Alert severity="warning">Бот не активирован</Alert>
-          )}
+        {isBotConnected ? null : (
+          <Alert severity="warning">Бот не активирован</Alert>
+        )}
+        {item_list.length === 0 ? (
+          <h2 className="text_not_found">В списке избранного ничего нет</h2>
+        ) : null}
         <div className="product_cards">
           {item_list.map(function (item, index) {
             return (

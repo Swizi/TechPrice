@@ -24,6 +24,9 @@ import InfoIcon from "@material-ui/icons/Info";
 import Popper from "@material-ui/core/Popper";
 import Fade from "@material-ui/core/Fade";
 
+import FileCopyIcon from "@material-ui/icons/FileCopy";
+import { CopyToClipboard } from "react-copy-to-clipboard";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -123,7 +126,7 @@ export function ProfilePage(props) {
   };
 
   const open = Boolean(anchorEl);
-  const id = open ? 'transitions-popper' : undefined;
+  const id = open ? "transitions-popper" : undefined;
 
   useEffect(() => {
     $.post(`${props.host}/ajax/user.php`, { target: "get-user" }, function (
@@ -324,6 +327,11 @@ export function ProfilePage(props) {
           <p className="default_gray_text">Код подтверждения</p>
           <div className="form_field_block">
             <span className="default_black_text">{user.code}</span>
+            <CopyToClipboard text={user.code}>
+              <IconButton className="clipboard_icon">
+                <FileCopyIcon />
+              </IconButton>
+            </CopyToClipboard>
           </div>
           <p className="default_gray_text">Логин</p>
           <div className="form_field_block">
@@ -454,7 +462,11 @@ export function ProfilePage(props) {
               }
               label="Отправлять выгодные предложения из желаемых"
             />
-            <IconButton aria-describedby={id} onClick={handleClick}>
+            <IconButton
+              className="info_icon"
+              aria-describedby={id}
+              onClick={handleClick}
+            >
               <InfoIcon />
             </IconButton>
             <Popper id={id} open={open} anchorEl={anchorEl} transition>
