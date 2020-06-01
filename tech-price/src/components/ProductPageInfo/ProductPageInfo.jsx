@@ -79,7 +79,7 @@ export default function ProductPageInfo(props) {
       <div className="product_description_header_block">
         <h1 className="product_page_header">{props.data.name}</h1>
         {loading ? (
-          <CircularProgress className="circular_progress" />
+          <CircularProgress className="add_list_circular_progress"/>
         ) : (
           <div
             className="favourite_button"

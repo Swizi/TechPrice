@@ -51,3 +51,9 @@
   font-size: 35px !important;
   color: #FFD600;
 }
+
+.add_list_circular_progress {
+  color: #FFD600 !important;
+  width: 47px !important;
+  height: 47px !important;
+}

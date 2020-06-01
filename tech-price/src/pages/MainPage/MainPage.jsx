@@ -21,31 +21,29 @@ import MonetizationOnIcon from "@material-ui/icons/MonetizationOn";
 import LocationCityIcon from "@material-ui/icons/LocationCity";
 import ContactSupportIcon from "@material-ui/icons/ContactSupport";
 import HomeIcon from "@material-ui/icons/Home";
-import StarsIcon from '@material-ui/icons/Stars';
+import StarsIcon from "@material-ui/icons/Stars";
 
-import UserContext from '../.././UserContext';
-import SearchContext from '../.././SearchContext';
+import UserContext from "../.././UserContext";
+import SearchContext from "../.././SearchContext";
 
-import $ from 'jquery';
-import CircularProgress from '@material-ui/core/CircularProgress';
+import $ from "jquery";
+import CircularProgress from "@material-ui/core/CircularProgress";
 
-import { useHistory } from 'react-router-dom';
+import { useHistory } from "react-router-dom";
 
 const useStyles = makeStyles({
   list: {
-    width: 200
-  }
+    width: 200,
+  },
 });
 
 const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
-
 
 export function MainPage(props) {
   let history = useHistory();
 
   const { isClicked, editSearchTab } = useContext(SearchContext);
   const { userCity, setCity } = useContext(UserContext);
-
 
   const [auth, setAuth] = useState(false);
   const [loading, setLoading] = useState(true);
@@ -54,13 +52,12 @@ export function MainPage(props) {
 
   const [toSubCategory, editClicked] = useState(false);
 
-
   const classes = useStyles();
   const [state, setState] = useState({
-    left: false
+    left: false,
   });
 
-  const toggleDrawer = (side, open) => event => {
+  const toggleDrawer = (side, open) => (event) => {
     if (
       event &&
       event.type === "keydown" &&
@@ -76,20 +73,26 @@ export function MainPage(props) {
   var first_menu_list = ["Домашняя страница"];
 
   useEffect(() => {
-    $.post(`${props.host}/ajax/check_auth.php`, { target: "checking" }, function (data) {
-      var response = $.parseJSON(data);
-      if (response.status === 0) {
-        setAuth(true);
-      } else {
-        setAuth(false);
+    $.post(
+      `${props.host}/ajax/check_auth.php`,
+      { target: "checking" },
+      function (data) {
+        var response = $.parseJSON(data);
+        if (response.status === 0) {
+          setAuth(true);
+        } else {
+          setAuth(false);
+        }
+        setLoading(false);
       }
-      setLoading(false);
-    });
+    );
   }, [props.host]);
 
   useEffect(() => {
     if (menuAction) {
-      $.post(`${props.host}/ajax/logout.php`, { target: "logout" }, function (data) {
+      $.post(`${props.host}/ajax/logout.php`, { target: "logout" }, function (
+        data
+      ) {
         var response = $.parseJSON(data);
         if (response.status === 0) {
           setAuth(false);
@@ -100,7 +103,6 @@ export function MainPage(props) {
       });
     }
   }, [menuAction]);
-
 
   if (auth) {
     second_menu_list.push("Выйти");
@@ -114,26 +116,30 @@ export function MainPage(props) {
   first_menu_list.push("Акции");
   first_menu_list.push("Служба поддержки");
 
-
-  const sideList = side => (
+  const sideList = (side) => (
     <div
       className={classes.fullList}
       role="presentation"
       onClick={toggleDrawer(side, false)}
       onKeyDown={toggleDrawer(side, false)}
     >
-      <CircularProgress className="circular_progress" style={{ display: menuAction ? "block" : "none" }} />
+      <CircularProgress
+        className="circular_progress"
+        style={{ display: menuAction ? "block" : "none" }}
+      />
       <List style={{ display: menuAction ? "none" : "block" }}>
         {first_menu_list.map((text, index) => (
           <Link
             key={index}
-            style={{display: (index === 2 && !auth) ? "none" : "block"}}
-            to={`${(index === 0 && "/") ||
+            style={{ display: index === 2 && !auth ? "none" : "block" }}
+            to={`${
+              (index === 0 && "/") ||
               (index === 1 && !auth && "/LoginPage") ||
               (index === 1 && auth && "/ProfilePage") ||
               (index === 2 && auth && "/FavoritesPage") ||
               (index === 3 && "/SalesPage") ||
-              (index === 4 && "/HelpPage")}`}
+              (index === 4 && "/HelpPage")
+            }`}
           >
             <ListItem button key={text}>
               <ListItemIcon>
@@ -149,15 +155,22 @@ export function MainPage(props) {
         ))}
       </List>
       <Divider />
-      <CircularProgress className="circular_progress" style={{ display: menuAction ? "block" : "none" }} />
+      <CircularProgress
+        className="circular_progress"
+        style={{ display: menuAction ? "block" : "none" }}
+      />
       <List style={{ display: menuAction ? "none" : "block" }}>
         {second_menu_list.map((text, index) => (
-          <Link key={index} to={`${(index === 0 && "/UserCityPage") ||
-            (index === 1 && "/")}`}
-            onClick={index ? () => setAction(!menuAction) : null}>
+          <Link
+            key={index}
+            to={`${(index === 0 && "/UserCityPage") || (index === 1 && "/")}`}
+            onClick={index ? () => setAction(!menuAction) : null}
+          >
             <ListItem button key={text}>
               <ListItemIcon>
-                {index === 1 && <ExitToAppIcon onClick={(e) => setAction(true)} />}
+                {index === 1 && (
+                  <ExitToAppIcon onClick={(e) => setAction(true)} />
+                )}
                 {index === 0 && <LocationCityIcon />}
               </ListItemIcon>
               <ListItemText primary={text} className="list_text" />
@@ -168,10 +181,9 @@ export function MainPage(props) {
     </div>
   );
 
-  if (toSubCategory){
+  if (toSubCategory) {
     history.push(`/RedirectPage/${category.id}`);
   }
-
 
   if (loading) {
     return (
@@ -181,9 +193,9 @@ export function MainPage(props) {
       </div>
     );
   }
-  
+
   return (
-    < div className="page_flexbox" >
+    <div className="page_flexbox">
       <SwipeableDrawer
         disableBackdropTransition={!iOS}
         disableDiscovery={iOS}
@@ -194,25 +206,23 @@ export function MainPage(props) {
       >
         {sideList("left")}
       </SwipeableDrawer>
-      <SearchTab host={props.host}/>
+      <SearchTab host={props.host} />
       <div className="navigation_menu">
         <div id="main-menu" className="menu_wrapper">
           <IconButton
             onClick={toggleDrawer("left", true)}
             edge="start"
-            className={classes.menuButton}
             color="inherit"
             aria-label="menu"
           >
             <MenuIcon />
           </IconButton>
-          <span
-            id="pageHeader"
-            className="page_header"
-          >
+          <span id="pageHeader" className="page_header">
             TechPrice
           </span>
-          <SearchIcon onClick={() => editSearchTab(!isClicked)} className="search_icon" />
+          <IconButton onClick={() => editSearchTab(!isClicked)}>
+            <SearchIcon className="search_icon" />
+          </IconButton>
         </div>
       </div>
       <div className="products">
@@ -227,10 +237,19 @@ export function MainPage(props) {
         </div>
         <div className="product_cards">
           {props.catalog.map(function (item, index) {
-            return <ItemsCard onClick={() => {setCategory(item);editClicked(true)}} key={index} data={item} />;
+            return (
+              <ItemsCard
+                onClick={() => {
+                  setCategory(item);
+                  editClicked(true);
+                }}
+                key={index}
+                data={item}
+              />
+            );
           })}
         </div>
       </div>
-    </div >
+    </div>
   );
 }

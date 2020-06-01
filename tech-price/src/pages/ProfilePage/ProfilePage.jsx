@@ -20,6 +20,10 @@ import $ from "jquery";
 
 import CircularProgress from "@material-ui/core/CircularProgress";
 
+import InfoIcon from "@material-ui/icons/Info";
+import Popper from "@material-ui/core/Popper";
+import Fade from "@material-ui/core/Fade";
+
 const useStyles = makeStyles((theme) => ({
   root: {
     "& > *": {
@@ -50,6 +54,13 @@ const useStyles = makeStyles((theme) => ({
     "&": {
       margin: "0 0 0 5px",
     },
+  },
+  paper: {
+    border: "1px solid",
+    padding: theme.spacing(1),
+    backgroundColor: theme.palette.background.paper,
+    width: "60%",
+    margin: "0 0 0 27%",
   },
 }));
 
@@ -104,6 +115,15 @@ export function ProfilePage(props) {
     mailing: false,
     code: 0,
   });
+
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(anchorEl ? null : event.currentTarget);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'transitions-popper' : undefined;
 
   useEffect(() => {
     $.post(`${props.host}/ajax/user.php`, { target: "get-user" }, function (
@@ -170,7 +190,10 @@ export function ProfilePage(props) {
         setUser({ ...user, lname: formik.values.lastName });
       }
       if (editState.aname) {
-        changeStatesArray.push(["additionalname", formik.values.additionalName]);
+        changeStatesArray.push([
+          "additionalname",
+          formik.values.additionalName,
+        ]);
         setUser({ ...user, aname: formik.values.additionalName });
       }
       if (editState.mailing) {
@@ -419,17 +442,32 @@ export function ProfilePage(props) {
               <CreateIcon name="additionalName" />
             </IconButton>
           </div>
-          <FormControlLabel
-            className="checkbox_label"
-            control={
-              <Checkbox
-                checked={user.mailing}
-                onChange={handleChange}
-                name="mailing"
-              />
-            }
-            label="Отправлять выгодные предложения из желаемых"
-          />
+          <div className="form_field_block">
+            <FormControlLabel
+              className="checkbox_label"
+              control={
+                <Checkbox
+                  checked={user.mailing}
+                  onChange={handleChange}
+                  name="mailing"
+                />
+              }
+              label="Отправлять выгодные предложения из желаемых"
+            />
+            <IconButton aria-describedby={id} onClick={handleClick}>
+              <InfoIcon />
+            </IconButton>
+            <Popper id={id} open={open} anchorEl={anchorEl} transition>
+              {({ TransitionProps }) => (
+                <Fade {...TransitionProps} timeout={350}>
+                  <div className={classes.paper}>
+                    Данные отправляются от бота в Telegram. Для активации нужно
+                    найти бота: @techpricebot и отправить ему код подтверждения.
+                  </div>
+                </Fade>
+              )}
+            </Popper>
+          </div>
           <Button
             type="submit"
             variant="outlined"

@@ -1,3 +1,9 @@
 .big_image_style {
-  width: 32%;
+  width: 25%;
+}
+
+@media (min-width: 1000px) {
+  .big_image_style {
+    width: 225px;
+  }
 }

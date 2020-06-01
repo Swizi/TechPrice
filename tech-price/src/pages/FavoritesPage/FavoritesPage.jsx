@@ -7,13 +7,17 @@ import SaleProductCard from "../../components/SaleProductCard/SaleProductCard";
 import CircularProgress from "@material-ui/core/CircularProgress";
 
 import $ from "jquery";
-export function FavoritesPage(props) {
 
+import Alert from '@material-ui/lab/Alert';
+
+export function FavoritesPage(props) {
   let history = useHistory();
 
   const [item_list, setItemList] = useState([]);
 
   const [loading, setLoading] = useState(true);
+
+  const [isBotConnected, setBotConnection] = useState(false);
 
   // Запрос на список желаемого
 
@@ -24,27 +28,26 @@ export function FavoritesPage(props) {
       function (data) {
         var response = $.parseJSON(data);
         console.log(response);
-        if (response.status === 0){
+        if (response.status === 0) {
           var catalog = [];
-          for (var key in response){
-            if (response[key].id){
+          for (var key in response) {
+            if (response[key].id) {
               var item = {
                 id: response[key].id,
                 name: response[key].title,
-                url: response[key].picture
+                url: response[key].picture,
               };
               catalog.push(item);
             }
           }
           setItemList(catalog);
+          setBotConnection(response.bot_connected);
         } else {
           console.log("Ошибка в запросе на избранные товары");
         }
         setLoading(false);
       }
-      );
-
-
+    );
   }, []);
 
   if (loading) {
@@ -55,7 +58,7 @@ export function FavoritesPage(props) {
       </div>
     );
   }
-  
+
   return (
     <div className="page_flexbox">
       <div className="navigation_menu">
@@ -67,9 +70,20 @@ export function FavoritesPage(props) {
         </div>
       </div>
       <div className="products">
+      {isBotConnected ? null : (
+            <Alert severity="warning">Бот не активирован</Alert>
+          )}
         <div className="product_cards">
-          {item_list.map(function(item, index) {
-            return <SaleProductCard key={index} data={item} onClick={() => {history.push(`/ProductPage/${item.id}`)}} />;
+          {item_list.map(function (item, index) {
+            return (
+              <SaleProductCard
+                key={index}
+                data={item}
+                onClick={() => {
+                  history.push(`/ProductPage/${item.id}`);
+                }}
+              />
+            );
           })}
         </div>
       </div>
