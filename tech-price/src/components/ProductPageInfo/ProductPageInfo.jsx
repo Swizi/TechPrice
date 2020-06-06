@@ -22,8 +22,6 @@ const useStyles = makeStyles((theme) => ({
 export default function ProductPageInfo(props) {
   const classes = useStyles();
 
-  console.log(props.data.favorite);
-
   const [isClicked, changeStyle] = useState(props.data.favorite);
 
   const [auth, setAuth] = useState(false);
@@ -49,14 +47,11 @@ export default function ProductPageInfo(props) {
   function changeFavoriteState(){
     if (!isClicked){
       setLoading(true);
-      console.log(props.data.id);
-      console.log(props.data.min_price);
       $.post(
         `${props.host}/ajax/favorites_change.php`,
         { target: "fav-put", item_id: props.data.id, price: props.data.min_price},
         function (data) {
           var response = $.parseJSON(data);
-          console.log(response);
           setLoading(false);
         }
       );    
@@ -67,7 +62,6 @@ export default function ProductPageInfo(props) {
         { target: "fav-rem", item_id: props.data.id },
         function (data) {
           var response = $.parseJSON(data);
-          console.log(response);
           setLoading(false);
         }
       );   

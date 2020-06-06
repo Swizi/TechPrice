@@ -75,17 +75,15 @@ export default function SearchTab(props) {
         function (data) {
           var response = $.parseJSON(data);
           if (response.status != 0) {
-            console.log("error");
             setRedirect(false);
           } else {
-            console.log("OK");
             var catalog = [];
             for (var i = 0; i < response.titles.length; i++){
               var item = {
                 id: i,
                 link: response.links[i],
                 urls: [],
-                popularity: i, // Это не работает, если что(так не должно быть)
+                popularity: i, // Это не работает, если что.(так не должно быть)
                 name: response.titles[i],
                 description: '',
                 reviews: [],

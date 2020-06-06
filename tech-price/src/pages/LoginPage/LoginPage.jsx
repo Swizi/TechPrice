@@ -76,15 +76,11 @@ export function LoginPage(props) {
     validate,
     onSubmit: values => {
       setLoadingAlert(true);
-      console.log(values);
       $.post(`${props.host}/ajax/login.php`, { target: 'logination', login: values.login, password: values.password }, function (data) {
         var response = $.parseJSON(data);
-        console.log(response);
         if (response.status != 0) {
-          console.log("error");
           setError(true);
         } else {
-          console.log("OK");
           setRedirect(true);
         }
         setLoadingAlert(false);

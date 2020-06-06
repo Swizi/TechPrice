@@ -112,7 +112,7 @@ export function MainPage(props) {
   }
 
   first_menu_list.push("Избранное");
-  // Передвинуть Избранное в auth, когда перекину на локалхост обычный
+  
   first_menu_list.push("Акции");
   first_menu_list.push("Служба поддержки");
 

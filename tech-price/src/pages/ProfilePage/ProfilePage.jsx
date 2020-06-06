@@ -144,28 +144,13 @@ export function ProfilePage(props) {
           mailing: response.reporting,
           code: response.report_code,
         });
-        // if (response.mailing === "f") {
-        //   setState({ checkedA: false });
-        // } else {
-        //   setState({ checkedA: true });
-        // }
       } else {
         setRedirect(true);
-        // setUser({
-        //   aname: "Denisovich",
-        //   email: "denis.bosiy@gmail.com",
-        //   fname: "Denis",
-        //   lname: "Bosiy",
-        //   login: "swizi",
-        //   mailing: false,
-        //   code: 4138,
-        // });
       }
       setLoading(false);
     });
   }, [props.host]);
 
-  // setUser({ ...user, "email": "denis.bosiy@gmail.com"});
 
   const formik = useFormik({
     initialValues: {
@@ -177,7 +162,6 @@ export function ProfilePage(props) {
     },
     validate,
     onSubmit: (values) => {
-      console.log(values);
       // Запрос на сервер на изменение чего-либо(ифом проверить что именно(из editState))
       var changeStatesArray = [];
       if (editState.email) {
@@ -217,14 +201,13 @@ export function ProfilePage(props) {
         fName: false,
         aName: false,
       };
-      console.log(JSON.stringify(changeStatesArray));
       $.post(
         `${props.host}/ajax/user.php`,
         { target: "change-user", changes: JSON.stringify(changeStatesArray) },
         function (data) {
           var response = $.parseJSON(data);
           if (response.status == 0) {
-            console.log("Everyyhing is ok");
+            console.log("Everything is ok");
           } else {
             console.log("Error!");
           }
@@ -247,12 +230,6 @@ export function ProfilePage(props) {
   if (redirect) {
     return <Redirect to="/" />;
   }
-
-  // email: false,
-  // fname: false,
-  // lname: false,
-  // aname: false,
-  // mailing: false,
 
   if (
     (editState.email ||

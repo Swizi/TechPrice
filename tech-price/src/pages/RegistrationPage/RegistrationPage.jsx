@@ -119,7 +119,6 @@ export function RegistrationPage(props) {
   const [errorText, setErrorText] = useState('');
 
   useEffect(() => {
-    console.log("Ajax request");
     $.post(`${props.host}/ajax/check_auth.php`, { target: "checking" }, function (data) {
       var response = $.parseJSON(data);
       if (response.status == 0) {

@@ -27,7 +27,6 @@ export function FavoritesPage(props) {
       { target: "get-fav" },
       function (data) {
         var response = $.parseJSON(data);
-        console.log(response);
         if (response.status === 0) {
           var catalog = [];
           for (var key in response) {

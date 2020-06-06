@@ -27,7 +27,6 @@ export function ShopPage(props) {
   const { searchCatalog, editSearchCatalog } = useContext(CatalogContext);
   const { item, setItem } = useContext(ItemContext);
 
-  // const [open, setOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [isClicked, editClicked] = useState(false);
   const [product, setProduct] = useState({});
@@ -51,11 +50,9 @@ export function ShopPage(props) {
       { target: "get-item-list", subcateg_id: href_id },
       function (data) {
         var response = $.parseJSON(data);
-        console.log(response);
         if (response.status === 0 || response.status === 8) {
           var catalog = [];
           for (var key in response){
-            console.log(key);
             if ((key !== "status") && (key !== "subcategory")){
               var item = {
                 id: response[key].id,
@@ -73,7 +70,6 @@ export function ShopPage(props) {
         } else {
           // Ошибочка вышла
         }
-        console.log(searchCatalog.header);
         setLoading(false);
       }
     ); 
@@ -145,89 +141,9 @@ export function ShopPage(props) {
 
   //   setProducts(products);
   // };
-  if (searchCatalog.header !== ''){
-    console.log("zabiv");
-  }
 
   if (isClicked) {
     history.push(`/ProductPage/${product.id}`);
-    // setLoading(true);
-    // $.post(
-    //   `${props.host}/ajax/get_content.php`,
-    //   { target: "get-item", link: product.link },
-    //   function (data) {
-    //     var response = $.parseJSON(data);
-    //     if (response.status === 0 || response.status === 8) {
-    //       // Ответ пришёл
-    //       var pics_urls = [];
-    //       if (response.pics.length === 2){
-    //         pics_urls.push(response.pics[0]);
-    //       } else {
-    //         pics_urls = response.pics;
-    //       }
-    //       var item_link = product.link;
-    //       item_link = item_link.slice(2);
-
-    //       var description_text = "";
-
-    //       for (var i = 0; i < response.description.length; i++) {
-    //         description_text = description_text + response.description[i];
-    //         description_text = description_text + " ; ";
-    //       }
-
-    //       if (item_link[0] === 'a'){
-    //         item_link = "https://www.eldorado.ru/c" + item_link;
-    //       } else {
-    //         item_link = "https://" + item_link;
-    //       }
-
-    //       var item_product = {
-    //         urls: pics_urls,
-    //         popularity: 4, //random popularity
-    //         name: response.title,
-    //         description: description_text,
-    //         reviews: [
-    //           {
-    //             id: 0,
-    //             url: "https://is.gd/8AzG0h",
-    //             name: "Egor Komaroff",
-    //             review: "Всё понравилось, рекомендую.",
-    //             isLiked: true,
-    //           },
-    //         ],
-    //         shops: [
-    //           {
-    //             name: "Eldorado",
-    //             price: response.el_price.replace(/[^0-9]/gim, ""),
-    //             rating: 0,
-    //             reviews: 0,
-    //             link: item_link,
-    //           },
-    //         ],
-    //       };
-
-    //       if (response.status === 0) {
-    //         if (response.mv_price !== "NULL") {
-    //           item_product.shops.push({
-    //             name: "Mvideo",
-    //             price: response.mv_price.replace(/[^0-9]/gim, ""),
-    //             rating: 0,
-    //             reviews: 0,
-    //             link: response.mv_link,
-    //           });
-    //         }
-    //       }
-
-    //       setItem(item_product);
-
-    //       history.push("/ProductPage");
-    //     } else {
-    //       // Ошибочка вышла
-    //     }
-    //     setLoading(false);
-    //   }
-    // );
-    // editClicked(false);
   }
 
   if (loading) {

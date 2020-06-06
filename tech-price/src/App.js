@@ -493,9 +493,6 @@ function App() {
                       <MainPage
                         catalog={catalog}
                         host={host}
-                        // toggleDrawer={toggleDrawer}
-                        // data={data}
-                        // classes={classes}
                       />{" "}
                     </UserContext.Provider>{" "}
                   </SearchContext.Provider>

@@ -26,7 +26,6 @@ export function ProductPage(props) {
   href = href.split("/");
   var index = href[href.length - 1];
   var props_data = {};
-  console.log(index);
   // if (/\d/.test(index)){
   //   props_data = props.data[index];
   // } else {
@@ -39,66 +38,9 @@ export function ProductPage(props) {
       { target: "get-item", item_id: index},
       function (data) {
         var response = $.parseJSON(data);
-        console.log(response);
         if (response.status === 0 || response.status === 8 || response.status === 7) {
           // Ответ пришёл
-          // if (response.pics.length === 2){
-          //   pics_urls.push(response.pictures[0]);
-          // } else {
-          //   pics_urls = response.pictures;
-          // }
-
-          // var description_text = "";
-
-          // for (var i = 0; i < response.description.length; i++) {
-          //   description_text = description_text + response.description[i];
-          //   description_text = description_text + " ; ";
-          // }
-
-          // // if (item_link[0] === 'a'){
-          // //   item_link = "https://www.eldorado.ru/c" + item_link;
-          // // } else {
-          // //   item_link = "https://" + item_link;
-          // // }
-
-          // var item_product = {
-          //   urls: pics_urls,
-          //   popularity: 4, //random popularity
-          //   name: response.title,
-          //   description: description_text,
-          //   reviews: [
-          //     {
-          //       id: 0,
-          //       url: "https://is.gd/8AzG0h",
-          //       name: "Egor Komaroff",
-          //       review: "Всё понравилось, рекомендую.",
-          //       isLiked: true,
-          //     },
-          //   ],
-          //   shops: [
-          //     {
-          //       name: "Eldorado",
-          //       price: response.el_price.replace(/[^0-9]/gim, ""),
-          //       rating: 0,
-          //       reviews: 0,
-          //       link: item_link,
-          //     },
-          //   ],
-          // };
-
-          // if (response.status === 0) {
-          //   if (response.mv_price !== "NULL") {
-          //     item_product.shops.push({
-          //       name: "Mvideo",
-          //       price: response.mv_price.replace(/[^0-9]/gim, ""),
-          //       rating: 0,
-          //       reviews: 0,
-          //       link: response.mv_link,
-          //     });
-          //   }
-          // }
-
-          // setItem(item_product);
+          
           var pics_urls = response.pictures.split(";");
           var item_product = {
             id: response.id,
@@ -128,7 +70,7 @@ export function ProductPage(props) {
             ]         
           };
 
-          if (response.mv_price != null){
+          if (response.mv_price !== null){
             item_product.shops.push({
               name: "Mvideo",
               price: response.mv_price,

@@ -17,8 +17,6 @@ export function RedirectPage(props) {
   var address = window.location.href;
   var address_array = address.split('/');
   var href_id = address_array[address_array.length-1];
-  console.log(address_array);
-  console.log(props.catalog);
 
   const { searchCatalog, editSearchCatalog } = useContext(CatalogContext);
   const [ subcategory_list, setSubcategoryList] = useState({
@@ -42,9 +40,7 @@ export function RedirectPage(props) {
       if ((response.status === 0) || (response.status === 8)) {
         // Ответ пришёл 
         var subcategory_array = [];
-        console.log(response);
         for (var key in response){
-          console.log(key);
           var item = {
             id: response[key].id,
             name: response[key].title,
@@ -54,7 +50,6 @@ export function RedirectPage(props) {
             subcategory_array.push(item);
           }
         }
-        console.log(subcategory_array);
         editSubcategories({ header: props.catalog[href_id].name, array:subcategory_array});
       } else {
         console.log("Ошибка при отправке запроса на сервер(запрос на получение подкатегорий)");
