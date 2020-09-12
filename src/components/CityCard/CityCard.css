@@ -1,0 +1,17 @@
+.default_gray_text {
+  font-size: 14px;
+  color: #7e7e7e;
+  margin: 10px 0 10px 0;
+}
+
+.default_gray_text:hover {
+  cursor: pointer;
+}
+
+.city_card_block {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  margin: 0 0 10px 0;
+}

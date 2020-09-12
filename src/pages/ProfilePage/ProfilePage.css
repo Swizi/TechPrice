@@ -1,0 +1,32 @@
+.profile_block {
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  margin-top: 30px;
+}
+
+.default_black_text {
+  font-size: 16px;
+  color: black;
+  margin: 10px 0 10px 0;
+}
+
+.checkbox_label {
+  margin: 30px 0 10px 0;
+  display: block !important;
+}
+
+.form_field_block {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  align-items: center;
+}
+
+.info_icon {
+  margin: 20px 0 0 0 !important;
+}
+
+.clipboard_icon {
+  margin: 0 0 0 10px !important;
+}

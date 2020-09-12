@@ -1,0 +1,17 @@
+.redirect_page_cards {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  flex-direction: row;
+  flex-wrap: wrap;
+  width: 100%;
+}
+
+
+/* Медиа запросы */
+
+@media (max-width: 400px) {
+  .redirect_page_cards {
+    justify-content: center;
+  }
+}

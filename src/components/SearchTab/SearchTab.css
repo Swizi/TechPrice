@@ -1,0 +1,40 @@
+.search_block {
+  position: absolute;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  background-color: #FFFFFF;
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+  animation-name: search-tab;
+  animation-duration: 500ms;
+  top: 0%;
+}
+
+.exit_icon {
+  align-self: flex-end;
+  margin: 20px 20px 50px 0;
+  font-size: 32px !important;
+}
+
+.exit_icon:hover {
+  cursor: pointer;
+  color: blue;
+}
+
+.search_query_form {
+  width: 90%;
+}
+
+@keyframes search-tab {
+  0% {
+    top: 100%;
+    opacity: 0.3;
+  }
+  100% {
+    top: 0%;
+    opacity: 1;
+  }
+}

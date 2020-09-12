@@ -1,0 +1,13 @@
+.redirect_page_card_text{
+  font-size: 14px;
+  margin: 10px 0 10px 0;
+}
+
+.redirect_page_card_text:hover{
+  cursor: pointer;
+  color: blue;
+}
+
+.redirect_page_card_text:focus{
+  text-decoration: underline;
+}
